@@ -1,0 +1,51 @@
+{
+  "requirements": [
+    {
+      "name": "Supplied business name, address, phone and social contacts mapped",
+      "approved": true
+    },
+    {
+      "name": "Final brand palette, fonts and editable design authority",
+      "approved": false
+    },
+    { "name": "Homepage and About copy", "approved": false },
+    { "name": "Actual program catalog and detail content", "approved": false },
+    { "name": "Coach profiles, credentials and portraits", "approved": false },
+    {
+      "name": "Facility descriptions, amenities and original photography",
+      "approved": false
+    },
+    { "name": "Approved weekly classes and opening hours", "approved": false },
+    { "name": "Membership fees, benefits and terms", "approved": false },
+    {
+      "name": "Approved gallery images and any member testimonials",
+      "approved": false
+    },
+    {
+      "name": "Journal articles, authors, dates and covers",
+      "approved": false
+    },
+    {
+      "name": "Confirmed affiliate offering and provider destinations",
+      "approved": false
+    },
+    { "name": "Vacancies or confirmed recruitment state", "approved": false },
+    {
+      "name": "Approved supplement catalog and product information",
+      "approved": false
+    },
+    { "name": "Approved privacy notice and website terms", "approved": false },
+    {
+      "name": "Real inquiry delivery provider or approved contact-only release",
+      "approved": false
+    },
+    {
+      "name": "Domain, hosting destination and publication configuration",
+      "approved": false
+    },
+    {
+      "name": "Final visual, accessibility, performance and content review",
+      "approved": false
+    }
+  ]
+}

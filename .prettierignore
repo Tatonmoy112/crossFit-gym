@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+pnpm-lock.yaml
+figma
+info
+public
+test-results
+playwright-report
+.cache
+next-env.d.ts
