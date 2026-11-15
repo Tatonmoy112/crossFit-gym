@@ -23,6 +23,8 @@ test("tablet and wide layouts fit the viewport", async ({ page }, info) => {
   }
 });
 test("complete route inventory loads without overflow", async ({ page }) => {
+  // This checks 23 full document loads, including hydration and network settling.
+  test.setTimeout(120000);
   const paths = [
     "/",
     "/about/",
@@ -49,18 +51,40 @@ test("complete route inventory loads without overflow", async ({ page }) => {
     "/terms/",
   ];
   const errors: string[] = [];
+  const origin = new URL(test.info().project.use.baseURL!).origin;
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("response", (response) => {
-    if (
-      response.status() >= 400 &&
-      response.url().startsWith("http://127.0.0.1:3000/")
-    )
+    if (response.status() >= 400 && new URL(response.url()).origin === origin)
       errors.push(`HTTP ${response.status()}: ${response.url()}`);
   });
   for (const path of paths) {
     expect((await page.goto(path))?.status()).toBe(200);
     await page.waitForLoadState("networkidle");
     await expect(page.locator("h1")).toHaveCount(1);
+    if (path === "/programs/") {
+      await expect(
+        page.getByRole("heading", {
+          level: 2,
+          name: "Program information is not available yet",
+        }),
+      ).toBeVisible();
+    } else {
+      await expect(
+        page.getByText("Page components are awaiting rebuild.", {
+          exact: true,
+        }),
+      ).toBeVisible();
+    }
+    await expect(page.locator("form, input, dialog")).toHaveCount(0);
+    await expect(page.getByRole("contentinfo")).toHaveCount(1);
+    await expect(page.getByRole("banner")).toHaveCount(1);
+    await expect(page.getByRole("main")).toHaveCount(1);
+    await expect(
+      page.getByRole("note", { name: "Website preview" }),
+    ).toHaveCount(1);
+    await expect(
+      page.getByRole("banner").getByRole("link", { name: "Crossfit Gym home" }),
+    ).toHaveAttribute("href", "/");
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= window.innerWidth + 1,
@@ -69,50 +93,47 @@ test("complete route inventory loads without overflow", async ({ page }) => {
   }
   expect(errors).toEqual([]);
 });
-test("gallery opens and closes with Escape", async ({ page }) => {
-  await page.goto("/gallery/");
-  await page.getByRole("button", { name: /Enlarge/ }).click();
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("dialog")).toHaveCount(0);
-  await expect(page.getByRole("button", { name: /Enlarge/ })).toBeFocused();
-});
-test("FAQ search updates URL and clears", async ({ page }) => {
-  await page.goto("/faq/");
-  await page.getByRole("searchbox").fill("zzzz");
-  await expect(page).toHaveURL(/q=zzzz/);
-  await expect(page.getByText("No matching questions.")).toBeVisible();
-  await page.getByRole("button", { name: "Clear search" }).click();
-  await expect(page.locator(".faq-list details")).toHaveCount(4);
-});
-test("invalid contact details are rejected without network submission", async ({
+test("temporary page inventory supports navigation and recovery", async ({
   page,
 }) => {
-  await page.goto("/contact/?topic=Membership&interest=Test%20plan");
-  await expect(page.getByLabel("I’m interested in")).toHaveValue("Membership");
-  await expect(
-    page.getByLabel("Program, plan or subject (optional)"),
-  ).toHaveValue("Test plan");
-  await page.getByRole("button", { name: "Check inquiry details" }).click();
-  await expect(page.getByText("Please enter your name.")).toBeVisible();
-});
-test("unknown pages use the custom 404", async ({ page }) => {
-  expect((await page.goto("/not-a-page/"))?.status()).toBe(404);
-  await expect(
-    page.getByRole("heading", { name: "404", exact: true }),
-  ).toBeVisible();
-});
-test("mobile navigation opens, follows links and closes", async ({
-  page,
-}, info) => {
-  test.skip(info.project.name !== "mobile");
   await page.goto("/");
-  await page.getByRole("button", { name: "Open navigation" }).click();
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await page
-    .getByRole("navigation", { name: "Mobile navigation" })
-    .getByRole("link", { name: "Class schedule" })
+  const inventory = page.getByRole("navigation", { name: "Page inventory" });
+  await expect(inventory.getByRole("link")).toHaveCount(22);
+  await inventory
+    .getByRole("link", { name: "/schedule/", exact: true })
     .click();
   await expect(page).toHaveURL(/\/schedule\//);
-  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "Schedule", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("link", { name: "Back to home", exact: true }).click();
+  await expect(
+    page.getByRole("navigation", { name: "Page inventory" }),
+  ).toBeVisible();
+});
+
+test("skip link moves keyboard focus to the main content", async ({ page }) => {
+  await page.goto("/");
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("link", { name: "Skip to content" }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("main")).toBeFocused();
+});
+
+test("unknown pages and detail slugs use the custom 404", async ({ page }) => {
+  for (const path of [
+    "/not-a-page/",
+    "/programs/missing/",
+    "/locations/missing/",
+  ]) {
+    expect((await page.goto(path))?.status()).toBe(404);
+    await expect(
+      page.getByRole("heading", { name: "404", exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "Back to home" }),
+    ).toHaveAttribute("href", "/");
+  }
 });

@@ -1,0 +1,40 @@
+:root {
+  --motion-duration-control: 150ms;
+  --motion-duration-overlay: 200ms;
+  --motion-easing: ease-out;
+}
+
+@layer components {
+  .motion-control {
+    transition-property: background-color, border-color, color, opacity;
+    transition-duration: var(--motion-duration-control);
+    transition-timing-function: var(--motion-easing);
+    transition-delay: 0s;
+  }
+
+  .motion-overlay {
+    transition-property: opacity, transform, translate, scale;
+    transition-duration: var(--motion-duration-overlay);
+    transition-timing-function: var(--motion-easing);
+    transition-delay: 0s;
+  }
+}
+
+/* Keep placement transforms intact; make state changes immediate. */
+@media (prefers-reduced-motion: reduce) {
+  .motion-control,
+  .motion-overlay {
+    transition-property: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}

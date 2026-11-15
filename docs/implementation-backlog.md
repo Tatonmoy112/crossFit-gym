@@ -1,21 +1,32 @@
 # Implementation status and remaining backlog
 
-| Workstream                                                                 | Status                                                                   |
-| -------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| Input audit and complete route inventory                                   | Completed for available local inputs                                     |
-| Static architecture and typed contracts                                    | Implemented                                                              |
-| Project toolchain and pnpm lockfile                                        | Implemented                                                              |
-| Adapted design system and global shell                                     | Implemented; visual approval pending                                     |
-| All 24 page templates                                                      | Implemented                                                              |
-| Catalog, schedule, gallery, membership, FAQ and form interactions          | Implemented; tested with isolated fixtures where business data is absent |
-| Metadata, robots, sitemap and local-business/article schema infrastructure | Implemented; indexing intentionally disabled                             |
-| Unit/component, export, E2E and accessibility test infrastructure          | Implemented; executed results recorded in qa-checklist                   |
-| CI and local static serving                                                | Implemented                                                              |
-| Actual client content and photography                                      | Blocked by missing supplied inputs                                       |
-| Exact Figma/mobile visual comparison                                       | Blocked by missing editable design and connected preview browser         |
-| Real submission/subscription/comments                                      | Unconfigured external-service dependencies                               |
-| Legal approval, domain, hosting and public release                         | Blocked by missing inputs                                                |
+The previous UI was removed on 2026-11-15. The canonical step-by-step component and page backlog is [component-rebuild-plan.md](component-rebuild-plan.md).
 
-Next content work: approve branding -> supply real programs/coaches -> memberships/classes -> About/Facilities copy and imagery -> journal -> affiliate offering -> vacancies -> products -> legal text -> real provider selection -> full content/visual QA -> production hosting.
+[F01 design foundations](specs/F01-design-foundations.md) defines selected design values, acceptance cases and requirement/test/task mapping. [F01-A local fonts](specs/F01-A-local-fonts.md) and [F01-B semantic colors](specs/F01-B-semantic-colors.md) are verified for their documented scopes, with tests written first; [F01-C typography](specs/F01-C-typography.md) also delivers the type hierarchy and readable measure; [F01-D layout/motion](specs/F01-D-layout-motion.md) adds section-owned containers, geometry and motion roles. These foundation contracts have scoped automated evidence; consumer adaptation and manual review remain open. [U01-A Button](specs/U01-A-button.md) adapts native action controls; [U01-B NavigationLink](specs/U01-B-navigation-link.md) adds standalone navigation and integrates only About's recovery link, with component/browser acceptance coverage. Other stock consumers remain unreviewed. Use the test-first iteration workflow in the rebuild plan and stop after each selected small task.
 
-No later page category was dropped to simplify delivery. Empty catalogs and layout previews must be replaced with approved records before representing the project as a content-complete public release.
+| Workstream                                                          | Current status                                                                                           |
+| ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Complete 24-template route inventory                                | Preserved as neutral shells; final page UI awaits rebuild                                                |
+| Next.js App Router, strict TypeScript and static export             | Preserved                                                                                                |
+| Typed content, Zod contracts and relationship validation            | Preserved                                                                                                |
+| Pinned pnpm and committed lockfile                                  | Preserved                                                                                                |
+| Stock UI library and theme foundations                              | Full official shadcn set installed: 63 UI modules and supporting files; brand review/integration pending |
+| Gym-specific design and shared patterns                             | Button, NavigationLink and mounted root header/footer/brand/navigation available                         |
+| Global header, navigation and footer                                | Header, footer and conditional preview notice mounted                                                    |
+| Home and interior page sections                                     | ContentState/Container integrated in Programs; other sections await rebuild                              |
+| Catalog, detail, schedule, gallery, FAQ and membership interactions | Removed; rebuild not started                                                                             |
+| Inquiry UI                                                          | Removed; validation/transport contract preserved; no provider connected                                  |
+| Metadata, canonical, robots and sitemap infrastructure              | Preserved; indexing intentionally disabled                                                               |
+| Article and location JSON-LD                                        | Removed with old presentation; restore during respective page rebuilds                                   |
+| Unit, browser, accessibility, export and CI infrastructure          | Retained/adapted for shells; see qa-checklist.md for actual execution                                    |
+| Approved business content and original photography                  | Incomplete; see content-readiness.json                                                                   |
+| Visual approval and full manual accessibility review                | Outstanding; previous visual/performance results do not validate a replacement UI                        |
+| Legal, domain, hosting and public release                           | Outstanding                                                                                              |
+
+[L01-A BrandLink](specs/L01-A-brand-link.md) selects a small derivative of the clean supplied mark and composes the Home identity link with tests first. L01-B mounts it in the root header; PNG originals, route definitions and business content are unchanged. Cover/social-image references and favicon configuration remain separate tasks.
+
+[L02-A desktop navigation](specs/L02-A-desktop-navigation.md) implements the supplied groups and current-page/section behavior with tests first. L01-B mounts it in the root header.
+
+[L02-B mobile navigation](specs/L02-B-mobile-navigation.md) implements the isolated modal menu with tests first. Both navigation variants share precise current matching. [L01-B header assembly](specs/L01-B-header-assembly.md) mounts BrandLink and both variants in the real layout with App Router/history, responsive focus and static-fallback coverage. [L03-A footer](specs/L03-A-footer.md) mounts validated supplied contacts/social links, all existing navigation and legal availability after main. [S01-A preview notice](specs/S01-A-preview-notice.md) adds the conditional server-rendered message while preserving separate indexing guards. [S01-B content states](specs/S01-B-content-states.md) introduces the shared static presentation and integrates only the empty Programs catalog; populated catalogs and other page sections remain pending. [S03-A Container](specs/S03-A-container.md) wraps Programs content inside its full-width section using existing width/gutter rules. Other consumers remain unchanged. [S03-B SectionHeading](specs/S03-B-section-heading.md) supplies the shared H2/description group inside ContentState; other consumers remain separate. Next task: **S02-A breadcrumbs only**, with its own specification and tests first. Keep page sections separate. Do not drop pages, fabricate content or mark placeholder pages complete.
+
+The [13-item pre-Home checklist](pre-home-checklist.md) tracks this sequence explicitly, without treating it as the complete website scope.

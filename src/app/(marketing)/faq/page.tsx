@@ -1,34 +1,20 @@
-import {
-  InquiryCTA,
-  PageHero,
-  SectionHeading,
-} from "@/components/shared/sections";
-import { FAQExplorer } from "@/features/faq/faq-explorer";
-import { faqs } from "@/content/faqs";
+import Link from "next/link";
 import { metadata as makeMetadata } from "@/lib/seo";
+
 export const metadata = makeMetadata(
   "Frequently asked questions",
   "Find Crossfit Gym contact and visiting information, and ask about current training and membership options.",
   "/faq",
 );
-export default function FAQPage() {
+
+export default function Page() {
   return (
-    <>
-      <PageHero
-        eyebrow="A LITTLE CLARITY"
-        title={"GOOD\nQUESTIONS."}
-        description="Find the information we have, or get in touch for a conversation with the gym."
-      />
-      <section className="section">
-        <div className="container">
-          <SectionHeading
-            eyebrow="FREQUENTLY ASKED"
-            title="LET’S CLEAR THINGS UP."
-          />
-          <FAQExplorer items={faqs} />
-        </div>
-      </section>
-      <InquiryCTA />
-    </>
+    <section className="layout-container py-8">
+      <h1>Frequently asked questions</h1>
+      <p>Page components are awaiting rebuild.</p>
+      <Link prefetch={false} href="/">
+        Back to home
+      </Link>
+    </section>
   );
 }

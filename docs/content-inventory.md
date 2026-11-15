@@ -1,33 +1,37 @@
 # Content inventory and update guide
 
-| Content                        | Module                      | Supplied status                                                                 |
-| ------------------------------ | --------------------------- | ------------------------------------------------------------------------------- |
-| Business identity and contacts | `src/content/site.ts`       | Name, address, phone, Instagram handle and Facebook URL supplied                |
-| Navigation and UI headings     | `navigation.ts`, `pages.ts` | Implemented; copy is UI guidance, not unsupported business claims               |
-| About                          | `about.ts`                  | Story, mission, values and community absent                                     |
-| Programs                       | `programs.ts`               | No approved records                                                             |
-| Coaches                        | `coaches.ts`                | No approved records or portraits                                                |
-| Facilities                     | `facilities.ts`             | Detailed descriptions and inventory absent                                      |
-| Schedule                       | `schedule.ts`               | No approved class records                                                       |
-| Membership                     | `memberships.ts`            | No approved prices or plans                                                     |
-| Gallery                        | `gallery.ts`                | One supplied cover photograph                                                   |
-| FAQs                           | `faqs.ts`                   | Four answers grounded in supplied contacts or explicit information availability |
-| Articles                       | `articles.ts`               | No approved articles/authors/dates                                              |
-| Affiliates                     | `affiliates.ts`             | No confirmed offering or provider links                                         |
-| Locations                      | `locations.ts`              | One actual Uttara record; opening hours absent                                  |
-| Vacancies                      | `vacancies.ts`              | No approved vacancies/application destinations                                  |
-| Supplements                    | `supplements.ts`            | No approved catalog, ingredients, variants, prices or destinations              |
-| Testimonials                   | `testimonials.ts`           | No approved quotations                                                          |
-| Legal                          | `legal.ts`                  | Both documents awaiting approved text                                           |
+UI reset (2026-11-15): the content modules below are retained, but their previous components have been removed. Pages currently render neutral rebuild shells. Reconnect approved content as each component is rebuilt; use `component-rebuild-plan.md` for the page/component mapping.
 
-Catalog records share validated slugs, titles, summaries, categories, structured sections and optional image/author/date/destination/variant fields. Relationships use program, coach, location and membership identifiers. Section bodies are rendered as React text; no raw client HTML is injected.
+| Content                         | Module                      | Supplied status                                                                                                                                           |
+| ------------------------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Business identity and contacts  | `src/content/site.ts`       | Name, address, phone, Instagram handle and Facebook URL supplied                                                                                          |
+| Brand identity link             | `brand.ts`                  | Validated existing name, Home destination and optimized supplied-logo metadata; component mounted in the header and reused in the footer                  |
+| Navigation and UI headings      | `navigation.ts`, `pages.ts` | Navigation is validated against fixed routes/approved locations and uniqueness rules; original values remain unchanged. UI copy makes no business claims. |
+| Footer channels and legal links | `footer.ts`                 | Zod-validated derivation of existing address/phone/social/directions and registered legal routes; hours and legal approval remain explicit.               |
+| Preview notice copy             | `preview-notice.ts`         | Zod-validated UI title/body; visibility reads existing site.preview without changing indexing or approval.                                                |
+| Content-state copy              | `content-states.ts`         | Zod-validated Programs explanation of absent approved website inputs; visibility follows the real catalog, with no preview substitute.                    |
+| About                           | `about.ts`                  | Story, mission, values and community absent                                                                                                               |
+| Programs                        | `programs.ts`               | No approved records                                                                                                                                       |
+| Coaches                         | `coaches.ts`                | No approved records or portraits                                                                                                                          |
+| Facilities                      | `facilities.ts`             | Detailed descriptions and inventory absent                                                                                                                |
+| Schedule                        | `schedule.ts`               | No approved class records                                                                                                                                 |
+| Membership                      | `memberships.ts`            | No approved prices or plans                                                                                                                               |
+| Gallery                         | `gallery.ts`                | One supplied cover photograph                                                                                                                             |
+| FAQs                            | `faqs.ts`                   | Four answers grounded in supplied contacts or explicit information availability                                                                           |
+| Articles                        | `articles.ts`               | No approved articles/authors/dates                                                                                                                        |
+| Affiliates                      | `affiliates.ts`             | No confirmed offering or provider links                                                                                                                   |
+| Locations                       | `locations.ts`              | One actual Uttara record; opening hours absent                                                                                                            |
+| Vacancies                       | `vacancies.ts`              | No approved vacancies/application destinations                                                                                                            |
+| Supplements                     | `supplements.ts`            | No approved catalog, ingredients, variants, prices or destinations                                                                                        |
+| Testimonials                    | `testimonials.ts`           | No approved quotations                                                                                                                                    |
+| Legal                           | `legal.ts`                  | Both documents awaiting approved text                                                                                                                     |
+
+Catalog records share validated slugs, titles, summaries, categories, structured sections and optional image/author/date/destination/variant fields. Relationships use program, coach, location and membership identifiers. When rebuilding sections, render bodies as React text; do not inject raw client HTML.
 
 For a real catalog record, add approved content with `status: "approved"` to the relevant content module. Supply all applicable sections and asset metadata. Rebuild to produce its static detail page; no API call or CMS is required. Do not insert `content-preview` into real collections.
 
 Class records require valid 24-hour time, positive duration and existing program/coach/location identifiers. Membership labels are supplied display text; never calculate discounts without approved pricing rules.
 
-Affiliates, About, Facilities and Legal have explicit content modules. Legal text is rendered from structured sections only when its `approved` flag is true.
+Affiliates, About, Facilities and Legal have explicit content modules. The rebuilt legal component must render legal text from structured sections only when its `approved` flag is true.
 
-The supplied cover is 851x315 and contains both photography and branding. CSS crops its photographic portion in hero/facility slots without modifying the source. Full-resolution original photos and a larger logo are still required for a polished public release. No reference screenshot is served as a page image.
-
-The original 309,438-byte PNG is preserved. Its 851x315 WebP derivative is 42,324 bytes and is used for displayed gym photographs and gallery content.
+The retained gallery/gym-image content refers to the previous 851x315 cover photograph. No photo components are currently rendered. Separate asset changes removed `public/images/brand/cover.png` and `cover.webp` and added `hero_section.png` during the reset; those edits were left untouched. Reconcile content/SEO image paths, dimensions and alt text against the selected replacement before implementing image sections or publishing social previews. See `qa-checklist.md` for the current limitation. Reference screenshots must remain visual inputs rather than page images.

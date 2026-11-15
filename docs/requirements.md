@@ -8,7 +8,9 @@ Frontend-only: static export; no CMS, database, authentication, internal booking
 
 Source of truth: the supplied blueprint, local business information and provided brand assets. Twelve PNGs are layout references, not proof that their depicted businesses, services or people belong to this gym. An editable Figma file and complete client content were not available.
 
-Implemented: all page routes and detail templates, reusable shell, typed local content, validation, URL-driven discovery controls, schedule and membership controls, gallery dialog, FAQ search, form validation, static SEO infrastructure, tests, CI and export server.
+Current reset state (2026-11-15): all 24 routes remain as neutral shells. The old shared shell, page sections and interactive components were removed for a complete UI rebuild. Typed local content, validation, static route generation, metadata/robots/sitemap infrastructure, inquiry transport contract, CI and export serving remain. See docs/component-rebuild-plan.md for the complete reconstruction backlog.
+
+The full official shadcn/ui foundation was subsequently installed at the owner's request: 63 local UI modules, supporting files and neutral theme tokens. Gym-specific design and page integration remain pending. See docs/component-inventory.md and docs/shadcn-setup.md.
 
 Content incomplete: most business records, detailed copy, original page photography, opening hours, legal text and external-service providers. Do not silently remove their page templates; maintain their content-needed states and readiness entries.
 

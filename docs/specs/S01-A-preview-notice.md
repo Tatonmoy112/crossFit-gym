@@ -1,0 +1,51 @@
+# S01-A: Preview notice
+
+Status: **verified for the documented scope**. Date: 2026-11-16. Item 5 in the [13-item pre-Home checklist](../pre-home-checklist.md).
+
+## Purpose and boundary
+
+Make the existing website preview state clear on every page without implying content or release approval. This iteration adds only the global preview notice. Content states, page introductions, page-specific structural-preview explanations, providers, dependency updates and SEO changes remain separate. Preserve all 24 templates, original inputs/assets and existing business content.
+
+No approved notice reference is available. Use the established yellow surface with dark text, subject to visual approval. Keep the existing page rebuild messages and footer hour/legal availability notes; they describe different conditions.
+
+## Contract
+
+- `PreviewNotice()` is a Server Component with no public props, local state or service. Read `site.preview` directly: true renders one notice; false renders nothing, including when other indexing prerequisites remain unmet. It is a build-time configuration, not a URL/cookie/browser preference or a per-page catalog status.
+- Mount before page children inside the existing focusable `main#main`, below Header and above the page H1. Keep Header, Footer and skip-link order/behavior. This includes the custom 404 and five content-preview detail URLs; do not add public fixture routes.
+- Use the installed shadcn Alert composition with an explicit **note** role and accessible name “Website preview”. Override its default assertive alert semantics for this static message. No live region, auto-focus, heading ownership, link, close button, dismissal state or announcement animation is needed. The page keeps its own H1.
+- Put UI copy in a small Zod-validated `src/content/preview-notice.ts` record: title “Website preview”; body “This website is being rebuilt. Content is incomplete and awaiting approval.” Do not mention technical indexing details in visitor copy or invent business content.
+- The full-width yellow surface owns a constrained inner container with existing 72rem maximum and 16/24/32px responsive gutters. Use 16px outer vertical padding and 16px alert padding, 8px control radius and semantic charcoal boundary/dark text. Use Inter 600 for title and Inter 400 16px/1.6 for body; retain a 65ch readable measure. No fixed height, truncation or clipped overflow.
+- Verify 320/375/768/1280/1920px and doubled/spaced text. Text remains readable with blocked fonts, reduced motion, forced colors and JavaScript disabled. The notice creates no additional Tab stop. Header modal isolation hides it with main and restores it on dismissal.
+- Preserve `indexable = !site.preview && explicit indexable environment flag && HTTPS site URL`. Keep robots/sitemap/metadata code and all approval flags unchanged. Site preview always disables indexing; structural preview records remain noindex and outside sitemap even under an otherwise indexable fixture configuration. Removing the notice never constitutes release approval.
+
+## Acceptance matrix and ordered tasks
+
+| ID      | Scenario / expected result                                                                                                                             | Verification                                                                               | Task and dependencies                                          |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------- |
+| S01-A01 | True preview flag exposes one correctly named static note with approved UI copy; false renders nothing even while indexing is disabled.                | Component tests with isolated configuration fixtures.                                      | 1. Tests first; 2. content and server composition.             |
+| S01-A02 | Notice precedes page content inside main on every route/404; no new heading, live region or Tab stop; skip link and modal isolation work.              | Component semantics; real-page keyboard/modal/all-route checks.                            | 1. Browser cases; 3. root integration, depends on 2.           |
+| S01-A03 | Yellow/dark semantics, typography, boundary and responsive measure remain readable at each width/text preference and under font failure/no JavaScript. | Computed styles/geometry, axe, media/failure checks and specimen inspection.               | 1. Cases; 4. presentation, depends on 3.                       |
+| S01-A04 | Indexing, structural-record isolation, routes, metadata and original inputs remain unchanged. Hidden notice does not enable indexing.                  | Configuration/SEO regression matrix, existing export/browser checks, protected-file audit. | 5. Complete README workflow and documentation, depends on 2–4. |
+
+Workflow: **specified → tests written → implemented → verified**. Record missing-behavior failures before implementation. Update only affected shell assertions, retaining page notices, H1, header/footer, recovery and indexing coverage. End this iteration before S01-B content states.
+
+## Evidence and limitations
+
+Before implementation, two of three component cases failed for the missing note; the hidden-state case and five existing indexing-policy cases passed. All four initial desktop browser cases failed for the absent message. Subsequent browser styling checks caught stock Alert utilities taking precedence over the foundation radius and title weight. The scoped composition now references the existing radius token in a mergeable arbitrary value and explicitly applies semibold. Stock Alert source remains unchanged; no behavior assertion or accessibility rule was weakened.
+
+| Cases | Recorded evidence                                                                                                                                                                                                                                                                                                                                                                                |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| A01   | Three component cases pass: one correctly named static note, no controls/headings/live region, preview off returns no markup and subsequent fixture renders reflect the flag. False visibility is tested with an explicitly disabled indexability environment fixture; it does not infer public readiness.                                                                                       |
+| A02   | Actual Home, structural detail and 404 pages show one notice before H1 inside main. All-route regression requires the named note while retaining page rebuild text, header/footer/main/H1/recovery assertions. First-Tab skip, main focus and onward Tab to the original recovery link pass; opening/dismissing the header modal hides/restores the note.                                        |
+| A03   | Yellow/dark paints, semantic border, 8px radius, Inter 600 title and Inter 400 16px/1.6 body pass. Reflow/readable bounds pass at 320/375/768/1280/1920px with normal and doubled/spaced text. Full-page WCAG-tag axe, blocked fonts, reduced motion, forced colors and JavaScript-disabled navigation pass. Inspected desktop and mobile specimens.                                             |
+| A04   | Five configuration fixtures cover preview on, blocked indexing flag, HTTP origin and otherwise indexable HTTPS. Metadata/robots/sitemap retain their original behavior; structural preview metadata remains noindex and sitemap excludes preview records even in the otherwise indexable fixture. The real export remains in preview mode; no public-mode export or release approval is claimed. |
+
+Typecheck, ESLint, 95 unit/component tests across fifteen files, build, matching Chromium check and export audit passed. Build normalized 24 Windows segment files; export audit checked 26 HTML files. The final full-browser/formatting result is recorded at closure. After the scoped styling corrections, both pointer/touch styling cases passed in 6.1 seconds.
+
+A before/after audit captures 162 existing package/config/route/component/content/style/schema/library/hook/input/asset files. Only root layout changes to insert PreviewNotice; the other 161 remain byte-identical. The new shared component and UI-copy record are additions. UI/layout module counts remain 64/seven; shared now contains one rebuilt module. No provider, custom client state, public fixture route or package was introduced. Site flags, approval records, SEO/configuration files, original inputs/assets and lockfiles remain unchanged.
+
+Completed **specified → tests written → implemented → verified**. Complete README workflow passed: typecheck, ESLint, final formatting, **95 unit/component tests across fifteen files**, production build, export audit, matching Chromium check and full browser suite. Browser result: **111 passed, one intentional viewport-specific skip in 4.5 minutes**, including all eight notice cases and existing regressions. The build normalized 24 Windows segment files; export audit verified 26 HTML files.
+
+Manual screen-reader/browser-zoom review, other engines and missing-reference visual approval remain open. Public launch still requires content/legal/hosting approval and full QA.
+
+Next: **S01-B content states only**, with a focused specification and tests first.

@@ -1,0 +1,47 @@
+@theme {
+  --spacing: 0.25rem;
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+  --radius-overlay: 1rem;
+}
+
+:root {
+  --content-max: 72rem;
+  --content-gutter: 1rem;
+  --touch-target-min: 2.75rem;
+}
+
+/* Match the existing Tailwind md/lg breakpoints without redefining them. */
+@media (width >= 48rem) {
+  :root {
+    --content-gutter: 1.5rem;
+  }
+}
+
+@media (width >= 64rem) {
+  :root {
+    --content-gutter: 2rem;
+  }
+}
+
+@layer components {
+  .layout-container {
+    inline-size: min(
+      var(--content-max),
+      calc(100% - 2 * var(--content-gutter))
+    );
+    min-inline-size: 0;
+    margin-inline: auto;
+  }
+
+  .touch-target {
+    min-inline-size: var(--touch-target-min);
+    min-block-size: var(--touch-target-min);
+    max-inline-size: 100%;
+  }
+}
+
+/* The full-width skip destination needs its indicator inside the viewport. */
+#main:focus-visible {
+  outline-offset: -3px;
+}

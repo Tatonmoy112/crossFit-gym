@@ -1,4 +1,6 @@
-export const navigation = [
+import { navigationSchema } from "@/schemas/navigation";
+
+export const navigation = navigationSchema.parse([
   {
     label: "About",
     links: [
@@ -34,4 +36,4 @@ export const navigation = [
       { label: "Contact", href: "/contact" },
     ],
   },
-] as const;
+]);

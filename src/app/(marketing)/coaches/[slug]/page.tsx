@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { catalogs, findItem } from "@/lib/content/catalogs";
-import { DetailPage } from "@/features/catalog/detail-page";
 import { metadata as makeMetadata } from "@/lib/seo";
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -33,5 +33,23 @@ export default async function Page({
   const { slug } = await params;
   const item = findItem("coaches", slug);
   if (!item) notFound();
-  return <DetailPage kind="coaches" item={item} />;
+  return (
+    <section className="layout-container py-8">
+      <h1>{item.title}</h1>
+      <p>Page components are awaiting rebuild.</p>
+      {item.status === "preview" && (
+        <p>
+          Structure preview only. No approved business record is represented.
+        </p>
+      )}
+      <p>
+        <Link prefetch={false} href="/coaches/">
+          Back to coaches
+        </Link>
+      </p>
+      <Link prefetch={false} href="/">
+        Back to home
+      </Link>
+    </section>
+  );
 }

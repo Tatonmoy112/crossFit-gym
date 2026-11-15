@@ -1,5 +1,9 @@
 # Decisions and assumptions
 
+Current library decision (2026-11-15): at the owner's request, install the entire official shadcn/ui component set before composing gym-specific sections. The latest CLI resolved to 4.23.0; use Radix Nova, neutral tokens, Lucide and the existing pnpm toolchain. Stock components are installed as local source and remain unmounted in the route shells. Brand review, page composition and feature integration still follow component-rebuild-plan.md.
+
+The original decisions below record the initial implementation. On 2026-11-15 the owner requested a complete UI reset. The global shell, primitives, shared sections, page feature components, UI helpers and old styling were removed. All 24 routes and the content/tooling foundation remain. Visual decisions and implemented-UI descriptions below are historical; the current source of truth is docs/component-rebuild-plan.md.
+
 1. Preserve all 24 planned templates. Missing records prevent content completion, not template implementation.
 2. Use Next.js 16.4.6, React 19.3.1 and Tailwind 4.3.5, verified against registry metadata during implementation. The committed pnpm lockfile fixes the resolved dependency tree.
 3. Pin pnpm 10.34.9 because pnpm 12's executable was blocked by Device Guard. No npm lockfile or global package-manager installation is introduced.

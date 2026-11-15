@@ -1,20 +1,13 @@
-import { ButtonLink } from "@/components/ui/button";
+import Link from "next/link";
 export default function NotFound() {
   return (
-    <section className="error-page">
-      <p className="eyebrow">A STEP OFF THE PATH</p>
+    <section className="layout-container py-8">
       <h1>404</h1>
-      <h2>LET’S GET YOU BACK.</h2>
-      <p>That page isn’t here. Find your next step with Crossfit Gym.</p>
-      <div className="button-row">
-        <ButtonLink href="/">Back to home</ButtonLink>
-        <ButtonLink href="/programs" variant="outline">
-          Explore programs
-        </ButtonLink>
-        <ButtonLink href="/contact" variant="text">
-          Contact us
-        </ButtonLink>
-      </div>
+      <p>This page could not be found.</p>
+      <p>Page components are awaiting rebuild.</p>
+      <Link prefetch={false} href="/">
+        Back to home
+      </Link>
     </section>
   );
 }

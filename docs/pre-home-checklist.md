@@ -1,0 +1,23 @@
+# Thirteen planned items before Home sections
+
+This tracks the agreed sequence after BrandLink, one focused iteration at a time. It counts roadmap items, not the complete 24-template rebuild or release approval. Each item needs its own specification, requirement/test mapping, tests first, implementation and recorded verification. A later specification may split an item into smaller tasks without silently dropping its scope.
+
+Updated 2026-11-16: **8 of 13 items verified for their documented scopes; 5 remain**. Next: S02-A breadcrumbs. Manual review limits remain explicit in each specification.
+
+| #   | Item                                                          | Status                     | Completion boundary                                                                                                                              |
+| --- | ------------------------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | [L02-A desktop navigation](specs/L02-A-desktop-navigation.md) | Verified; mounted by L01-B | Existing groups/destinations, current page/section, disclosures, keyboard/focus and desktop visibility.                                          |
+| 2   | [L02-B mobile navigation](specs/L02-B-mobile-navigation.md)   | Verified; mounted by L01-B | Mobile controls, open/closed navigation, current state, dismissal and focus behavior.                                                            |
+| 3   | [L01-B header assembly](specs/L01-B-header-assembly.md)       | Verified                   | Compose BrandLink and both navigation variants in the real layout; verify shared responsive and routing behavior.                                |
+| 4   | [L03-A footer](specs/L03-A-footer.md)                         | Verified                   | Supplied navigation/contact/social content, responsive structure and accessible links.                                                           |
+| 5   | [S01-A preview notice](specs/S01-A-preview-notice.md)         | Verified                   | Clear preview status tied to the existing preview configuration; preserve indexing safeguards.                                                   |
+| 6   | [S01-B content states](specs/S01-B-content-states.md)         | Verified                   | Static missing/empty/unavailable presentation; first consumer is the real empty Programs catalog. Other integrations follow their section tasks. |
+| 7   | [S03-A container](specs/S03-A-container.md)                   | Verified                   | Reusable constrained native div consuming verified CSS width/gutters; first integrated in Programs.                                              |
+| 8   | [S03-B section heading](specs/S03-B-section-heading.md)       | Verified                   | Semantic H2/optional description, caller ID and start/center alignment; first reused in ContentState.                                            |
+| 9   | S02-A breadcrumbs                                             | Pending                    | Actual hierarchy, meaningful destinations and current-page semantics.                                                                            |
+| 10  | S02-B page introduction                                       | Pending                    | Composable approved heading/intro content and page-level heading ownership.                                                                      |
+| 11  | S05-A image presentation                                      | Pending                    | Approved local assets, accurate metadata/alt text, responsive geometry and relevant stale references.                                            |
+| 12  | S06-A location/contact details                                | Pending                    | Actual Uttara/contact information; missing opening hours remain explicit.                                                                        |
+| 13  | S04-A inquiry CTA                                             | Pending                    | Honest contact destination/action; no claim of service delivery.                                                                                 |
+
+After these items, specify the Home hero as the next page-section task. Header/footer mounting happens within their assembly tasks; isolated components do not mark pages complete. Manual visual/accessibility limitations remain explicit in each task's QA record. See [rebuild plan](component-rebuild-plan.md) for all 24 templates and [QA checklist](qa-checklist.md) for actual evidence.

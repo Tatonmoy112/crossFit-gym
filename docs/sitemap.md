@@ -1,6 +1,8 @@
 # Complete sitemap
 
-| Template          | Route                  | State                                                                                           |
+Current state (2026-11-15): all 24 templates are preserved as neutral route shells while the previous UI is rebuilt. The last column below records the required rebuild scope, not currently implemented interactions. See [component-rebuild-plan.md](component-rebuild-plan.md) for each page's ordered sections, components and content sources.
+
+| Template          | Route                  | Rebuild scope                                                                                   |
 | ----------------- | ---------------------- | ----------------------------------------------------------------------------------------------- |
 | Home              | `/`                    | Supplied business details and navigation; populated highlights render from approved collections |
 | About             | `/about/`              | Story/mission/values/community content slots; unapproved copy clearly identified                |
@@ -31,4 +33,4 @@ There are 23 named route templates plus the custom 404. Detail routes expand wit
 
 `content-preview` slugs are isolated layout previews, not catalog records. The only actual detail record currently supplied is `/locations/uttara/`.
 
-Main navigation groups About, Training, Explore and Visit us. The footer exposes all destinations. No account, cart, checkout, internal payment or booking route exists.
+The planned navigation groups remain About, Training, Explore and Visit us. Header and footer components have been removed for rebuilding. A temporary homepage inventory exposes all current page outputs. No account, cart, checkout, internal payment or booking route exists.

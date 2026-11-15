@@ -1,11 +1,13 @@
 import { defineConfig } from "@playwright/test";
+const port = process.env.PLAYWRIGHT_PORT || "3100";
+const baseURL = `http://127.0.0.1:${port}`;
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: true,
   workers: 2,
   timeout: 60000,
   use: {
-    baseURL: "http://127.0.0.1:3000",
+    baseURL,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },
@@ -22,7 +24,8 @@ export default defineConfig({
   ],
   webServer: {
     command: "node scripts/serve.mjs",
-    url: "http://127.0.0.1:3000",
-    reuseExistingServer: !process.env.CI,
+    url: baseURL,
+    env: { PORT: port },
+    reuseExistingServer: false,
   },
 });

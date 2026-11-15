@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
-import { SiteHeader } from "@/components/layout/header";
-import { SiteFooter } from "@/components/layout/footer";
 import { siteUrl } from "@/config/site";
-import { site } from "@/content/site";
+import { barlowCondensed, inter } from "@/styles/fonts";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { PreviewNotice } from "@/components/shared/preview-notice";
 import "@/styles/globals.css";
 export const metadata: Metadata = {
   metadataBase: siteUrl,
@@ -14,28 +14,22 @@ export const metadata: Metadata = {
   description:
     "Crossfit Gym in Sector 12, Uttara, Dhaka. Find the gym, explore the website and contact the team.",
   robots: { index: false, follow: false },
-  icons: { icon: "/images/brand/logo.jpg" },
 };
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${barlowCondensed.variable}`}>
       <body>
-        <a href="#main" className="skip-link">
+        <a href="#main" className="skip-link touch-target z-[60]">
           Skip to content
         </a>
-        {site.preview && (
-          <div className="preview-bar">
-            WEBSITE PREVIEW{" "}
-            <span>Some business information is awaiting approval.</span>
-          </div>
-        )}
-        <Suspense>
-          <SiteHeader />
-        </Suspense>
-        <main id="main">{children}</main>
-        <SiteFooter />
+        <Header />
+        <main id="main" tabIndex={-1}>
+          <PreviewNotice />
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
