@@ -1,14 +1,13 @@
-import * as React from "react";
 import Link from "next/link";
+import { cn } from "cn";
 import {
   Breadcrumb,
-  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { cn } from "@/lib/utils";
 
 export interface BreadcrumbEntry {
   label: string;
@@ -20,32 +19,46 @@ export interface BreadcrumbsProps {
   className?: string;
 }
 
+function Entry({ item, current }: { item: BreadcrumbEntry; current: boolean }) {
+  if (current) {
+    // Current page is plain text; drop the stock disabled-link semantics.
+    return (
+      <BreadcrumbPage role={undefined} aria-disabled={undefined}>
+        {item.label}
+      </BreadcrumbPage>
+    );
+  }
+  if (!item.href) return <span>{item.label}</span>;
+  return (
+    <BreadcrumbLink asChild className="text-muted-foreground">
+      <Link href={item.href} prefetch={false}>
+        {item.label}
+      </Link>
+    </BreadcrumbLink>
+  );
+}
+
 export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
-  if (!items || items.length === 0) return null;
+  if (items.length === 0) return null;
 
   return (
-    <Breadcrumb className={cn("py-2", className)} aria-label="Breadcrumb">
+    <Breadcrumb aria-label="Breadcrumb" className={cn("py-2", className)}>
       <BreadcrumbList>
-        {items.map((item, index) => {
-          const isLast = index === items.length - 1;
-          const isInteractive = Boolean(item.href) && !isLast;
-
-          return (
-            <React.Fragment key={`${item.label}-${index}`}>
-              <BreadcrumbItem>
-                {isInteractive ? (
-                  <BreadcrumbLink asChild>
-                    <Link href={item.href!}>{item.label}</Link>
-                  </BreadcrumbLink>
-                ) : (
-                  <BreadcrumbPage role={undefined} aria-disabled={undefined}>
-                    {item.label}
-                  </BreadcrumbPage>
-                )}
-              </BreadcrumbItem>
-              {!isLast && <BreadcrumbSeparator />}
-            </React.Fragment>
+        {items.flatMap((item, index) => {
+          const current = index === items.length - 1;
+          // "anywhere" (unlike the list's break-word) shrinks flex min-content,
+          // so unbroken labels wrap instead of overflowing narrow viewports.
+          const entry = (
+            <BreadcrumbItem
+              key={`item-${index}`}
+              className="min-w-0 [overflow-wrap:anywhere]"
+            >
+              <Entry item={item} current={current} />
+            </BreadcrumbItem>
           );
+          return current
+            ? [entry]
+            : [entry, <BreadcrumbSeparator key={`separator-${index}`} />];
         })}
       </BreadcrumbList>
     </Breadcrumb>

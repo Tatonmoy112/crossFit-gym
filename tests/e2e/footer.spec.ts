@@ -224,7 +224,11 @@ test("L03-A01/A02/A03: footer content and navigation work without JavaScript", a
     ).toBeVisible();
     await footer(page).getByRole("link", { name: "Crossfit Gym home" }).click();
     await expect(
-      page.getByRole("heading", { level: 1, name: "Home", exact: true }),
+      page.getByRole("heading", {
+        level: 1,
+        name: "One step closer. Crossfit Gym",
+        exact: true,
+      }),
     ).toBeVisible();
   } finally {
     await context.close();

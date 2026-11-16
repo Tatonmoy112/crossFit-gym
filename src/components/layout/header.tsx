@@ -4,7 +4,7 @@ import { MobileNavigation } from "@/components/layout/mobile-navigation";
 
 function Header() {
   return (
-    <header data-surface="charcoal" className="border-b border-input">
+    <header data-surface="charcoal">
       <div className="layout-container flex flex-wrap items-center justify-between gap-4 py-4">
         <BrandLink className="min-w-0 max-w-full" />
         <DesktopNavigation className="min-w-0" />

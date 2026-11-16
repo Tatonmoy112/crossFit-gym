@@ -3,7 +3,6 @@ import { siteUrl } from "@/config/site";
 import { barlowCondensed, inter } from "@/styles/fonts";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { PreviewNotice } from "@/components/shared/preview-notice";
 import "@/styles/globals.css";
 export const metadata: Metadata = {
   metadataBase: siteUrl,
@@ -26,7 +25,6 @@ export default function RootLayout({
         </a>
         <Header />
         <main id="main" tabIndex={-1}>
-          <PreviewNotice />
           {children}
         </main>
         <Footer />

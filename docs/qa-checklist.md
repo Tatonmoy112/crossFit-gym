@@ -1,5 +1,83 @@
 # QA checklist
 
+## Shared 1550px container maximum: 2026-11-16
+
+- [x] Owner requested a 1550px maximum for section content. Changed the shared `--content-max` token to `1550px`; all existing `Container` and direct `layout-container` consumers inherit it, including header, footer, Home and interior shells. Full-width backgrounds and existing 16/24/32px responsive gutters remain unchanged. The maximum stays 1550 CSS pixels when root text is enlarged; gutters still scale with text size.
+- [x] Tests first: updated existing geometry assertions and added a real Home check covering all seven section/header/footer containers, narrow screens, 1440/1550px, the 1614px cap threshold and wide 1920/2560px screens. The baseline failed at 1152px instead of 1550px before the token changed. Existing enlarged-text/constrained-parent and no-JavaScript cases also require the new cap.
+- [x] The first wider-layout check passed, while the existing hero separation assertion caught the vertical decoration overlapping the heading at 1280px (decoration right edge 40px, heading left edge 32px). Moved only that decoration from 24px to 8px from the viewport edge; the strengthened assertion requires at least 8px separation at six desktop widths. Section widths and text measures are not narrowed to accommodate it.
+
+- [x] Strict typecheck after build, lint, formatting, **217 unit/component tests across 30 files**, production build, matching Chromium availability and the 26-HTML export audit pass. All 24 templates remain. Desktop checks confirm the new maximum and responsive/enlarged-text/constrained-parent/no-JavaScript geometry; the hero clearance regression passes. Inspected the 1920px Home screenshot with consistently aligned section edges.
+
+- [x] Complete browser workflow passes in 4.0 minutes: **206 passed, two intentional viewport/hover skips**. All ten Container cases and both strengthened hero cases pass. Desktop/phone Home screenshots were inspected and copied to `.cache/qa/container-1550/`. Mobile gutters, page overflow, no-JavaScript content, navigation/focus, image/font fallbacks and indexing regressions pass. Content, dependencies and supplied originals are unchanged by this width update. Manual screen-reader, actual browser zoom, other-engine and owner visual approval remain open.
+
+## Why choose us copy refinement: 2026-11-16
+
+- [x] Rewrote all three headings and descriptions by owner request: Certified Training Team, Your Gym in Uttara and Start With a Conversation. Copy retains the owner-supplied trainer count and derives the address/phone from existing site content. No new credentials, programs, services or outcome claims were added.
+- [x] Updated the existing exact-copy checks first; the content test failed against the former headings before implementation. Retained validation, escaping, empty-content and placement coverage. Updated real-page browser assertions to the revised text, including enlarged-text/fallback and no-JavaScript checks.
+- [x] Changes are confined to content, corresponding assertions and documentation. Card/section components, styles, imagery, routes and counter labels are unchanged. See the current copy contract in [H01-D](specs/H01-D-home-why-choose-us.md).
+
+- [x] Typecheck, lint, formatting, **217 unit/component tests**, production build and 26-HTML export audit pass. All **eight focused desktop/mobile browser cases** pass, including six-width reflow, enlarged/spaced text with failed fonts/images, axe, keyboard behavior and no JavaScript. Inspected updated desktop/phone screenshots: longer descriptions remain readable within the existing cards. Full site browser regressions were not repeated for this content-only edit; the preceding removal run remains recorded below. Manual screen-reader and owner visual approval remain open.
+
+## Features and services removal: 2026-11-16
+
+- [x] Removed this section by owner request. Home again composes Hero → Counter → Why choose us → Story → temporary page inventory, without an extra wrapper or reserved gap.
+- [x] Tests first: updated Home placement/absence checks failed twice against the existing section before removal. Removed the dedicated wheel/card/preview modules, sample content, unused schemas, fixtures, feature-only tests and withdrawn specification. Updated README, inventory and rebuild trackers. No dependency or lockfile change was required.
+- [x] Regression coverage requires the section and its wheel/card markup to be absent, including when preview is disabled and with JavaScript disabled. Counter/story placement checks require Why choose us and Story to be adjacent. Existing counter values, three Why choose us cards, shared components and original image remain intact.
+
+- [x] Strict typecheck, lint, formatting, **217 unit/component tests across 30 files**, production build, matching Chromium availability and export audit (26 HTML files) pass. Exported Home contains no removed section, card/wheel markup or sample service copy. All 191 protected files match the snapshot from before the section was introduced, including Home composition/content/schema, shared UI, original assets, package declarations and lockfile.
+
+- [x] Full README browser workflow passes in 4.3 minutes: **204 passed, two intentional viewport/hover skips**. Desktop/mobile absence, exact placement and no-JavaScript checks pass. Inspected the unchanged Why choose us screenshots at desktop and phone sizes. No public-launch approval is implied; existing content and visual-review limitations remain.
+
+## H01-D Why choose us: 2026-11-16
+
+- [x] Followed the agreed sequence: card/component/schema tests first, actual ReUI Card 8 installation/adaptation, isolated card verification, section/placement tests, then three-card composition. Initial missing-component/schema failures and missing-section/order failures are recorded in the [specification](specs/H01-D-home-why-choose-us.md).
+- [x] Added `@reui` registry configuration and used the requested latest shadcn command through pnpm 10.34.9 (CLI 4.23.0). Dry-run exposed the proposed shared Card overwrite; declined it during installation. Adapted/moved the downloaded pattern into WhyChooseUsCard; no Picsum image, demo route, new dependency, provider or stock module overwrite remains.
+- [x] Verified one reusable Certified Trainers card before reusing it for Uttara Location and Talk to Our Team. Content uses the owner-supplied count and original address/phone/photo. One H2 section now sits directly after the counter and before the unchanged story. Updated counter/story regression assertions to verify the new complete order. Empty items render nothing.
+- [x] First isolated geometry cases failed at 14px corners instead of 12px; a local radius override resolved the stock-class conflict. All 16 focused browser cases pass: eight isolated card plus eight integrated section cases, with contrast/axe, hover/reduced motion, image/font failure, long/enlarged text, six widths and actual no-JavaScript navigation. Inspected desktop/mobile section screenshots.
+- [x] Typecheck, lint, formatting, **217 unit/component tests across 30 files**, production build and export audit (26 HTML files) pass. All 24 templates remain. A before/after audit of 189 existing files finds only the four planned configuration/route/content/schema changes; 185 files, including original assets, stock modules and package/lockfiles, remain unchanged. No public-launch approval is implied.
+- [x] Final complete browser workflow passes in 3.4 minutes: **204 passed, two intentional viewport/hover skips**. All sixteen new card/section cases and the revised counter/story placements pass. Final formatting and protected-file checks pass. Desktop/phone review images are retained under `.cache/qa/why-choose-us/`, alongside the original registry source and before/after audit. Completed only H01-D.
+
+Manual screen-reader, actual browser zoom, other engines and final owner visual approval remain open. Missing story/catalog/legal content and release gates remain unresolved; no business claim beyond supplied inputs was invented. Stop after this section.
+
+## Fourth counter value: 2026-11-16
+
+- [x] Added the owner-requested **30+ Certified Trainers** as the fourth item in the existing Home preview counter, recording owner-supplied provenance. Existing example values, disclosures, approved content, preview indexing safeguards and the four-item schema are preserved. No component, dependency or layout change was needed.
+- [x] Tests first: updated data/placement assertions and added the exact value/label/source case; three assertions failed before the record existed. All **194 unit/component tests across 27 files** now pass. Lint, typecheck, production build and 26-HTML export audit pass.
+- [x] Six focused browser cases pass for four values, exact trainer label, final digit widths, no-JavaScript display and enlarged/spaced text at five widths with blocked fonts and reduced motion. Inspected desktop/mobile screenshots: four columns on desktop, four stacked values and three horizontal dividers on phones.
+- [x] Complete README workflow passes, including formatting, matching Chromium availability and the full browser suite: **188 passed, two intentional viewport/hover skips in 3.2 minutes**. All 18 counter cases pass. All 24 templates remain available; packages, lockfile, original assets and indexing safeguards are unchanged. Four-item review screenshots are retained under `.cache/qa/trainer-counter/`.
+
+## Header/hero divider removal: 2026-11-16
+
+- [x] Extended the existing Home join browser case before implementation: require a 0px header bottom border, no header shadow and no hero top border at 320/375/768/1280/1920px. It failed against the old export with 1px instead of 0px.
+- [x] Removed only the shared header's `border-b border-input` classes. Charcoal surface, layout, navigation, keyboard focus and hero content are unchanged. All 193 unit/component tests across 27 files pass; production compilation and static generation pass.
+- [x] Complete README workflow passes: strict typecheck, lint, formatting, 193 unit/component tests, production build, 26-HTML export audit, matching Chromium check and **188 browser tests passed with two intentional skips in 3.0 minutes**. Both pointer/touch join cases pass at all five widths. Inspected desktop/mobile screenshots: the light separator is gone; navigation and keyboard-focus regressions pass. Copies are retained under `.cache/qa/header-hero-join/`. Dependencies, pnpm lockfile, original assets/content, all 24 templates and indexing guards are unchanged by this refinement.
+
+## Website preview banner removal: 2026-11-16
+
+Removed only the global Website preview section by owner request. The header now leads directly into page content; on Home that is the hero. Counter example-data disclosure, missing-content states and preview indexing/release protections remain active.
+
+- [x] Tests first: two new root-layout cases failed for the existing banner/extra wrapper while the landmark/metadata case and five indexing-policy cases passed. The new browser removal case also failed against the old export because it found one Website preview note instead of zero.
+- [x] Removed the PreviewNotice import/mount, unused component and dedicated UI-copy record. Retired its three component cases and four browser cases, replacing them with three root-layout cases and four removal/geometry/navigation/no-JavaScript cases. Updated the all-route and content-state assertions to require absence of this specific banner rather than removing preview protections.
+- [x] Typecheck, lint, formatting, all 193 unit/component tests across 27 files, production build, matching Chromium availability and export audit (26 HTML files) pass. All 24 templates remain available. Dependencies, pnpm-lock.yaml, site.preview, noindex/robots/sitemap code, supplied originals and release approvals are unchanged.
+- [x] Full browser workflow passed in 2.9 minutes: **188 passed, two intentional viewport/hover skips**, including all eight new banner-removal browser cases. Inspected desktop/mobile screenshots: no yellow Website preview section or empty gap remains between the header and hero. Copies are retained under `.cache/qa/banner-removal/`. All-route, structural-preview/404, skip-link/modal, counter, metadata, robots/sitemap and no-JavaScript regressions pass.
+
+The [S01-A specification](specs/S01-A-preview-notice.md) is marked retired and retains its historical evidence. Current inventory, README and rebuild tracker describe the banner removal. Removing a UI banner does not approve publication or supply missing business/legal content. Manual screen-reader and final owner visual approval remain open.
+
+## H01-C Home counter: 2026-11-16
+
+Completed the counter placement and edge-case fixes only. See [H01-C specification](specs/H01-C-home-stats.md).
+
+- [x] The pre-existing 27 scoped tests passed. Added seven lifecycle/placement cases before production edits: four failed (live reduced motion, missing matchMedia, stale changed-prop text and absent preview counter) and three passed. Added one/four-item and content-separation coverage afterward; all 37 focused unit/component cases are included in the passing full unit suite.
+- [x] Owner requested random values. Home now places a clearly labeled example counter directly after the hero and before the story, using 1,200+ example clients, 4.8 example rating and 5+ example years. Examples live in a separate Zod-validated preview record, with an explicit visible notice. They never populate approved statistics, disappear when site.preview is false, and yield to supplied approved data. Preview noindex and unresolved statistics-readiness requirements remain intact.
+- [x] CountUp keeps final server/screen-reader text, counts once after intersection, cancels frames/observer/listener on cleanup, responds to live reduced motion and safely handles absent browser APIs and changed values. Animation updates only the decorative span. No new library or public specimen route was added.
+- [x] Screenshot review exposed a proportional-reserve/tabular-overlay mismatch: the added browser assertion failed at x=55.89 versus the reserved x=64. Both spans now inherit tabular numerals. Inspected corrected 1280px and 375px counter screenshots, including the V-cut join, dividers, aligned values/labels and readable example notice.
+- [x] The initial scoped Chromium run passed all 26 counter/story cases after resolving a Windows sandbox teardown hang by terminating only the verified test-owned static server. Subsequent runs used subprocess-cleanup permission. No development server was stopped.
+- [x] First full-browser run: 186 passed, two intentional skips, two failures in the enlarged-text counter check. Diagnosis showed measurements during the foundation's 0.01ms responsive transition guard (temporary zero-width flex items). Waiting two animation frames after resize retains the same overflow assertion; both targeted pointer/touch cases then passed. No foundation styles or accessibility rules were changed.
+- [x] Pinned pnpm 10.34.9; typecheck, lint, formatting, 193 unit/component tests across 27 files, production build and export audit pass. Export audit checks 26 HTML files; all 24 templates remain. Matching Chromium availability check passed. Dependency declarations, pnpm-lock.yaml, original inputs/references/assets, real business catalogs and release approvals were not changed by this task.
+- [x] Final complete Chromium rerun passed in 3.0 minutes: **188 passed, two intentional viewport/hover skips**, with no failures. All 18 counter cases and eight story cases pass in this full run. Corrected desktop/mobile screenshots are retained under test-results and copied to `.cache/qa/home-stats/`, outside supplied assets/public routes.
+
+Manual screen-reader, actual browser-zoom, other-engine and final owner visual approval remain open. Example figures cannot establish real business claims or public-launch readiness. Other Home sections remain separate tasks.
+
 ## Git checkpoint: 2026-11-16
 
 The owner requested pushing the current code. The workspace also contains newer build/export script edits and a Breadcrumbs draft with four component cases and an initial Programs integration. These are included in the checkpoint review; the draft does not complete S02-A or change the eight-of-thirteen verified count. Fresh checks for this exact workspace passed. Its new Home breadcrumb initially broke the older one-link assertion; the updated tests explicitly require both breadcrumb Home and Back to home, including their keyboard order.
@@ -10,6 +88,169 @@ Original reference/brand-image deletions already present locally are excluded fr
 
 - [x] Fresh README workflow passed: typecheck, ESLint, final formatting, **113 unit/component tests across nineteen files**, webpack production build, export audit (26 HTML files), matching Chromium check and **135 browser tests passed, one intentional viewport-specific skip in 4.6 minutes**. The ten directly affected content-state/breadcrumb component cases also pass.
 - [x] Reviewed 231 staged files and prepared the source checkpoint for origin/main without force. Only the fifteen pre-existing original-reference/brand-image deletions remain unstaged. Code whitespace checks exclude the two byte-preserved upstream Barlow license copies, which contain original trailing spaces. The actual push result is reported after remote verification.
+
+## H01-A2 Home hero design: 2026-11-16
+
+This restyles only the Home hero, to the reference screenshot the owner supplied (an Invictus Fitness hero).
+
+**Owner decisions**
+
+- Headline: the approved tagline plus the name, two-tone.
+- Actions: Call and Get directions only.
+
+**What was and wasn't reused from the reference**
+
+- Reused: the layout and style.
+- Mapped: green to the brand yellow, and the serif display font to Barlow Condensed.
+- Not copied: the reference's slogan and its "since 2009" claim.
+- Out of scope: the transparent header, which would be a header task.
+
+**Results**
+
+- [x] **Tests first.** Wrote the [H01-A2 spec](specs/H01-A2-home-hero-design.md), then updated the unit, component and browser tests and recorded failures before changing code:
+  - 5 unit/component cases failed;
+  - every new hero browser case failed (21 in total including the regressions; one hover case is skipped on touch);
+  - the 4 updated header/footer H1-name regressions failed.
+- [x] **Shared Button fix.** Hover/active selectors changed from `enabled:` to `not-disabled:` (10 hover, 13 active). Native buttons match identically, and `Button asChild` links now get the variant states. The Button, desktop and mobile navigation, header and footer specs still pass. This completes the slotted-anchor item left open in U01-A.
+- [x] **Hero.**
+  - Uppercase `type-display` H1 with a white tagline span and a yellow name span. Its accessible name is "One step closer. Crossfit Gym".
+  - Location line with a map pin.
+  - Two `Button asChild` + `NavigationLink` actions: default variant with an arrow, outline variant with a pin.
+  - Uppercase, 14px, bold, 0.12em tracking and a 2px radius.
+  - 70% charcoal scrim plus a decorative left gradient; `aria-hidden` vertical name at 1280px and wider; V-cut `clip-path`; at least `min(88svh, 56rem)` tall.
+  - Content now has two actions.
+- [x] **Fixed during implementation.** These were caught by tests or review:
+  - The 2px radius lost to the `rounded-control` token, which `cn` does not merge, so it now uses a `data-[slot=button]` selector.
+  - `w-full` would have removed the Container gutters.
+  - The vertical name overlapped the H1 at 1024px, so it is now shown at 1280px and wider, with a no-overlap assertion.
+- [x] **Focused results.** All 17 applicable hero cases pass. They cover:
+  - Barlow uppercase start-aligned H1, aligned to the container;
+  - white and yellow spans, with worst-case scrim contrast of at least 4.5:1 for white and at least 3:1 for the large yellow name;
+  - full-page axe;
+  - button typography, radius, fills, borders, icons and targets of at least 44px;
+  - primary hover `rgb(230, 184, 0)` and outline hover fill on desktop;
+  - vertical name at 1280px but not at 1024px or 375px;
+  - polygon clip-path and minimum height, with the H1 inside the first viewport;
+  - image size and that it covers the hero;
+  - reflow at 320–1920px;
+  - keyboard Call → Directions with the 3px ring;
+  - blocked image, forced colors and reduced motion;
+  - no JavaScript.
+- [x] **Full README workflow passed:** typecheck, ESLint, Prettier check, **156 unit/component tests across 23 files**, production build, export audit of 26 HTML files, and **170 browser tests passed with 2 intentional skips**.
+- [x] **Visual check.** Compared screenshots at 1920×946, 1280×900 and 375×812, plus a crop of the V-cut edge, with the reference. Saved outside the repository.
+- [ ] **Still open.** Owner approval of the visual design; a transparent header over the hero (a separate header task if wanted); screen-reader review and other browser engines.
+
+## H01-B Home story: 2026-11-16
+
+Completed only [H01-B Home story](specs/H01-B-home-story.md), the second Home section.
+
+- [x] **Inputs reviewed.** `about.story` is `null`, and "Homepage and About copy" is not approved. The `Screenshot_1.png` reference ("Why Invictus?") relies on unverified medical-spa and nutrition claims, so none of its copy, claims or icons were reused.
+- [x] **Tests first.** Wrote the spec, then 11 unit cases, 5 component cases and a browser spec. Before implementation, the unit cases failed (no `aboutSchema` or `homeStory`), the component file could not resolve `home-story`, and the browser spec failed at collection for the same reason.
+- [x] **Content.**
+  - Added `aboutSchema` (nonblank text or `null`; nonblank values) and parsed `about.ts` through it, keeping the same shape. Nothing else imported `about`.
+  - Added `homeStorySchema` and `homeStory`, derived from `about.story`. The UI copy is the heading "Our story" (matching the navigation label), the link "More about Crossfit Gym" → `/about`, and the missing-state title and description.
+- [x] **Component.**
+  - Added the Server Component `src/features/home/home-story.tsx`. A missing story shows ContentState, and the region is named by that state's H2.
+  - A supplied story shows a SectionHeading H2, paragraphs split on blank lines (empty fragments dropped, text escaped, 65ch measure) and a NavigationLink to About.
+  - ContentState gained an optional pass-through `headingId`.
+- [x] **Home integration.** Mounted directly after the hero and before the temporary inventory.
+- [x] **Focused results.** All new cases pass.
+  - **Real Home:** order hero → story → inventory; the missing-state text; no links; Barlow H2 in charcoal; one H1; no animation; full-page WCAG 2.x A/AA axe; reflow at 320/375/768/1280/1920px; present without JavaScript.
+  - **Fixture injected into another page:** the 65ch measure, long unbroken words reflowing at every width, axe, the 3px focus ring on the About link, and Enter opening About.
+  - The existing ContentState, SectionHeading, journeys and accessibility specs still pass.
+- [x] **Full README workflow passed:** typecheck, ESLint and Prettier check; **157 unit/component tests across 23 files**; production build; export audit of 26 HTML files; **167 browser tests passed with one intentional skip**.
+- [x] **Visual check.** Reviewed the section at 1280px and 375px in screenshots saved outside the repository. It is the same bordered missing-content panel used on Programs, centered and wrapping cleanly.
+- [ ] **Still open.** Real story text needs owner approval, and the section needs manual design review.
+
+Next task: **H01-C Home discovery links only**: links to the real Programs, Coaches and Membership routes, without claims about their content.
+
+## H01-A Home hero: 2026-11-16
+
+Completed only [H01-A Home hero](specs/H01-A-home-hero.md), the first Home section. The owner chose to start Home before pre-Home items 10–13. Those items remain pending.
+
+**Owner decisions**
+
+- Use `public/images/brand/hero_section.png`; the owner confirmed it represents the gym.
+- Tagline-only copy, from approved `site.ts` values. No "Welcome to" eyebrow and no unapproved marketing line.
+- No email action, because no email address was supplied.
+
+**Results**
+
+- [x] **Tests first.** Wrote the spec, then:
+  - 14 content/schema unit cases;
+  - 7 component cases;
+  - 7 browser cases per project.
+    All failed before implementation: the content and feature modules were missing, and there was no hero region.
+- [x] **Updated regressions.** The header and footer no-JavaScript cases now expect the Home H1 to be "Crossfit Gym". Both failed against the old "Home" H1, while the other 12 header/footer cases still passed.
+- [x] **Corrected one test before running it.** It treated the preview note's wrapper as Home's first section. The note's `role="note"` sits inside a wrapper `div`, so the test now skips the main child that contains the note.
+- [x] **Content and image:**
+  - Added `homeHeroSchema` (nonblank text; 1–3 actions limited to `tel:+`, `https:` or root-relative destinations) and `src/content/home.ts`, derived from `site.ts`.
+  - Encoded `home-hero.webp` at the same 1672×941 size with sharp 0.35.5 (WebP quality 80, effort 6): 229,154 bytes, down from 2,545,135.
+  - Recorded provenance, hashes and the owner's approval in `home-hero-source.json`. The original PNG is unchanged.
+- [x] **Component.** Added the Server Component `src/features/home/home-hero.tsx`:
+  - a charcoal section named by its H1, using `type-display`;
+  - a cover image loaded eagerly with high priority;
+  - an `aria-hidden` 80% charcoal overlay;
+  - the tagline, and the location with a hidden map-pin icon;
+  - a list of NavigationLinks: a yellow primary Call action, then outlined Directions and Contact actions.
+- [x] **Home integration.** Mounted the hero on Home first after the preview note. Removed the old "Home" H1 and kept the temporary inventory and rebuild note below. Metadata is unchanged.
+- [x] **Focused results.** All 35 new cases pass. They cover:
+  - display typography;
+  - worst-case contrast of at least 4.5:1 over white and black pixels;
+  - full-page WCAG 2.x A/AA axe;
+  - targets of at least 44px and exact destinations (Contact exports as `/contact/`);
+  - the image's natural size and that it covers the hero;
+  - the H1 inside the first viewport at 375×812 and 1280×900;
+  - reflow of a long title at 320/375/768/1280/1920px;
+  - keyboard order Call → Directions → Contact with the 3px focus ring;
+  - a blocked image (charcoal fallback), reduced motion, forced colors and no JavaScript.
+- [x] **Unrelated flake fixed.** The full browser run exposed an existing flaky foundation test, F01-D04, on `/about/`. Chromium reported the 200ms transition as 199.99997ms, which failed 3 of 20 targeted runs. The measured duration is now rounded to whole milliseconds without changing what the test checks, and the spec then passed 100 of 100 repeated runs.
+- [x] **Full README workflow passed** with pnpm 10.34.9:
+  - typecheck, ESLint and Prettier check;
+  - **144 unit/component tests across 21 files**;
+  - production build;
+  - export audit of 26 HTML files;
+  - **159 browser tests passed with one intentional skip** (160 total).
+- [x] **Visual check.** Reviewed 1280×900 and 375×812 screenshots, saved outside the repository. The text is crisp over the scrim, the primary action stands out, and on mobile the actions wrap to two rows with everything above the fold.
+- [ ] **Still open.** Manual design approval against the reference, screen-reader review, other browser engines and the remaining Home sections.
+
+Next task: **H01-B Home introductory story only**. `about.story` is not supplied yet, so it starts from the explicit missing-content state.
+
+## S02-A breadcrumbs: 2026-11-16
+
+Completed only [S02-A Breadcrumbs](specs/S02-A-breadcrumbs.md), item 9 of the [13-item pre-Home sequence](pre-home-checklist.md). **Nine verified, four remain.** S02-B page introduction is next.
+
+- [x] **Spec first.** Tightened the specification with current/ancestor/empty/single-item rules and a new S02-A06 edge-case row.
+- [x] **Component tests before code.** Expanded the draft's four component cases to fourteen; one failed against the draft. The draft marked a non-last unlinked ancestor `aria-current="page"`, which created two current pages.
+- [x] **Corrected test assumption: trailing slashes.** The trailing-slash href cases initially failed because Next Link outside a build drops trailing slashes. The repo's routes and navigation content use the unslashed form (`/programs`), and the export adds the slash. The tests and spec now use the `routes.ts` form; this was a test correction, not a component change.
+- [x] **Browser tests before code.** Added ten Playwright cases across desktop and mobile. Six failed against the draft:
+  - Ancestor links inherited the global `a { color: var(--link) }` (`rgb(23,23,23)`) instead of the muted foreground.
+  - Long unbroken labels overflowed at 320px.
+  - A case-sensitive title assertion was a test error. It was corrected to match the real title "Training programs | Crossfit Gym".
+- [x] **Implementation, three-way per item:**
+  - linked ancestor: Next Link with `prefetch={false}` and a muted underlined link;
+  - unlinked ancestor: plain text with no `aria-current`;
+  - last item: current page, with the stock `role="link"`/`aria-disabled` removed. An `href` on the last item is ignored.
+- [x] **Edge cases.** Empty trails render nothing, separators are keyed by position, and the `cn` import is aligned with other modules.
+- [x] **Overflow fix.** The stock list's `wrap-break-word` overrode the inherited `overflow-wrap: anywhere`, so each `<li>` now sets `[overflow-wrap:anywhere]` and `min-w-0`. The reflow assertion now reports the offending nodes. SVG icons are exempt only from the overflow-style check, because the browser's default stylesheet gives every `<svg>` `overflow:hidden`; their bounds are still checked.
+- [x] **Focused results.** All 14 component cases and all 10 focused browser cases pass. They cover:
+  - Inter 14px, the muted underlined ancestor links and the foreground current page;
+  - two hidden chevrons, with exactly three list items in the accessibility tree;
+  - fixture-scoped WCAG 2.x A/AA axe;
+  - reflow at 320/375/768/1280px;
+  - the skip link followed by Tab reaching Home with the 3px global focus outline, and Enter navigating Home;
+  - Programs integration: one H1 after the breadcrumb inside Container, ContentState, title and noindex preserved;
+  - the no-JavaScript breadcrumb at 320px.
+- [x] **Full README workflow passed** with pnpm 10.34.9 via `npm.cmd exec`:
+  - typecheck, ESLint and Prettier check;
+  - **123 unit/component tests across nineteen files**;
+  - production build and export audit;
+  - **145 browser tests passed with one intentional desktop-only journey skip on mobile** (146 total, 2.4 minutes).
+- [x] **Environment.** Matching Chromium 1255 was installed into the git-ignored `.cache/ms-playwright`, because the user-level cache only held build 1243.
+- [x] **Files changed.** The breadcrumb component, its tests and this documentation only. The Programs page source is unchanged (it already supplied `Home > Programs`). Dependencies, lockfile, content, tokens, stock UI modules, `info/` and `figma/` are untouched.
+- [ ] **Still open.** Manual visual approval, screen-reader review, other browser engines and other interior-page integrations remain open. Other pages receive breadcrumbs in their own section tasks.
+
+Next task: **S02-B page introduction only**, with its own specification and tests first.
 
 ## S03-B section heading: 2026-11-16
 

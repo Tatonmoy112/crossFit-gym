@@ -100,3 +100,94 @@ export const inquirySchema = z.object({
     .refine(Boolean, "Please acknowledge the privacy notice."),
 });
 export type Inquiry = z.infer<typeof inquirySchema>;
+
+const heroText = z.string().trim().min(1);
+const heroDestination = z
+  .string()
+  .refine(
+    (href) =>
+      /^tel:\+[1-9]\d{7,14}$/.test(href) ||
+      /^https:\/\/[^\s/]+/.test(href) ||
+      /^\/(?!\/)\S*$/.test(href),
+    "Use a tel:+ number, an https URL or a root-relative path.",
+  );
+export const homeHeroSchema = z.object({
+  title: heroText,
+  tagline: heroText,
+  location: heroText,
+  image: imageSchema,
+  actions: z
+    .array(z.object({ label: heroText, href: heroDestination }))
+    .min(1)
+    .max(3),
+});
+export type HomeHeroContent = z.infer<typeof homeHeroSchema>;
+
+const optionalCopy = z.string().trim().min(1).nullable();
+export const aboutSchema = z.object({
+  story: optionalCopy,
+  mission: optionalCopy,
+  values: z.array(z.string().trim().min(1)),
+  community: optionalCopy,
+});
+export type AboutContent = z.infer<typeof aboutSchema>;
+
+export const homeStorySchema = z.object({
+  heading: heroText,
+  story: optionalCopy,
+  link: z.object({
+    label: heroText,
+    href: z.string().regex(/^\/(?!\/)\S*$/),
+  }),
+  missing: z.object({ title: heroText, description: heroText }),
+});
+export type HomeStoryContent = z.infer<typeof homeStorySchema>;
+
+export const homeStatSchema = z.object({
+  value: z.number().finite().nonnegative(),
+  decimals: z.union([z.literal(0), z.literal(1), z.literal(2)]),
+  suffix: z.string(),
+  suffixLabel: heroText.optional(),
+  label: heroText,
+  // Provenance for every published number; required, never displayed.
+  source: heroText,
+});
+export const homeStatsSchema = z.object({
+  heading: heroText,
+  items: z.array(homeStatSchema).max(4),
+});
+export type HomeStatsContent = z.infer<typeof homeStatsSchema>;
+
+export const whyChooseUsItemSchema = z.object({
+  id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  title: heroText,
+  description: heroText,
+  image: imageSchema.extend({
+    src: z
+      .string()
+      .regex(/^\/images\/[a-zA-Z0-9/_-]+\.(?:webp|png|jpe?g|avif)$/),
+    alt: heroText,
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+  }),
+  imagePosition: z.enum(["left", "center", "right"]),
+  source: heroText,
+});
+export type WhyChooseUsItem = z.infer<typeof whyChooseUsItemSchema>;
+
+export const homeWhyChooseUsSchema = z.object({
+  heading: heroText,
+  items: z.array(whyChooseUsItemSchema).superRefine((items, context) => {
+    const ids = new Set<string>();
+    items.forEach((item, index) => {
+      if (ids.has(item.id))
+        context.addIssue({
+          code: "custom",
+          message: "Duplicate Why choose us card ID",
+          path: [index, "id"],
+        });
+      ids.add(item.id);
+    });
+  }),
+});
+export type HomeWhyChooseUsContent = z.infer<typeof homeWhyChooseUsSchema>;

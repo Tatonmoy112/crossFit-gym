@@ -81,7 +81,7 @@ test("complete route inventory loads without overflow", async ({ page }) => {
     await expect(page.getByRole("main")).toHaveCount(1);
     await expect(
       page.getByRole("note", { name: "Website preview" }),
-    ).toHaveCount(1);
+    ).toHaveCount(0);
     await expect(
       page.getByRole("banner").getByRole("link", { name: "Crossfit Gym home" }),
     ).toHaveAttribute("href", "/");

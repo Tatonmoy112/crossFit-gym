@@ -136,7 +136,7 @@ test("F01-D01: full-width sections constrain only their inner content", async ({
   for (const width of widths) {
     await page.setViewportSize({ width, height: 900 });
     const gutter = width >= 1024 ? 32 : width >= 768 ? 24 : 16;
-    const expectedWidth = Math.min(1152, width - gutter * 2);
+    const expectedWidth = Math.min(1550, width - gutter * 2);
     const geometry = await page.evaluate(() => {
       const rect = (node: Element) => {
         const box = node.getBoundingClientRect();
@@ -338,7 +338,8 @@ test("F01-D04: motion roles drive actual transitions without delaying state or f
     getComputedStyle(overlay).getPropertyValue("opacity");
     const transitions = (node: Element) =>
       node.getAnimations().map((animation) => ({
-        duration: animation.effect!.getTiming().duration,
+        // Chromium can report 200ms as 199.9999…; compare whole milliseconds.
+        duration: Math.round(Number(animation.effect!.getTiming().duration)),
         property: (animation as CSSTransition).transitionProperty,
       }));
     return {
@@ -369,7 +370,8 @@ test("F01-D04: motion roles drive actual transitions without delaying state or f
     return {
       status: document.querySelector("#motion-status")!.textContent,
       transitions: overlay.getAnimations().map((animation) => ({
-        duration: animation.effect!.getTiming().duration,
+        // Chromium can report 200ms as 199.9999…; compare whole milliseconds.
+        duration: Math.round(Number(animation.effect!.getTiming().duration)),
         property: (animation as CSSTransition).transitionProperty,
       })),
     };

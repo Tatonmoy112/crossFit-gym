@@ -7,7 +7,9 @@ import { loadServerComponent } from "./helpers/server-component";
 const { Container } = loadServerComponent<
   typeof import("@/components/shared/container")
 >("src/components/shared/container.tsx");
-const widths = [320, 375, 767, 768, 1023, 1024, 1280, 1920];
+const widths = [
+  320, 375, 767, 768, 1023, 1024, 1280, 1550, 1613, 1614, 1615, 1920, 2560,
+];
 async function ready(page: Page) {
   await page.goto("/programs/");
   await page.waitForLoadState("networkidle");
@@ -22,7 +24,7 @@ async function geometry(
   const outer = (await parent.boundingBox())!;
   const box = (await inner.boundingBox())!;
   const gutter = (width >= 1024 ? 32 : width >= 768 ? 24 : 16) * scale;
-  const expected = Math.min(1152 * scale, outer.width - 2 * gutter);
+  const expected = Math.min(1550, outer.width - 2 * gutter);
   expect(box.width).toBeCloseTo(expected, 1);
   expect(box.x).toBeCloseTo(outer.x + (outer.width - expected) / 2, 1);
   await expect(inner).toHaveCSS("padding-inline-start", "0px");
@@ -36,6 +38,41 @@ async function geometry(
     ),
   ).toBe(true);
 }
+
+test("shared section containers cap at 1550px and keep responsive gutters throughout Home", async ({
+  page,
+}, info) => {
+  await page.goto("/");
+  await page.waitForLoadState("networkidle");
+  await page.evaluate(() => document.fonts.ready);
+  const containers = page.locator(".layout-container");
+  expect(await containers.count()).toBeGreaterThanOrEqual(7);
+  for (const width of [
+    1920, 320, 375, 768, 1280, 1440, 1550, 1613, 1614, 1615, 2560,
+  ]) {
+    await page.setViewportSize({ width, height: 1000 });
+    const gutter = width >= 1024 ? 32 : width >= 768 ? 24 : 16;
+    const expected = Math.min(1550, width - gutter * 2);
+    for (const container of await containers.all()) {
+      const box = (await container.boundingBox())!;
+      expect(box.width).toBeCloseTo(expected, 1);
+      expect(box.x).toBeCloseTo((width - expected) / 2, 1);
+    }
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth + 1,
+      ),
+    ).toBe(true);
+  }
+  await page.setViewportSize({
+    width: info.project.name === "mobile" ? 375 : 1920,
+    height: 1000,
+  });
+  await page.screenshot({
+    path: info.outputPath("home-container-width.png"),
+    fullPage: true,
+  });
+});
 
 test("S03-A02/A04: Programs owns a full-width section with one constrained inner wrapper", async ({
   page,
@@ -211,6 +248,8 @@ test("S03-A04: server-rendered wrapper preserves content and navigation without 
     await page.goto("/programs/");
     const section = page.locator("main > section");
     await geometry(section.locator(":scope > div"), section, 375);
+    await page.setViewportSize({ width: 1920, height: 1000 });
+    await geometry(section.locator(":scope > div"), section, 1920);
     await expect(
       page.getByRole("heading", { level: 1, name: "Programs", exact: true }),
     ).toBeVisible();

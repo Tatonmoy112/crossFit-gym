@@ -1,6 +1,9 @@
-export const about = {
-  story: null as string | null,
-  mission: null as string | null,
-  values: [] as string[],
-  community: null as string | null,
-};
+import { aboutSchema } from "@/schemas/content";
+
+// No story, mission, values or community text has been supplied yet.
+export const about = aboutSchema.parse({
+  story: null,
+  mission: null,
+  values: [],
+  community: null,
+});

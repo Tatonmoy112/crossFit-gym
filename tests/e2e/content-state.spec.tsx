@@ -58,7 +58,7 @@ test("S01-B02/B04/B05: real catalog state, keyboard recovery and preview protect
     page.getByText("Page components are awaiting rebuild.", { exact: true }),
   ).toHaveCount(0);
   await expect(page.getByRole("note", { name: "Website preview" })).toHaveCount(
-    1,
+    0,
   );
   await expect(page.locator('meta[name="robots"]').first()).toHaveAttribute(
     "content",
@@ -117,7 +117,7 @@ test("S01-B03: actual composition has semantic styling and reflows on all surfac
     await fits(page);
     const box = (await root.boundingBox())!;
     expect(box.width).toBe(
-      Math.min(1152, width - (width >= 1024 ? 64 : width >= 768 ? 48 : 32)),
+      Math.min(1550, width - (width >= 1024 ? 64 : width >= 768 ? 48 : 32)),
     );
   }
   await root.screenshot({ path: info.outputPath("content-state-desktop.png") });

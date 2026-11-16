@@ -9,16 +9,16 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "border-primary-border bg-primary text-primary-foreground enabled:hover:bg-primary-hover enabled:active:bg-primary-active",
+          "border-primary-border bg-primary text-primary-foreground not-disabled:hover:bg-primary-hover not-disabled:active:bg-primary-active",
         outline:
-          "border-input bg-background text-foreground enabled:hover:bg-accent enabled:hover:text-accent-foreground enabled:active:border-selected-border enabled:active:bg-selected enabled:active:text-selected-foreground",
+          "border-input bg-background text-foreground not-disabled:hover:bg-accent not-disabled:hover:text-accent-foreground not-disabled:active:border-selected-border not-disabled:active:bg-selected not-disabled:active:text-selected-foreground",
         secondary:
-          "border-input bg-secondary text-secondary-foreground enabled:hover:bg-accent enabled:hover:text-foreground enabled:active:border-selected-border enabled:active:bg-selected enabled:active:text-selected-foreground",
+          "border-input bg-secondary text-secondary-foreground not-disabled:hover:bg-accent not-disabled:hover:text-foreground not-disabled:active:border-selected-border not-disabled:active:bg-selected not-disabled:active:text-selected-foreground",
         ghost:
-          "bg-transparent text-foreground enabled:hover:bg-accent enabled:hover:text-accent-foreground enabled:active:border-selected-border enabled:active:bg-selected enabled:active:text-selected-foreground",
+          "bg-transparent text-foreground not-disabled:hover:bg-accent not-disabled:hover:text-accent-foreground not-disabled:active:border-selected-border not-disabled:active:bg-selected not-disabled:active:text-selected-foreground",
         destructive:
-          "border-destructive bg-background text-destructive enabled:hover:bg-muted enabled:active:bg-selected",
-        link: "bg-transparent text-link underline underline-offset-4 enabled:hover:bg-accent enabled:hover:text-accent-foreground enabled:active:bg-selected enabled:active:text-selected-foreground",
+          "border-destructive bg-background text-destructive not-disabled:hover:bg-muted not-disabled:active:bg-selected",
+        link: "bg-transparent text-link underline underline-offset-4 not-disabled:hover:bg-accent not-disabled:hover:text-accent-foreground not-disabled:active:bg-selected not-disabled:active:text-selected-foreground",
       },
       size: {
         default: "px-4 py-2",

@@ -152,7 +152,11 @@ test("L01-B01/B05: static brand and page recovery remain usable without JavaScri
     await banner(page).getByRole("link", { name: "Crossfit Gym home" }).click();
     await expect(page).toHaveURL(/\/$/);
     await expect(
-      page.getByRole("heading", { level: 1, name: "Home", exact: true }),
+      page.getByRole("heading", {
+        level: 1,
+        name: "One step closer. Crossfit Gym",
+        exact: true,
+      }),
     ).toBeVisible();
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       "content",

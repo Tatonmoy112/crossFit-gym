@@ -1,6 +1,8 @@
 # S01-A: Preview notice
 
-Status: **verified for the documented scope**. Date: 2026-11-16. Item 5 in the [13-item pre-Home checklist](../pre-home-checklist.md).
+**Retired by owner request on 2026-11-16.** The Website preview banner, root-layout mount, component and dedicated UI-copy record have been removed. The contract and evidence below describe the earlier implementation, not current behavior. Page content now starts directly inside main; Home's hero follows the header without a banner/spacer. Preview configuration, noindex/robots/sitemap guards, missing-content notices and the counter's example-data disclosure remain unchanged. Replacement root-layout/browser regressions cover removal, keyboard navigation, no-JavaScript behavior and indexing protection. See the latest [QA record](../qa-checklist.md).
+
+Status: **retired; earlier implementation verified**. Date: 2026-11-16. Item 5 in the [13-item pre-Home checklist](../pre-home-checklist.md).
 
 ## Purpose and boundary
 

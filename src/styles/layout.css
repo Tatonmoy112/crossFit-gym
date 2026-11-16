@@ -6,7 +6,7 @@
 }
 
 :root {
-  --content-max: 72rem;
+  --content-max: 1550px;
   --content-gutter: 1rem;
   --touch-target-min: 2.75rem;
 }
