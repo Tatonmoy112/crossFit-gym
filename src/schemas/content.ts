@@ -129,26 +129,6 @@ export const homeHeroSchema = z.object({
 });
 export type HomeHeroContent = z.infer<typeof homeHeroSchema>;
 
-const optionalCopy = z.string().trim().min(1).nullable();
-export const aboutSchema = z.object({
-  story: optionalCopy,
-  mission: optionalCopy,
-  values: z.array(z.string().trim().min(1)),
-  community: optionalCopy,
-});
-export type AboutContent = z.infer<typeof aboutSchema>;
-
-export const homeStorySchema = z.object({
-  heading: heroText,
-  story: optionalCopy,
-  link: z.object({
-    label: heroText,
-    href: z.string().regex(/^\/(?!\/)\S*$/),
-  }),
-  missing: z.object({ title: heroText, description: heroText }),
-});
-export type HomeStoryContent = z.infer<typeof homeStorySchema>;
-
 export const homeStatSchema = z.object({
   value: z.number().finite().nonnegative(),
   decimals: z.union([z.literal(0), z.literal(1), z.literal(2)]),

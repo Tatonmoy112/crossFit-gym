@@ -1,5 +1,7 @@
 # Component rebuild plan
 
+[A01 / H01-L About](specs/A01-about.md) implements the supplied short introduction directly below the Home hero and the nine-section About template at `/about/`. The earlier missing-story placeholder and nullable schema are retired. Content is stored separately from presentation, uses the approved local gym photo and retains existing Membership/Contact destinations. Additional original member/trainer photography, final owner review and existing launch gates remain pending. Earlier story/route-shell notes below are historical.
+
 [M01 Membership Plans](specs/M01-membership-plans.md) implements the current preview/inquiry presentation for the existing Membership template: hero, introduction, illustrative pricing, proposed benefits/comparison, joining steps, FAQ, final CTA and pending information. Confirmed plan content, policies and any approved billing/registration integration remain future work. The real catalog remains empty; page previews disappear when preview mode is disabled. The earlier Affiliates section is reconnected to Home to complete its already-approved integration.
 
 [H01-K homepage Affiliates](specs/H01-K-home-affiliates.md) implements the approved partnership invitation between Product Categories and Success Stories. All-server composition supplies the charcoal introduction, circular gym hub, light opportunity tiles and Contact action. The separate Affiliates template, actual partner records and any referral/commission offering remain pending. Earlier homepage adjacency notes below are historical.

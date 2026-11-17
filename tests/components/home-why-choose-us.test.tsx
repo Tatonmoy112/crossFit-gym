@@ -62,9 +62,11 @@ it("H01-D04: actual Home places the new services section after Why choose us", (
     container.querySelector("[data-features-wheel], [data-feature-card]"),
   ).toBeNull();
   const region = screen.getByRole("region", { name: "Why choose us" });
-  expect(region.previousElementSibling).toHaveAttribute("data-home-hero");
+  expect(region.previousElementSibling).toHaveAttribute("data-home-about");
   expect(
-    region.previousElementSibling?.querySelector("[data-home-stats-preview]"),
+    region.previousElementSibling?.previousElementSibling?.querySelector(
+      "[data-home-stats-preview]",
+    ),
   ).not.toBeNull();
   expect(region.nextElementSibling).toHaveAttribute(
     "aria-labelledby",
@@ -78,5 +80,10 @@ it("H01-D04: actual Home places the new services section after Why choose us", (
     region.nextElementSibling?.nextElementSibling?.nextElementSibling,
   ).toHaveAttribute("aria-labelledby", "home-features-title");
   expect(container.querySelectorAll("h1")).toHaveLength(1);
-  expect(screen.getByText("Our story has not been supplied yet")).toBeVisible();
+  expect(
+    screen.getByRole("heading", {
+      level: 2,
+      name: "More Than Fitness. A Way of Life.",
+    }),
+  ).toBeVisible();
 });

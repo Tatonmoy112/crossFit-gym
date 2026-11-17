@@ -86,7 +86,7 @@ test("H01-C06: real Home embeds labeled example figures in the hero", async ({
         .closest("[data-home-hero]")
         ?.nextElementSibling?.getAttribute("aria-labelledby"),
     ),
-  ).toBe("home-why-choose-us-title");
+  ).toBe("home-about-title");
   expect(
     await preview.evaluate((node) =>
       node
@@ -95,7 +95,7 @@ test("H01-C06: real Home embeds labeled example figures in the hero", async ({
           "aria-labelledby",
         ),
     ),
-  ).toBe("home-services-title");
+  ).toBe("home-why-choose-us-title");
   await preview.scrollIntoViewIfNeeded();
   await expect(preview.locator("[data-count-visual]")).toHaveText(
     ["1,200", "4.8", "5", "30"],

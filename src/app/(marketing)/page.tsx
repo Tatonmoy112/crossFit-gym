@@ -2,16 +2,12 @@ import Link from "next/link";
 import { metadata as makeMetadata } from "@/lib/seo";
 import { routes } from "@/config/routes";
 import { site } from "@/content/site";
-import {
-  homeHero,
-  homeStats,
-  homeStory,
-  homeWhyChooseUs,
-} from "@/content/home";
+import { homeHero, homeStats, homeWhyChooseUs } from "@/content/home";
 import { HomeHero } from "@/features/home/home-hero";
 import { HomeStats } from "@/features/home/home-stats";
 import { HomeStatsPreview } from "@/features/home/home-stats-preview";
-import { HomeStory } from "@/features/home/home-story";
+import { homeAbout } from "@/content/about";
+import { HomeAbout } from "@/features/home/home-about";
 import { HomeWhyChooseUs } from "@/features/home/home-why-choose-us";
 import { homeServices } from "@/content/home-services";
 import { HomeServices } from "@/features/home/home-services";
@@ -47,6 +43,7 @@ export default function Page() {
           ) : undefined
         }
       />
+      <HomeAbout content={homeAbout} />
       <HomeWhyChooseUs content={homeWhyChooseUs} />
       <HomeServices content={homeServices} />
       {site.preview && <HomeMemberships content={homeMembershipsPreview} />}
@@ -60,7 +57,6 @@ export default function Page() {
         <HomeSuccessStories content={homeSuccessStoriesPreview} />
       )}
       <HomeFaq content={homeFaq} items={homeFaqItems} />
-      <HomeStory content={homeStory} />
       <section className="layout-container py-8">
         <p>Page components are awaiting rebuild.</p>
         <nav aria-label="Page inventory">

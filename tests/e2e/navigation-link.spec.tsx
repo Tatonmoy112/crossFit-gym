@@ -241,18 +241,21 @@ test("U01-B03: fragment internal destinations and the hydrated recovery link nav
     "content",
     /noindex/,
   );
-  await page.goto("/about/");
-  const recovery = page.getByRole("link", {
-    name: "Back to home",
+  await page.goto("/");
+  const recovery = page.locator("[data-home-about]").getByRole("link", {
+    name: "Discover Our Story",
     exact: true,
   });
   expect((await recovery.boundingBox())!.height).toBeGreaterThanOrEqual(44);
-  await expect(recovery).toHaveAttribute("href", "/");
+  await expect(recovery).toHaveAttribute("href", "/about/");
   await recovery.focus();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(/\/$/);
+  await expect(page).toHaveURL(/\/about\/$/);
   await expect(
-    page.getByRole("navigation", { name: "Page inventory" }),
+    page.getByRole("heading", {
+      level: 1,
+      name: "Built for Strength. Driven by Passion.",
+    }),
   ).toBeVisible();
 });
 

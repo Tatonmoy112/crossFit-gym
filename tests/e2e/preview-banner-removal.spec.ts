@@ -100,7 +100,9 @@ test("skip-link focus and mobile navigation remain usable after removing the ban
   await expect(page.getByRole("main")).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
-    page.getByRole("link", { name: "Back to home", exact: true }),
+    page
+      .getByRole("navigation", { name: "Breadcrumb" })
+      .getByRole("link", { name: "Home", exact: true }),
   ).toBeFocused();
   await page.setViewportSize({ width: 375, height: 812 });
   const trigger = page

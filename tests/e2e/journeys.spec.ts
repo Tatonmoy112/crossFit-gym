@@ -69,6 +69,11 @@ test("complete route inventory loads without overflow", async ({ page }) => {
           name: "Program information is not available yet",
         }),
       ).toBeVisible();
+    } else if (path === "/about/") {
+      await expect(page.locator("#about-hero-title")).toHaveText(
+        "Built for Strength. Driven by Passion.",
+      );
+      await expect(page.locator("[data-about-section]")).toHaveCount(9);
     } else if (path === "/membership/") {
       await expect(
         page.getByRole("heading", {

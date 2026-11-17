@@ -121,3 +121,22 @@ describe("S01-B02/B05: Programs integration follows actual record availability",
     );
   });
 });
+
+it("forwards headingId to its H2 and stays unchanged without it", () => {
+  const { rerender } = render(
+    <ContentState
+      title="Fixture title"
+      description="Fixture description."
+      headingId="fixture-id"
+    />,
+  );
+  expect(
+    screen.getByRole("heading", { level: 2, name: "Fixture title" }),
+  ).toHaveAttribute("id", "fixture-id");
+  rerender(
+    <ContentState title="Fixture title" description="Fixture description." />,
+  );
+  expect(
+    screen.getByRole("heading", { level: 2, name: "Fixture title" }),
+  ).not.toHaveAttribute("id");
+});

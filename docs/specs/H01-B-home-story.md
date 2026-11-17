@@ -1,5 +1,7 @@
 # H01-B: Home introductory story
 
+Superseded on 2026-11-17 by [A01 / H01-L](A01-about.md): supplied homepage and full About content now render through the new HomeAbout and modular About page. HomeStory and its missing-content placeholder are retired. The material below is the historical implementation/verification record.
+
 Current composition after H01-H: Story follows the Success Stories preview while site preview is enabled; with preview disabled it follows Features. Earlier adjacency notes below describe prior stages.
 
 Current composition: Story follows the [H01-G Membership preview](H01-G-home-memberships.md) while site preview is enabled, or Features otherwise. Services, Why choose us and the hero/counters precede them. Earlier ordering below is historical.

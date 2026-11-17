@@ -148,7 +148,11 @@ test("F01-D01: full-width sections constrain only their inner content", async ({
       };
       return {
         main: rect(document.querySelector("main")!),
-        shell: rect(document.querySelector("main > section")!),
+        shell: rect(
+          document.querySelector(
+            '[data-about-section="story"] > .layout-container',
+          )!,
+        ),
         sections: [
           ...document.querySelectorAll("#layout-fixtures > section"),
         ].map((node) => ({

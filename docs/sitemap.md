@@ -1,5 +1,7 @@
 # Complete sitemap
 
+A01 / H01-L update (2026-11-17): Home adds the supplied About introduction immediately below the hero and retires its old bottom Story placeholder. `/about/` now composes the complete nine-section About page. Discover Our Story uses this existing canonical; no `/about-us/` alias, new route or template is added. Membership/Contact actions remain native inquiries/discovery. Existing preview indexing safeguards remain unchanged.
+
 M01 update (2026-11-17): `/membership/` now composes the nine-section Membership Plans page with isolated illustrative tiers and explicit noindex while examples are displayed. Existing canonical/navigation destinations remain unchanged; no `/membership-plans/` alias or new template is added. Outside preview, sample plans/comparison/benefits are replaced by safe pending-content states and guidance.
 
 H01-K update (2026-11-17): Home adds the partnership invitation between Product Categories and Success Stories. This adds no route/template or sitemap entry. The existing `/affiliates/` shell remains available for its later page rebuild; the homepage CTA opens Contact.

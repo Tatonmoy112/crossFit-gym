@@ -49,9 +49,7 @@ test("H01-D04/D05: real section reuses three cards directly after the counter wi
   expect(
     await section.evaluate(
       (node) =>
-        node.previousElementSibling?.querySelector(
-          "[data-home-stats-preview]",
-        ) !== null &&
+        node.previousElementSibling?.hasAttribute("data-home-about") &&
         node.nextElementSibling?.getAttribute("aria-labelledby") ===
           "home-services-title",
     ),

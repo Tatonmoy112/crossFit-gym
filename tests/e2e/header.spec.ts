@@ -147,7 +147,9 @@ test("L01-B01/B05: static brand and page recovery remain usable without JavaScri
     await expect(banner(page)).toHaveCount(1);
     await expect(page.getByRole("main")).toHaveCount(1);
     await expect(
-      page.getByRole("link", { name: "Back to home", exact: true }),
+      page
+        .getByRole("navigation", { name: "Breadcrumb" })
+        .getByRole("link", { name: "Home", exact: true }),
     ).toBeVisible();
     await banner(page).getByRole("link", { name: "Crossfit Gym home" }).click();
     await expect(page).toHaveURL(/\/$/);

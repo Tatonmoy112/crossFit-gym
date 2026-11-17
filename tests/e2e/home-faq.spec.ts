@@ -34,7 +34,7 @@ async function fits(page: Page) {
   ).toEqual([]);
 }
 
-test("six closed questions follow Success Stories and precede Story across responsive layouts", async ({
+test("six closed questions follow Success Stories and precede the temporary inventory across responsive layouts", async ({
   page,
 }, info) => {
   await ready(page);
@@ -44,8 +44,11 @@ test("six closed questions follow Success Stories and precede Story across respo
         node.previousElementSibling?.hasAttribute(
           "data-home-success-stories",
         ) &&
-        node.nextElementSibling?.getAttribute("aria-labelledby") ===
-          "home-story-title",
+        Boolean(
+          node.nextElementSibling?.querySelector(
+            'nav[aria-label="Page inventory"]',
+          ),
+        ),
     ),
   ).toBe(true);
   await expect(rows(page)).toHaveCount(6);

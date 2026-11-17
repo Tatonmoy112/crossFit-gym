@@ -36,7 +36,7 @@ beforeEach(() => {
 
 afterEach(() => vi.unstubAllGlobals());
 
-it("H01-C06: shows a clearly labeled example counter inside the real hero before Why choose us", () => {
+it("H01-C06: keeps example counters in the hero followed by About and Why choose us", () => {
   const { container } = render(<Page />);
   const preview = screen.getByRole("region", {
     name: "Example counter figures",
@@ -44,14 +44,14 @@ it("H01-C06: shows a clearly labeled example counter inside the real hero before
   const wrapper = preview.closest<HTMLElement>("[data-home-stats-preview]")!;
   const hero = wrapper.closest("[data-home-hero]")!;
   expect(hero).toContainElement(wrapper);
-  expect(hero.nextElementSibling).toHaveAttribute(
+  expect(hero.nextElementSibling).toHaveAttribute("data-home-about");
+  expect(hero.nextElementSibling?.nextElementSibling).toHaveAttribute(
     "aria-labelledby",
     "home-why-choose-us-title",
   );
-  expect(hero.nextElementSibling?.nextElementSibling).toHaveAttribute(
-    "aria-labelledby",
-    "home-services-title",
-  );
+  expect(
+    hero.nextElementSibling?.nextElementSibling?.nextElementSibling,
+  ).toHaveAttribute("aria-labelledby", "home-services-title");
   const items = within(preview).getAllByRole("listitem");
   expect(items).toHaveLength(4);
   expect(within(items[3]).getByText("Certified Trainers")).toBeVisible();
@@ -82,9 +82,7 @@ it("H01-C06: shows a clearly labeled example counter inside the real hero before
   expect(affiliates?.nextElementSibling?.nextElementSibling).toHaveAttribute(
     "data-home-faq",
   );
-  expect(
-    affiliates?.nextElementSibling?.nextElementSibling?.nextElementSibling,
-  ).toHaveAttribute("aria-labelledby", "home-story-title");
+  expect(container.querySelector("#home-story-title")).toBeNull();
 });
 
 it("H01-C06: never renders sample figures when site preview is disabled", () => {
@@ -112,7 +110,7 @@ it("H01-C06: never renders sample figures when site preview is disabled", () => 
   expect(
     container.querySelector('[aria-labelledby="home-hero-title"]')
       ?.nextElementSibling,
-  ).toHaveAttribute("aria-labelledby", "home-why-choose-us-title");
+  ).toHaveAttribute("data-home-about");
 });
 
 it("H01-C06: approved statistics replace samples in both preview and release configurations", () => {

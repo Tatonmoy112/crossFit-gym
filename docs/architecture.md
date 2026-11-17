@@ -1,5 +1,9 @@
 # Architecture
 
+## About page and homepage introduction
+
+[A01 / H01-L](specs/A01-about.md) replaces the retired HomeStory placeholder with HomeAbout immediately below the hero. The existing About route composes nine focused Server Components. A dedicated Zod contract owns both content shapes, validates known route destinations and item identities/icons, and reuses the approved gym image. AboutSectionHeading/AboutCopy reuse real typography patterns; native Button/NavigationLink/Breadcrumbs provide all navigation. Scoped container-query CSS reflows presentation without client state. No route, dependency, data provider or release flag changes.
+
 ## Membership Plans
 
 [M01](specs/M01-membership-plans.md) composes nine server-owned sections at `/membership/`. Validated page copy and isolated page-specific preview records resolve against existing homepage plan identities; approved inventory stays separate and empty. MembershipSectionLink adds fragment focus/history through Next's patched native History API, while FaqDisclosures is reused for FAQ interaction. Pricing/comparison use explicit unknown-content states outside preview. Native table semantics/overflow and scoped container-query CSS need no client layout state. The page introduces no new route, provider, dependency, or commerce integration.

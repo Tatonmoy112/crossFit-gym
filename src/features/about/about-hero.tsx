@@ -1,0 +1,45 @@
+import Image from "next/image";
+import { Container } from "@/components/shared/container";
+import { Breadcrumbs } from "@/components/shared/breadcrumbs";
+import type { AboutPageContent } from "@/schemas/about";
+import { AboutCopy } from "./about-section-heading";
+
+export function AboutHero({
+  content,
+  breadcrumb,
+}: {
+  content: AboutPageContent["hero"];
+  breadcrumb: AboutPageContent["breadcrumb"];
+}) {
+  return (
+    <section
+      data-about-section="hero"
+      data-surface="charcoal"
+      className="about-hero"
+      aria-labelledby="about-hero-title"
+    >
+      <Image
+        {...content.image}
+        alt={content.image.alt}
+        unoptimized
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
+        className="about-hero-image"
+      />
+      <Container className="about-hero-content">
+        <Breadcrumbs
+          items={[
+            { label: breadcrumb.home, href: "/" },
+            { label: breadcrumb.current },
+          ]}
+        />
+        <div className="about-hero-intro">
+          <p className="about-eyebrow">{content.eyebrow}</p>
+          <h1 id="about-hero-title">{content.heading}</h1>
+          <AboutCopy paragraphs={content.paragraphs} />
+        </div>
+      </Container>
+    </section>
+  );
+}

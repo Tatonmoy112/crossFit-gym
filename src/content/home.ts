@@ -1,10 +1,8 @@
 import {
   homeHeroSchema,
   homeStatsSchema,
-  homeStorySchema,
   homeWhyChooseUsSchema,
 } from "@/schemas/content";
-import { about } from "./about";
 import { site } from "./site";
 
 // Owner decisions: approved site text/photo (2026-11-16), Contact and Membership actions (2026-11-17).
@@ -22,16 +20,6 @@ export const homeHero = homeHeroSchema.parse({
     { label: "Start your journey", href: "/contact/" },
     { label: "View memberships", href: "/membership/" },
   ],
-});
-
-export const homeStory = homeStorySchema.parse({
-  heading: "Our story",
-  story: about.story,
-  link: { label: `More about ${site.name}`, href: "/about" },
-  missing: {
-    title: "Our story has not been supplied yet",
-    description: `Approved story text for ${site.name} has not been provided for this website.`,
-  },
 });
 
 // Owner decision (2026-11-16): no statistics are published until real numbers
