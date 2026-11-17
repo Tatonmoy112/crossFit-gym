@@ -21,16 +21,16 @@ const next = (page: Page) =>
   section(page).getByRole("button", { name: "Next feature" });
 const position = (page: Page) => section(page).locator('[aria-live="polite"]');
 
-test("features follow Services with split introduction, staggered cards and yellow pill links", async ({
+test("features follow Memberships with split introduction, staggered cards and yellow pill links", async ({
   page,
 }, info) => {
   await ready(page);
   expect(
     await section(page).evaluate(
       (node) =>
-        node.previousElementSibling?.hasAttribute("data-home-services") &&
+        node.previousElementSibling?.hasAttribute("data-home-memberships") &&
         node.nextElementSibling?.getAttribute("aria-labelledby") ===
-          "home-memberships-title",
+          "home-product-categories-title",
     ),
   ).toBe(true);
   await expect(section(page).locator("h3")).toHaveText(titles);

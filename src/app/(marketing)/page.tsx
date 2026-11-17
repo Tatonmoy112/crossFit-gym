@@ -23,6 +23,8 @@ import { homeSuccessStoriesPreview } from "@/content/previews/home-success-stori
 import { HomeSuccessStories } from "@/features/home/home-success-stories";
 import { homeProductCategoriesPreview } from "@/content/previews/home-product-categories";
 import { HomeProductCategories } from "@/features/home/home-product-categories";
+import { homeFaq, homeFaqItems } from "@/content/home-faq";
+import { HomeFaq } from "@/features/home/home-faq";
 
 export const metadata = makeMetadata(
   "One step closer",
@@ -45,14 +47,16 @@ export default function Page() {
       />
       <HomeWhyChooseUs content={homeWhyChooseUs} />
       <HomeServices content={homeServices} />
-      <HomeFeatures content={homeFeatures} />
       {site.preview && <HomeMemberships content={homeMembershipsPreview} />}
+      <HomeFeatures content={homeFeatures} />
+      {/* {site.preview && <HomeMemberships content={homeMembershipsPreview} />} */}
       {site.preview && (
         <HomeProductCategories content={homeProductCategoriesPreview} />
       )}
       {site.preview && (
         <HomeSuccessStories content={homeSuccessStoriesPreview} />
       )}
+      <HomeFaq content={homeFaq} items={homeFaqItems} />
       <HomeStory content={homeStory} />
       <section className="layout-container py-8">
         <p>Page components are awaiting rebuild.</p>

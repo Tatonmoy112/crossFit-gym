@@ -1,5 +1,7 @@
 # Component inventory
 
+[H01-J homepage FAQ](specs/H01-J-home-faq.md) adds server-composed HomeFaq and FaqRow with the client FaqDisclosures enhancement. The six native disclosures reuse Container, SectionHeading, Button and NavigationLink; all other UI primitive contracts remain unchanged. FAQ now follows Success Stories and precedes Story, including a factual six-answer presentation when previews are disabled. The standalone FAQ page is still a shell.
+
 [SHOP02](specs/SHOP02-product-details.md) adds ProductDetailPage, ProductDetailHeader, ProductGallery, ProductSummary, ProductAvailabilityInfo, ProductInquiryActions, ProductDescription, ProductDetails, ProductReviewsEmpty, RelatedProducts and ProductStructurePreview as server compositions. ProductImageGallery and ProductShare isolate local browser state. Existing cards, quick view, Breadcrumbs, Container, Button, NavigationLink and Dialog are reused; no dependency or global store is added.
 
 [SHOP01](specs/SHOP01-products-listing.md) adds the ProductsPage server composition, ProductCatalog client discovery boundary, static ProductCatalogFallback, ProductCard/ProductMedia presentation and ProductCategoryFilter/ProductQuickView interaction compositions. These reuse existing layout, link, button, input and Dialog primitives. Home's Product Categories section now navigates to the listing and preselected filters. Shared navigation displays Products; the Supplements compatibility listing reuses the same composition.

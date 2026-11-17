@@ -1,0 +1,149 @@
+.home-faq {
+  background: var(--muted);
+}
+
+.home-faq-container {
+  container-type: inline-size;
+  display: grid;
+  gap: 2.5rem;
+}
+
+.faq-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.faq-eyebrow::before {
+  content: "";
+  inline-size: 0.625rem;
+  block-size: 0.625rem;
+  flex: 0 0 auto;
+  background: var(--primary);
+  border: 1px solid var(--foreground);
+  border-radius: 50%;
+}
+
+.faq-list {
+  min-inline-size: 0;
+  border-block-start: 1px solid var(--border);
+}
+
+.faq-row {
+  min-inline-size: 0;
+  padding: 1.5rem 0;
+  border-block-end: 1px solid var(--border);
+}
+
+.faq-question {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 1.25rem;
+  min-block-size: 2.75rem;
+  padding: 0.5rem;
+  list-style: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.6;
+  border-radius: var(--radius-control);
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question-text {
+  min-inline-size: 0;
+}
+
+.faq-row-marker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.8;
+  font-variant-numeric: tabular-nums;
+}
+
+.faq-row-icon {
+  flex: 0 0 auto;
+  transition: rotate var(--motion-duration-control) var(--motion-easing);
+}
+
+.faq-row[open] .faq-row-icon {
+  rotate: 45deg;
+}
+
+.faq-row[open] .faq-question-text {
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.3em;
+}
+
+.faq-answer {
+  min-inline-size: 0;
+  padding: 0.75rem 0.5rem 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.faq-answer p {
+  margin: 0;
+}
+
+.faq-row[open] .faq-answer {
+  animation: faq-reveal var(--motion-duration-control) var(--motion-easing);
+}
+
+@keyframes faq-reveal {
+  from {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.faq-closing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 3rem;
+}
+
+/* Native disclosure content remains stacked in engines without this selector. */
+@supports selector(details::details-content) {
+  @container (min-width: 60rem) {
+    .faq-row[open] {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 4rem;
+      column-gap: 2.5rem;
+    }
+
+    .faq-row[open]::details-content {
+      display: contents;
+    }
+
+    .faq-row[open] > .faq-question {
+      grid-area: 1 / 1 / 2 / -1;
+      grid-template-columns: subgrid;
+    }
+
+    .faq-row[open] .faq-row-marker {
+      grid-column: 3;
+      justify-content: end;
+    }
+
+    .faq-row[open] > .faq-answer {
+      grid-area: 1 / 2;
+      z-index: 1;
+      padding-block-start: 0.5rem;
+    }
+  }
+}

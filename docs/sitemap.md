@@ -1,5 +1,7 @@
 # Complete sitemap
 
+H01-J update (2026-11-17): Home now includes six FAQ disclosures after Success Stories and before Our Story. This adds no template or sitemap entry; `/faq/` remains its existing route shell for a later rebuild.
+
 SHOP02 update (2026-11-17): `/products/[slug]/` implements reusable product details for the ten illustrative records, with native listing/quick-view links and a neutral `/products/content-preview/` structure. Examples disappear outside site preview; all new detail paths stay noindex and outside sitemap. This supersedes the individual-detail deferral below.
 
 SHOP01 update (2026-11-17): `/products/` is the all-category product listing with preview examples and quick view. `/supplements/` is a compatible Supplements-filtered entrypoint; existing supplement detail previews remain. The reference shop's individual product pages are deferred. Products replaces Supplements in shared navigation. Earlier reset notes below are historical.

@@ -50,14 +50,14 @@ async function fits(page: Page) {
   ).toEqual([]);
 }
 
-test("four disclosed categories follow Memberships with centered layering and usable responsive cards", async ({
+test("four disclosed categories follow Features with centered layering and usable responsive cards", async ({
   page,
 }, info) => {
   await ready(page);
   expect(
     await section(page).evaluate(
       (node) =>
-        node.previousElementSibling?.hasAttribute("data-home-memberships") &&
+        node.previousElementSibling?.hasAttribute("data-home-features") &&
         node.nextElementSibling?.hasAttribute("data-home-success-stories"),
     ),
   ).toBe(true);

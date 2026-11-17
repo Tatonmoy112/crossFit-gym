@@ -46,10 +46,10 @@ export const catalogSchema = z.object({
 export type CatalogItem = z.infer<typeof catalogSchema>;
 export type ImageAsset = z.infer<typeof imageSchema>;
 export const faqSchema = z.object({
-  id: z.string(),
-  question: z.string().min(1),
-  answer: z.string().min(1),
-  category: z.string(),
+  id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  question: z.string().trim().min(1),
+  answer: z.string().trim().min(1),
+  category: z.string().trim().min(1),
 });
 export type FAQ = z.infer<typeof faqSchema>;
 export const classSchema = z.object({

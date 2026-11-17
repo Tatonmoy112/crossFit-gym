@@ -92,15 +92,17 @@ test("H01-B01/B05: Home shows the missing story state after the counter and Why 
           "home-services-title" &&
         why.nextElementSibling.nextElementSibling?.getAttribute(
           "aria-labelledby",
-        ) === "home-features-title" &&
+        ) === "home-memberships-title" &&
         why.nextElementSibling.nextElementSibling.nextElementSibling?.getAttribute(
           "aria-labelledby",
-        ) === "home-memberships-title" &&
+        ) === "home-features-title" &&
         why.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling?.getAttribute(
           "aria-labelledby",
         ) === "home-product-categories-title" &&
-        categories.nextElementSibling === story.previousElementSibling &&
-        story.previousElementSibling?.hasAttribute(
+        categories.nextElementSibling ===
+          story.previousElementSibling?.previousElementSibling &&
+        story.previousElementSibling?.hasAttribute("data-home-faq") &&
+        story.previousElementSibling?.previousElementSibling?.hasAttribute(
           "data-home-success-stories",
         ) &&
         Boolean(

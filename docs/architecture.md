@@ -1,5 +1,9 @@
 # Architecture
 
+## Homepage FAQ
+
+[H01-J](specs/H01-J-home-faq.md) adds a Server Component section and row composition, with native disclosure HTML passed into a small client interaction boundary. Shared FAQ records are validated once, and ordered homepage IDs are resolved with duplicate/missing-reference checks. The enhancement keeps pointer previews, click persistence and focus protection local; no provider or shared store is introduced. Native summary activation and the real Contact link remain usable without JavaScript. Scoped container-query CSS aligns desktop answers beside questions with a stacked fallback. The factual section is independent of illustrative preview flags; `/faq/` remains a separate pending page rebuild.
+
 ## Reusable product details
 
 [SHOP02](specs/SHOP02-product-details.md) adds a server-composed static Products detail template with separate header, gallery, summary, description, details, review and related-product sections. Only image-gallery enhancement and sharing require client boundaries. ProductInquiryActions is shared with quick view; ProductCard supplies native detail links across listing, static fallback and related results. Validated detail content is joined by product ID and status; actual and preview collections remain separate. A neutral content-preview static parameter supports an empty approved collection without publishing samples. All new detail outputs stay noindex and outside sitemap.

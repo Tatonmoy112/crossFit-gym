@@ -67,15 +67,21 @@ it("H01-C06: shows a clearly labeled example counter inside the real hero before
   expect(homeStats.items).toEqual([]);
   const memberships = container.querySelector("[data-home-memberships]")!;
   expect(memberships.previousElementSibling).toHaveAttribute(
-    "data-home-features",
+    "data-home-services",
   );
+  const features = memberships.nextElementSibling!;
+  expect(features).toHaveAttribute("data-home-features");
   expect(
-    memberships.nextElementSibling?.nextElementSibling?.nextElementSibling,
+    features.nextElementSibling?.nextElementSibling?.nextElementSibling,
+  ).toHaveAttribute("data-home-faq");
+  expect(
+    features.nextElementSibling?.nextElementSibling?.nextElementSibling
+      ?.nextElementSibling,
   ).toHaveAttribute("aria-labelledby", "home-story-title");
-  expect(memberships.nextElementSibling).toHaveAttribute(
+  expect(features.nextElementSibling).toHaveAttribute(
     "data-home-product-categories",
   );
-  expect(memberships.nextElementSibling?.nextElementSibling).toHaveAttribute(
+  expect(features.nextElementSibling?.nextElementSibling).toHaveAttribute(
     "data-home-success-stories",
   );
 });
@@ -88,6 +94,8 @@ it("H01-C06: never renders sample figures when site preview is disabled", () => 
   expect(container.querySelector("[data-home-memberships]")).toBeNull();
   expect(container.querySelector("[data-home-product-categories]")).toBeNull();
   expect(container.querySelector("[data-home-success-stories]")).toBeNull();
+  expect(container.querySelector("[data-home-faq]")).toBeInTheDocument();
+  expect(container.querySelectorAll("[data-faq-row]")).toHaveLength(6);
   expect(
     screen.queryByRole("region", { name: "Features and services" }),
   ).toBeNull();

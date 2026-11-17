@@ -72,11 +72,11 @@ it("H01-D04: actual Home places the new services section after Why choose us", (
   );
   expect(region.nextElementSibling?.nextElementSibling).toHaveAttribute(
     "aria-labelledby",
-    "home-features-title",
+    "home-memberships-title",
   );
   expect(
     region.nextElementSibling?.nextElementSibling?.nextElementSibling,
-  ).toHaveAttribute("aria-labelledby", "home-memberships-title");
+  ).toHaveAttribute("aria-labelledby", "home-features-title");
   expect(container.querySelectorAll("h1")).toHaveLength(1);
   expect(screen.getByText("Our story has not been supplied yet")).toBeVisible();
 });

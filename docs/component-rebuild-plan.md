@@ -1,5 +1,7 @@
 # Component rebuild plan
 
+[H01-J homepage FAQ](specs/H01-J-home-faq.md) implements the six-question Home section after Success Stories and before Story. Shared FAQ records, native disclosures, fine-pointer hover previews, click persistence, touch/keyboard controls and a Contact action are included. This factual section renders outside preview mode. The broader FAQ discovery/search/category page in step 9 remains pending; this change does not mark that page rebuilt.
+
 [SHOP02](specs/SHOP02-product-details.md) implements the approved master-first reusable Products detail composition for all ten illustrative records. Native listing/media/quick-view links now open these pages. The original 24 templates remain alongside the approved Products listing and detail additions (26 templates including custom 404). Earlier notes deferring individual product pages are superseded. Approved inventory, photos, prices and manufacturer information remain pending; no purchase or review-submission integration is added.
 
 [SHOP01](specs/SHOP01-products-listing.md) implements the owner-approved Products listing addition, hover quick view and homepage/category discovery destinations. Products replaces the navigation label; the original Supplements route becomes a compatible category entrypoint and its detail shell remains. All original 24 templates stay in scope, with one approved listing template added. Ten supplied examples remain separately disclosed previews; individual product pages are deferred.

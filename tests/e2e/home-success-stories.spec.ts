@@ -61,7 +61,7 @@ async function accessible(page: Page) {
   ).toEqual([]);
 }
 
-test("three disclosed stories form a responsive asymmetric section between Product Categories and Story", async ({
+test("three disclosed stories form a responsive asymmetric section between Product Categories and FAQ", async ({
   page,
 }, info) => {
   await ready(page);
@@ -70,9 +70,7 @@ test("three disclosed stories form a responsive asymmetric section between Produ
       (node) =>
         node.previousElementSibling?.hasAttribute(
           "data-home-product-categories",
-        ) &&
-        node.nextElementSibling?.getAttribute("aria-labelledby") ===
-          "home-story-title",
+        ) && node.nextElementSibling?.hasAttribute("data-home-faq"),
     ),
   ).toBe(true);
   await expect(section(page).getByRole("note")).toHaveText(

@@ -53,16 +53,16 @@ async function noOverflow(page: Page) {
   ).toEqual([]);
 }
 
-test("disclosed preview plans follow Features with responsive centered layering and real Contact links", async ({
+test("disclosed preview plans follow Services with responsive centered layering and real Contact links", async ({
   page,
 }, info) => {
   await ready(page);
   expect(
     await section(page).evaluate(
       (node) =>
-        node.previousElementSibling?.hasAttribute("data-home-features") &&
+        node.previousElementSibling?.hasAttribute("data-home-services") &&
         node.nextElementSibling?.getAttribute("aria-labelledby") ===
-          "home-product-categories-title",
+          "home-features-title",
     ),
   ).toBe(true);
   await expect(section(page).locator("h3")).toHaveText([
