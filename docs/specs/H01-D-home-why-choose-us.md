@@ -1,5 +1,7 @@
 # H01-D: Why choose us
 
+Current composition: Our Services and [H01-F Features](H01-F-home-features.md) follow Why choose us before Story. Earlier direct-adjacency statements below describe the original implementation.
+
 Status: **verified for the documented scope**. Date: 2026-11-16.
 
 ## Agreed scope and design

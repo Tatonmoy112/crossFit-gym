@@ -48,11 +48,11 @@ it("H01-A02: renders exactly two real actions as shadcn Button links", () => {
 
   const links = within(screen.getByRole("list")).getAllByRole("link");
   expect(links.map((link) => link.textContent?.trim())).toEqual([
-    `Call ${site.phone}`,
-    "Get directions",
+    "Start your journey",
+    "View memberships",
   ]);
-  expect(links[0]).toHaveAttribute("href", `tel:${site.telephone}`);
-  expect(links[1]).toHaveAttribute("href", site.directions);
+  expect(links[0].getAttribute("href")).toMatch(/^\/contact\/?$/);
+  expect(links[1].getAttribute("href")).toMatch(/^\/membership\/?$/);
   expect(links.map((link) => link.getAttribute("data-slot"))).toEqual([
     "button",
     "button",
@@ -65,14 +65,15 @@ it("H01-A02: renders exactly two real actions as shadcn Button links", () => {
     "primary",
     "secondary",
   ]);
+  expect(links[0].querySelector('svg[aria-hidden="true"]')).not.toBeNull();
+  expect(links[1].querySelector("svg")).toBeNull();
   links.forEach((link) => {
     expect(link).not.toHaveAttribute("target");
     expect(link).not.toHaveAttribute("type");
-    expect(link.querySelector('svg[aria-hidden="true"]')).not.toBeNull();
   });
 });
 
-it("H01-A03/A11: image, hidden scrims and decorative vertical name", () => {
+it("H01-A03/A11: image and hidden gradients without a vertical name", () => {
   const { container } = render(<HomeHero content={homeHero} />);
 
   const image = screen.getByRole("img", { name: homeHero.image.alt });
@@ -85,17 +86,15 @@ it("H01-A03/A11: image, hidden scrims and decorative vertical name", () => {
   for (const selector of [
     "[data-hero-overlay]",
     "[data-hero-gradient]",
-    "[data-hero-vertical]",
+    "[data-hero-bottom-gradient]",
   ]) {
     expect(container.querySelector(selector)).toHaveAttribute(
       "aria-hidden",
       "true",
     );
   }
-  expect(container.querySelector("[data-hero-vertical]")).toHaveTextContent(
-    site.name,
-  );
-  expect(screen.getAllByText(site.name)).toHaveLength(2);
+  expect(container.querySelector("[data-hero-vertical]")).toBeNull();
+  expect(screen.getAllByText(site.name)).toHaveLength(1);
 });
 
 it("H01-A06: renders a single action as one primary Button link", () => {

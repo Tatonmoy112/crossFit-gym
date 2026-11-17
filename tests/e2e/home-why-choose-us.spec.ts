@@ -49,9 +49,11 @@ test("H01-D04/D05: real section reuses three cards directly after the counter wi
   expect(
     await section.evaluate(
       (node) =>
-        node.previousElementSibling?.hasAttribute("data-home-stats-preview") &&
+        node.previousElementSibling?.querySelector(
+          "[data-home-stats-preview]",
+        ) !== null &&
         node.nextElementSibling?.getAttribute("aria-labelledby") ===
-          "home-story-title",
+          "home-services-title",
     ),
   ).toBe(true);
   const grid = section.locator("[data-why-grid]");
@@ -151,7 +153,7 @@ test("H01-D05: complete page accessibility and native keyboard order remain inta
         name: "One step closer. Crossfit Gym",
         exact: true,
       })
-      .getByRole("link", { name: "Call 01323-275695" }),
+      .getByRole("link", { name: "Start your journey" }),
   ).toBeFocused();
 });
 
@@ -222,7 +224,7 @@ test("H01-D05: real server section works with JavaScript disabled", async ({
       await region(page).evaluate((node) =>
         node.nextElementSibling?.getAttribute("aria-labelledby"),
       ),
-    ).toBe("home-story-title");
+    ).toBe("home-services-title");
     await expect(region(page).getByRole("article")).toHaveCount(3);
     await expect(
       region(page).getByText(

@@ -1,5 +1,9 @@
 # H01-B: Home introductory story
 
+Current composition after H01-H: Story follows the Success Stories preview while site preview is enabled; with preview disabled it follows Features. Earlier adjacency notes below describe prior stages.
+
+Current composition: Story follows the [H01-G Membership preview](H01-G-home-memberships.md) while site preview is enabled, or Features otherwise. Services, Why choose us and the hero/counters precede them. Earlier ordering below is historical.
+
 Status: **verified** (see [QA record](../qa-checklist.md#h01-b-home-story-2026-11-16); manual review remains open). Date: 2026-11-16. This is the second Home section ([rebuild plan](../component-rebuild-plan.md), page 1: Hero → **introductory story** → discovery links …). It is built after [H01-A Home hero](H01-A-home-hero.md).
 
 ## Purpose and inputs

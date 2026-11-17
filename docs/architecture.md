@@ -1,8 +1,32 @@
 # Architecture
 
+## Shared footer redesign
+
+[L03-B](specs/L03-B-footer-redesign.md) keeps one Footer after main across the entire site and custom 404. FooterCallToAction is a Server Component composing Container, SectionHeading and a Button/NavigationLink Contact action. Footer composes a second Container, white Card, BrandLink and original contact/navigation/social/legal content; the decorative wordmark is isolated from meaningful content. Validated footer content owns CTA copy, source-derived tagline and wordmark. Named Card container queries control four/two/one navigation columns and meta reflow. Local footer CSS was created before its global import. No pathname boundary, client state, provider, route, dependency or release-policy change is introduced; native no-JavaScript navigation and modal isolation remain.
+
+## Homepage success stories preview
+
+[H01-H](specs/H01-H-home-success-stories.md) adds a site.preview-gated section after Memberships and before Story. HomeSuccessStories/SuccessStoryCard compose validated fictional content on the server; a small HomeSuccessStoriesCarousel client owns finite centered navigation, active presentation, inert state and reduced motion. Scoped CSS supplies native scrolling before initialization. The existing CarouselContent gains optional typed viewportProps for accessible viewport focus/keyboard events; existing consumers retain their behavior. The real testimonials catalog and review structured data remain empty.
+
+## Homepage membership preview
+
+[H01-G](specs/H01-G-home-memberships.md) adds a site.preview-gated section between Features and Story. Separately validated example records never populate the real membership catalog. HomeMemberships and MembershipPlanCard own server composition; HomeMembershipsCarousel isolates finite centered Embla navigation, position/elevation, boundary guards, inert state, focus reveal and reduced motion. Scoped native snapping preserves the disclosure and Contact actions without JavaScript. No page, provider, dependency or global state is added.
+
+## Homepage features integration
+
+[H01-F](specs/H01-F-home-features.md) adds Features between Services and Story. HomeFeatures, FeatureCard and FeatureAction preserve server-owned copy and compose existing primitives. HomeFeaturesCarousel owns manual Embla looping, selected-position status, focus-visible reveal, live reduced motion, inert offscreen slides and trailing-card geometry. Native snapping keeps links available before hydration and without JavaScript. There is no second timer or state store. Feature content is separately Zod/route-validated, with optional future local images; existing destinations remain until detail pages are requested.
+
+## Homepage services integration
+
+[H01-E](specs/H01-E-home-services.md) adds eight approved service cards between Why choose us and Story. HomeServices and ServiceCard retain server-owned content; HomeServicesCarousel isolates Embla, a five-second timer, visibility/hover suspension, explicit playback and reduced motion. Offscreen slides become inert after initialization. Scoped native scrolling retains all links without JavaScript. Container queries reduce columns under enlarged text. Zod/route-validated home-services.ts stays separate from Programs; links open Contact until detail pages are built. No dependency, provider, route or global state is added.
+
+## Current hero integration
+
+[H01-A3](specs/H01-A3-home-hero-redesign.md) keeps HomeHero server-rendered and introduces its dedicated statistics slot. The homepage chooses validated real statistics or the preview-only fallback inside that slot, without nested section Containers or a separate counter band. The hero uses the approved photograph, local color gradients and the existing H1; its actions now navigate to Contact and Membership. Header remains server-composed; HeaderFrame isolates pathname detection and ResizeObserver lifecycle. It reserves the measured header height through a CSS custom property and enables overlay only on Home after measurement. On other routes, or without JavaScript/ResizeObserver, the header stays in normal flow. Observer and custom-property cleanup run when leaving Home. Scoped presentation rules live in `src/styles/home-hero.css`; existing modal, focus and navigation state boundaries are retained.
+
 ## Current reset state
 
-The UI was reset on 2026-11-15. All 24 templates remain in Next.js App Router as Server Component route shells. Each route renders a heading and recovery links; Programs now replaces its rebuild notice with a conditional empty-content explanation. Other routes retain their rebuild notice. The homepage temporarily links to every currently exported page. The new root header composes BrandLink and both navigation variants. The root footer reuses original destinations and supplied contact/social channels. The site-wide preview notice is now server-rendered before page content while site.preview is true. Other page sections and interactive features await rebuilding.
+The UI was reset on 2026-11-15. All 24 templates remain in Next.js App Router as Server Component route shells. Each route renders a heading and recovery links; Programs now replaces its rebuild notice with a conditional empty-content explanation. Other routes retain their rebuild notice. The homepage temporarily links to every currently exported page. The new root header composes BrandLink and both navigation variants. The root footer reuses original destinations and supplied contact/social channels. The global preview notice is removed; local missing-content and example-statistics disclosures remain. Other page sections and interactive features await rebuilding.
 
 The root layout provides document metadata, a first-tab skip link, the server-composed Header, a focusable main landmark and the server-rendered Footer after main. At the owner's request the full official shadcn/ui library was subsequently installed: 63 local UI modules, support hooks/utilities and components.json. The configuration uses Radix Nova, neutral colors, Lucide icons, RSC and TSX. Global CSS imports Tailwind 4, shadcn and animation styles, defines light/dark tokens and preserves focus/reduced motion. Temporary document defaults live in the base layer. The pnpm 10.34.9 lockfile was updated in place for library dependencies.
 

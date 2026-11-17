@@ -5,6 +5,12 @@
 @import "./typography.css";
 @import "./layout.css";
 @import "./motion.css";
+@import "./home-hero.css";
+@import "./home-services.css";
+@import "./home-features.css";
+@import "./home-memberships.css";
+@import "./home-success-stories.css";
+@import "./footer.css";
 
 @custom-variant dark {
   @scope (.dark, [data-surface="charcoal"]) to (.light, [data-surface="light"], [data-surface="yellow"]) {

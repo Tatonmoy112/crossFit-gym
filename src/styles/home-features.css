@@ -1,0 +1,75 @@
+@layer components {
+  .home-feature-card {
+    width: 100%;
+    /* A proportional minimum preserves the portrait design without imposing
+       an aspect-ratio height on enlarged or unusually long content. */
+    min-height: max(28rem, 150cqi);
+    background-image: linear-gradient(
+      150deg,
+      var(--secondary),
+      var(--card) 60%,
+      var(--background)
+    );
+  }
+}
+
+[data-home-features] > .layout-container {
+  container: home-features / inline-size;
+}
+.home-features-layout {
+  display: grid;
+  gap: 2rem;
+  min-width: 0;
+}
+[data-home-features-carousel] [data-slot="carousel-content"] {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+[data-home-features-carousel] [data-slot="carousel-item"] {
+  container-type: inline-size;
+  scroll-snap-align: start;
+}
+[data-home-features-carousel][data-ready="true"]
+  [data-slot="carousel-content"] {
+  overflow: hidden;
+  scroll-snap-type: none;
+  touch-action: pan-y pinch-zoom;
+}
+[data-home-features-carousel] [hidden] {
+  display: none;
+}
+
+@container home-features (min-width: 40rem) {
+  [data-home-features-carousel] [data-slot="carousel-item"] {
+    flex-basis: calc((100% - 1.25rem) / 2);
+  }
+  [data-home-features-carousel] [data-slot="carousel-item"]:nth-child(even) {
+    padding-bottom: 4.5rem;
+  }
+  [data-home-features-carousel][data-ready="true"]
+    [data-slot="carousel-item"]:nth-child(even) {
+    padding-bottom: 0;
+  }
+  [data-home-features-carousel][data-ready="true"]
+    [data-slot="carousel-item"][data-feature-trailing] {
+    padding-bottom: 4.5rem;
+  }
+  .home-features-track {
+    gap: 0;
+  }
+  [data-home-features-carousel] [data-features-controls] {
+    position: relative;
+    justify-self: end;
+    width: calc((100% - 1.25rem) / 2);
+    margin-top: -2.75rem;
+  }
+}
+@container home-features (min-width: 62rem) {
+  .home-features-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    column-gap: 3rem;
+  }
+  .home-features-intro {
+    padding-block: 0 0.25rem;
+  }
+}

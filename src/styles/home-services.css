@@ -1,0 +1,62 @@
+@layer components {
+  .service-card {
+    container: service-card / inline-size;
+    background-image: linear-gradient(
+      155deg,
+      var(--card) 25%,
+      var(--secondary)
+    );
+  }
+}
+
+[data-home-services-carousel] {
+  container: home-services / inline-size;
+}
+
+@container service-card (max-width: 14rem) {
+  .service-card > a {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .service-card [data-service-arrow] {
+    grid-row: 1;
+    justify-self: end;
+  }
+}
+
+/* Text enlargement reduces the card count before the reading column gets narrow. */
+@media (width >= 48rem) {
+  @container home-services (min-width: 40rem) {
+    [data-home-services-carousel] [data-slot="carousel-item"] {
+      flex-basis: calc((100% - 1rem) / 2);
+    }
+  }
+}
+
+@media (width >= 64rem) {
+  @container home-services (min-width: 60rem) {
+    [data-home-services-carousel] [data-slot="carousel-item"] {
+      flex-basis: calc((100% - 3rem) / 4);
+    }
+  }
+}
+
+/* Progressive enhancement is local to this carousel, including before hydration. */
+[data-home-services-carousel] [data-slot="carousel-content"] {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+[data-home-services-carousel] [data-slot="carousel-item"] {
+  scroll-snap-align: start;
+}
+
+[data-home-services-carousel][data-ready="true"]
+  [data-slot="carousel-content"] {
+  overflow: hidden;
+  scroll-snap-type: none;
+  touch-action: pan-y pinch-zoom;
+}
+
+[data-home-services-carousel] [data-services-controls][hidden] {
+  display: none;
+}

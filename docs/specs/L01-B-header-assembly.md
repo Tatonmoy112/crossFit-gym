@@ -1,5 +1,7 @@
 # L01-B: Header assembly
 
+Update 2026-11-17: [H01-A3](H01-A3-home-hero-redesign.md) supersedes the hero presentation/actions, counter placement and Home-only header placement described below. Historical acceptance results remain recorded for the earlier implementation.
+
 Owner refinement (2026-11-16): removed the header's 1px bottom border so it meets the Home hero without a light separator. The shared header has no bottom border or shadow; keyboard focus indicators remain unchanged. The existing Home geometry browser case now checks the borderless join at 320/375/768/1280/1920px, including direct adjacency and no overflow. Before the fix it failed with an actual 1px border versus the required 0px. Final verification is recorded in the [QA checklist](../qa-checklist.md).
 
 Status: **verified for the documented scope**. Date: 2026-11-16. Item 3 of the [13-item pre-Home checklist](../pre-home-checklist.md).

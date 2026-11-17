@@ -1,5 +1,7 @@
 # H01-C: Home stats band
 
+Update 2026-11-17: [H01-A3](H01-A3-home-hero-redesign.md) supersedes the hero presentation/actions, counter placement and Home-only header placement described below. Historical acceptance results remain recorded for the earlier implementation.
+
 Owner refinement (2026-11-16): appended **30+ Certified Trainers** as the fourth value in the currently displayed preview counter, with owner-supplied provenance. The existing three example figures and preview/release boundaries remain unchanged; no coach profiles or credential verification were invented. The existing four-item schema and responsive component support it without layout or dependency changes. Tests were updated first: three assertions failed for the absent fourth entry, then passed after adding it. Six focused Chromium cases pass, including four-value animation completion, exact trainer label, no-JavaScript final values and enlarged-text reflow. See the latest [QA record](../qa-checklist.md) for final full-workflow results.
 
 Status: **verified for the documented scope**. Date: 2026-11-16. This is a Home section directly under the [hero](H01-A2-home-hero-design.md), built from an owner-supplied style reference: a dark band reading "10K+ Members transformed │ 4.9★ Average rating │ 5+ Years stronger together".

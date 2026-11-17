@@ -7,7 +7,7 @@ import {
 import { about } from "./about";
 import { site } from "./site";
 
-// Owner decisions (2026-11-16): approved site text only; supplied hero image.
+// Owner decisions: approved site text/photo (2026-11-16), Contact and Membership actions (2026-11-17).
 export const homeHero = homeHeroSchema.parse({
   title: site.name,
   tagline: site.tagline,
@@ -19,8 +19,8 @@ export const homeHero = homeHeroSchema.parse({
     height: 941,
   },
   actions: [
-    { label: `Call ${site.phone}`, href: `tel:${site.telephone}` },
-    { label: "Get directions", href: site.directions },
+    { label: "Start your journey", href: "/contact/" },
+    { label: "View memberships", href: "/membership/" },
   ],
 });
 

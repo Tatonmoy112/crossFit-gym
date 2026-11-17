@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { routes } from "@/config/routes";
 
 export const imageSchema = z.object({
   src: z.string().startsWith("/"),
@@ -191,3 +192,163 @@ export const homeWhyChooseUsSchema = z.object({
   }),
 });
 export type HomeWhyChooseUsContent = z.infer<typeof homeWhyChooseUsSchema>;
+
+export const homeServiceSchema = z.object({
+  id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  title: heroText,
+  subtitle: heroText,
+  href: z
+    .string()
+    .refine(
+      (href) => routes.some((route) => href === `${route.replace(/\/$/, "")}/`),
+      "Use an existing page destination with a trailing slash.",
+    ),
+  image: imageSchema
+    .extend({
+      src: z
+        .string()
+        .regex(/^\/images\/[a-zA-Z0-9/_-]+\.(?:webp|png|jpe?g|avif)$/),
+    })
+    .optional(),
+});
+export type HomeService = z.infer<typeof homeServiceSchema>;
+
+export const homeServicesSchema = z.object({
+  eyebrow: heroText,
+  heading: heroText,
+  description: heroText,
+  items: z.array(homeServiceSchema).superRefine((items, context) => {
+    const ids = new Set<string>();
+    items.forEach((item, index) => {
+      if (ids.has(item.id))
+        context.addIssue({
+          code: "custom",
+          message: "Duplicate homepage service ID",
+          path: [index, "id"],
+        });
+      ids.add(item.id);
+    });
+  }),
+});
+export type HomeServicesContent = z.infer<typeof homeServicesSchema>;
+
+export const homeFeatureSchema = homeServiceSchema
+  .omit({ subtitle: true })
+  .extend({
+    description: heroText,
+    actionLabel: heroText,
+  });
+export type HomeFeature = z.infer<typeof homeFeatureSchema>;
+
+export const homeFeaturesSchema = z.object({
+  eyebrow: heroText,
+  heading: heroText,
+  description: heroText,
+  action: z.object({ label: heroText, href: homeFeatureSchema.shape.href }),
+  items: z.array(homeFeatureSchema).superRefine((items, context) => {
+    const ids = new Set<string>();
+    items.forEach((item, index) => {
+      if (ids.has(item.id))
+        context.addIssue({
+          code: "custom",
+          message: "Duplicate homepage feature ID",
+          path: [index, "id"],
+        });
+      ids.add(item.id);
+    });
+  }),
+});
+export type HomeFeaturesContent = z.infer<typeof homeFeaturesSchema>;
+
+export const homeMembershipPlanSchema = z.object({
+  id: homeServiceSchema.shape.id,
+  name: heroText,
+  description: heroText,
+  badge: heroText,
+  featured: z.boolean(),
+  priceLabel: heroText,
+  benefits: z.array(heroText).min(1),
+  action: z.object({ label: heroText, href: homeServiceSchema.shape.href }),
+  image: homeServiceSchema.shape.image,
+});
+export type HomeMembershipPlan = z.infer<typeof homeMembershipPlanSchema>;
+
+export const homeMembershipsPreviewSchema = z.object({
+  status: z.literal("preview"),
+  eyebrow: heroText,
+  heading: heroText,
+  description: heroText,
+  supportingText: heroText,
+  notice: heroText,
+  action: z.object({ label: heroText, href: homeServiceSchema.shape.href }),
+  plans: z
+    .array(homeMembershipPlanSchema)
+    .length(3)
+    .superRefine((plans, context) => {
+      const ids = new Set<string>();
+      plans.forEach((plan, index) => {
+        if (ids.has(plan.id))
+          context.addIssue({
+            code: "custom",
+            message: "Duplicate homepage membership ID",
+            path: [index, "id"],
+          });
+        ids.add(plan.id);
+      });
+      if (
+        plans.filter((plan) => plan.featured).length !== 1 ||
+        !plans[1]?.featured
+      ) {
+        context.addIssue({
+          code: "custom",
+          message: "Feature the middle preview plan.",
+        });
+      }
+    }),
+});
+export type HomeMembershipsPreviewContent = z.infer<
+  typeof homeMembershipsPreviewSchema
+>;
+
+export const homeSuccessStorySchema = z.object({
+  id: homeServiceSchema.shape.id,
+  name: heroText,
+  focus: heroText,
+  quote: heroText,
+  image: homeServiceSchema.shape.image,
+});
+export type HomeSuccessStory = z.infer<typeof homeSuccessStorySchema>;
+
+export const homeSuccessStoriesPreviewSchema = z.object({
+  status: z.literal("preview"),
+  eyebrow: heroText,
+  heading: heroText,
+  description: heroText,
+  supportingText: heroText,
+  notice: heroText,
+  action: z.object({ label: heroText, href: homeServiceSchema.shape.href }),
+  closing: z.object({
+    eyebrow: heroText,
+    heading: heroText,
+    description: heroText,
+    action: z.object({ label: heroText, href: homeServiceSchema.shape.href }),
+  }),
+  stories: z
+    .array(homeSuccessStorySchema)
+    .length(3)
+    .superRefine((stories, context) => {
+      const ids = new Set<string>();
+      stories.forEach((story, index) => {
+        if (ids.has(story.id))
+          context.addIssue({
+            code: "custom",
+            message: "Duplicate homepage success story ID",
+            path: [index, "id"],
+          });
+        ids.add(story.id);
+      });
+    }),
+});
+export type HomeSuccessStoriesPreviewContent = z.infer<
+  typeof homeSuccessStoriesPreviewSchema
+>;

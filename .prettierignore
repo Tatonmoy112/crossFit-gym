@@ -4,6 +4,8 @@ out
 pnpm-lock.yaml
 figma
 info
+# Preserve the owner-supplied content brief verbatim, like info/ inputs.
+newsection.md
 public
 test-results
 playwright-report

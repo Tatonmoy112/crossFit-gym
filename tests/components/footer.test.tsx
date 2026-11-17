@@ -3,11 +3,12 @@ import { expect, it } from "vitest";
 import { Footer } from "@/components/layout/footer";
 import { navigation } from "@/content/navigation";
 import { site } from "@/content/site";
+import { footerContent } from "@/content/footer";
 
 it("L03-A01: footer owns its landmark and exposes all original groups and destinations", () => {
   render(<Footer />);
   const footer = screen.getByRole("contentinfo");
-  expect(footer).toHaveAttribute("data-surface", "charcoal");
+  expect(footer).toHaveAttribute("data-surface", "light");
   expect(
     within(footer).getByRole("link", { name: "Crossfit Gym home" }),
   ).toHaveAttribute("href", "/");
@@ -34,6 +35,36 @@ it("L03-A01: footer owns its landmark and exposes all original groups and destin
     within(footer).queryByRole("heading", { level: 1 }),
   ).not.toBeInTheDocument();
   expect(within(footer).queryByRole("button")).not.toBeInTheDocument();
+});
+
+it("L03-B: server-composes the approved CTA, light panel and decorative wordmark", () => {
+  render(<Footer />);
+  const footer = screen.getByRole("contentinfo");
+  const cta = within(footer).getByRole("region", {
+    name: footerContent.cta.heading,
+  });
+  expect(cta).toHaveAttribute("data-surface", "charcoal");
+  expect(cta).toHaveTextContent(footerContent.cta.description);
+  const action = within(cta).getByRole("link", {
+    name: "Start your journey",
+  });
+  expect(action.getAttribute("href")).toMatch(/^\/contact\/?$/);
+  expect(within(footer).getAllByRole("link")[0]).toBe(action);
+  expect(footer.querySelectorAll(".layout-container")).toHaveLength(2);
+  expect(footer.querySelector(".footer-panel")).toHaveAttribute(
+    "data-slot",
+    "card",
+  );
+  expect(within(footer).getByText(site.tagline)).toBeInTheDocument();
+  const wordmark = footer.querySelector(".footer-wordmark-frame")!;
+  expect(wordmark).toHaveAttribute("aria-hidden", "true");
+  expect(wordmark).toHaveAttribute("inert");
+  expect(wordmark).toHaveTextContent("CROSSFIT GYM");
+  expect(wordmark.querySelector("a,button,[tabindex]")).toBeNull();
+  expect(within(footer).getAllByRole("link")).toHaveLength(23);
+  expect(footer.textContent).not.toMatch(
+    /Nexiron|Nexion|copyright|all rights reserved|newsletter|©/i,
+  );
 });
 
 it("L03-A02: supplied contacts and social links stay native and missing hours stay explicit", () => {

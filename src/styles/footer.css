@@ -1,0 +1,91 @@
+@layer components {
+  [data-site-footer] {
+    background: var(--secondary);
+  }
+  .footer-cta {
+    min-height: 20rem;
+    display: grid;
+    align-items: center;
+    padding-block: 4rem;
+    border-radius: 0 0 3rem 3rem;
+    background:
+      radial-gradient(
+        ellipse at 50% -40%,
+        color-mix(in srgb, var(--primary) 12%, transparent),
+        transparent 65%
+      ),
+      var(--background);
+  }
+  .footer-body {
+    margin-top: 1rem;
+    padding-top: 3rem;
+    border-radius: 3rem 3rem 0 0;
+    background: var(--background);
+  }
+  .footer-panel {
+    container: footer-panel / inline-size;
+  }
+  .footer-panel-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+  .footer-navigation {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem 1.5rem;
+  }
+  .footer-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .footer-legal-note {
+    grid-column: 1 / -1;
+  }
+  .footer-wordmark-frame {
+    overflow: clip;
+    pointer-events: none;
+    margin-top: 2rem;
+  }
+  .footer-wordmark {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 16vw, 17rem);
+    font-weight: 700;
+    line-height: 0.8;
+    white-space: nowrap;
+    letter-spacing: -0.035em;
+    text-align: center;
+    color: color-mix(in srgb, var(--foreground) 7%, transparent);
+    user-select: none;
+  }
+}
+/* Card ring utilities also set box-shadow; preserve this local frame shadow. */
+.footer-panel {
+  box-shadow: 0 1rem 3rem color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+@container footer-panel (min-width: 18rem) {
+  .footer-navigation {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container footer-panel (min-width: 40rem) {
+  .footer-meta {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+}
+@container footer-panel (min-width: 64rem) {
+  .footer-panel-main {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+  }
+  .footer-navigation {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (forced-colors: active) {
+  .footer-wordmark-frame {
+    display: none;
+  }
+}

@@ -42,16 +42,17 @@ test("Website preview banner is absent on Home, interior, structural preview and
   );
 });
 
-test("Home hero follows the header without the removed banner or an empty gap at each width", async ({
+test("Home hero starts under its overlay header without the removed banner or an empty gap", async ({
   page,
 }, info) => {
   await page.goto("/");
   await page.waitForLoadState("networkidle");
+  await expect(page.getByRole("banner")).toHaveAttribute("data-overlay", "");
   for (const width of [320, 375, 768, 1280, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     await expect(page.getByRole("banner")).toHaveCSS(
       "border-bottom-width",
-      "0px",
+      "1px",
     );
     await expect(page.getByRole("banner")).toHaveCSS("box-shadow", "none");
     await expect(page.locator('[aria-labelledby="home-hero-title"]')).toHaveCSS(
@@ -66,13 +67,13 @@ test("Home hero follows the header without the removed banner or an empty gap at
       )!;
       return {
         first: main.firstElementChild === hero,
-        headerBottom: header.getBoundingClientRect().bottom,
+        headerTop: header.getBoundingClientRect().top,
         heroTop: hero.getBoundingClientRect().top,
         fits: document.documentElement.scrollWidth <= innerWidth + 1,
       };
     });
     expect(geometry.first).toBe(true);
-    expect(geometry.heroTop).toBeCloseTo(geometry.headerBottom, 1);
+    expect(geometry.heroTop).toBeCloseTo(geometry.headerTop, 1);
     expect(geometry.fits).toBe(true);
   }
   await expect(

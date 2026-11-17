@@ -4,6 +4,10 @@ import Page from "@/app/(marketing)/page";
 import { homeStats } from "@/content/home";
 import { fixture } from "../fixtures/home-stats.data";
 
+vi.mock("embla-carousel-react", () => ({
+  default: () => [undefined, undefined],
+}));
+
 const flags = vi.hoisted(() => ({ preview: true }));
 
 vi.mock("@/content/site", async (importOriginal) => {
@@ -32,23 +36,21 @@ beforeEach(() => {
 
 afterEach(() => vi.unstubAllGlobals());
 
-it("H01-C06: shows a clearly labeled example counter immediately between the real hero and Why choose us", () => {
+it("H01-C06: shows a clearly labeled example counter inside the real hero before Why choose us", () => {
   const { container } = render(<Page />);
   const preview = screen.getByRole("region", {
     name: "Example counter figures",
   });
   const wrapper = preview.closest<HTMLElement>("[data-home-stats-preview]")!;
-  expect(wrapper.previousElementSibling).toHaveAttribute(
-    "aria-labelledby",
-    "home-hero-title",
-  );
-  expect(wrapper.nextElementSibling).toHaveAttribute(
+  const hero = wrapper.closest("[data-home-hero]")!;
+  expect(hero).toContainElement(wrapper);
+  expect(hero.nextElementSibling).toHaveAttribute(
     "aria-labelledby",
     "home-why-choose-us-title",
   );
-  expect(wrapper.nextElementSibling?.nextElementSibling).toHaveAttribute(
+  expect(hero.nextElementSibling?.nextElementSibling).toHaveAttribute(
     "aria-labelledby",
-    "home-story-title",
+    "home-services-title",
   );
   const items = within(preview).getAllByRole("listitem");
   expect(items).toHaveLength(4);
@@ -63,12 +65,27 @@ it("H01-C06: shows a clearly labeled example counter immediately between the rea
   );
   expect(container.querySelectorAll("h1")).toHaveLength(1);
   expect(homeStats.items).toEqual([]);
+  const memberships = container.querySelector("[data-home-memberships]")!;
+  expect(memberships.previousElementSibling).toHaveAttribute(
+    "data-home-features",
+  );
+  expect(memberships.nextElementSibling?.nextElementSibling).toHaveAttribute(
+    "aria-labelledby",
+    "home-story-title",
+  );
+  expect(memberships.nextElementSibling).toHaveAttribute(
+    "aria-labelledby",
+    "home-success-stories-title",
+  );
 });
 
 it("H01-C06: never renders sample figures when site preview is disabled", () => {
   flags.preview = false;
   const { container } = render(<Page />);
   expect(container.querySelector("[data-home-stats-preview]")).toBeNull();
+  expect(container.querySelector("[data-hero-stats]")).toBeNull();
+  expect(container.querySelector("[data-home-memberships]")).toBeNull();
+  expect(container.querySelector("[data-home-success-stories]")).toBeNull();
   expect(
     screen.queryByRole("region", { name: "Features and services" }),
   ).toBeNull();

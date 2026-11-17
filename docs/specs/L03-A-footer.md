@@ -1,5 +1,7 @@
 # L03-A: Footer
 
+The current visual composition is defined by [L03-B shared footer redesign](L03-B-footer-redesign.md). This document retains the original implementation contract and historical verification results.
+
 Status: **verified for the documented scope**. Date: 2026-11-16. Item 4 of the [13-item pre-Home checklist](../pre-home-checklist.md).
 
 ## Purpose and boundary

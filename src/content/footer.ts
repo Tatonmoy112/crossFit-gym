@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { navigationSchema } from "@/schemas/navigation";
+import { routes } from "@/config/routes";
 import { legalDocuments } from "./legal";
 import { site } from "./site";
 
@@ -15,6 +16,22 @@ const channel = z.object({
 });
 
 export const footerContentSchema = z.object({
+  tagline: copy,
+  wordmark: copy,
+  cta: z.object({
+    heading: copy,
+    description: copy,
+    action: z.object({
+      label: copy,
+      href: z
+        .string()
+        .refine(
+          (href) =>
+            routes.some((route) => href === `${route.replace(/\/$/, "")}/`),
+          "Use a registered page destination with a trailing slash.",
+        ),
+    }),
+  }),
   address: copy,
   phone: z.object({
     label: copy,
@@ -43,8 +60,17 @@ export const footerContentSchema = z.object({
   legal: navigationSchema,
   legalNotice: copy.nullable(),
 });
+export type FooterContent = z.infer<typeof footerContentSchema>;
 
 export const footerContent = footerContentSchema.parse({
+  tagline: site.tagline,
+  wordmark: site.name.toUpperCase(),
+  cta: {
+    heading: "Your Stronger Future Starts Here.",
+    description:
+      "Visit Crossfit Gym in Sector 12, Uttara, Dhaka. Contact our team to get started.",
+    action: { label: "Start your journey", href: "/contact/" },
+  },
   address: site.address,
   phone: { label: site.phone, href: `tel:${site.telephone}` },
   directions: { label: "Get directions", href: site.directions },

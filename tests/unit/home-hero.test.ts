@@ -13,8 +13,8 @@ it("H01-A04: derives hero text and actions from approved site content only", () 
   expect(homeHero.tagline).toBe(site.tagline);
   expect(homeHero.location).toBe(site.shortAddress);
   expect(homeHero.actions).toEqual([
-    { label: `Call ${site.phone}`, href: `tel:${site.telephone}` },
-    { label: "Get directions", href: site.directions },
+    { label: "Start your journey", href: "/contact/" },
+    { label: "View memberships", href: "/membership/" },
   ]);
   expect(JSON.stringify(homeHero)).not.toMatch(/mailto:|welcome/i);
 });

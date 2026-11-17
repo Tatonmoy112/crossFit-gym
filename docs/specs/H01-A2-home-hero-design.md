@@ -1,5 +1,7 @@
 # H01-A2: Home hero design
 
+Update 2026-11-17: [H01-A3](H01-A3-home-hero-redesign.md) supersedes the hero presentation/actions, counter placement and Home-only header placement described below. Historical acceptance results remain recorded for the earlier implementation.
+
 Status: **verified** (see [QA record](../qa-checklist.md#h01-a2-home-hero-design-2026-11-16); owner visual approval pending). Date: 2026-11-16. This restyles [H01-A Home hero](H01-A-home-hero.md) from a style reference the owner supplied (an Invictus Fitness hero screenshot, provided in the conversation). Where this document differs from H01-A, it replaces H01-A's contract. All other H01-A rules still apply: validated content, owner-approved image, no invented copy, a single H1 and Server Component only.
 
 ## Reference to project mapping

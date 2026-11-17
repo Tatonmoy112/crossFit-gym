@@ -1,6 +1,18 @@
 # Component rebuild plan
 
-Updated: 2026-11-16. This is the working checklist for rebuilding the UI one component at a time and then composing each existing page.
+[L03-B shared footer redesign](specs/L03-B-footer-redesign.md) implements the owner's full CTA/panel/wordmark composition across all routes and the custom 404. Original destinations, availability notes, page templates and preview/indexing/release guards remain. Footer and FooterCallToAction compose existing primitives on the server; named container queries provide responsive reflow without client state. See the specification and QA record for current verified behavior; earlier footer composition descriptions remain historical.
+
+[H01-H](specs/H01-H-home-success-stories.md) implements the approved three-card Member Success Stories preview after Memberships and before Story. It includes exact fictional examples/disclosure, asymmetric finite navigation, native fallback and the closing community action. Approved member stories, consent and photos remain outstanding. Earlier adjacency and next-task notes below are historical.
+
+Current addition (2026-11-17): [H01-G Membership & Pricing](specs/H01-G-home-memberships.md) implements the homepage-only owner-approved preview after Features and before Story. Three example tiers use unconfirmed-price wording, a visible disclosure and Contact links. The real memberships catalog stays empty, and the section disappears when site preview is disabled. Photography and approved membership business data remain pending; no additional page or billing interaction is introduced.
+
+Current addition (2026-11-17): [H01-F Homepage features](specs/H01-F-home-features.md) implements the owner's next-section reference after Services. Home now composes Hero/counters → Why choose us → Our Services → Features → Story → inventory. Six supplied feature cards use existing route targets and gradient photography placeholders. Feature pages and photos remain later tasks; earlier Services/Story adjacency and “second section pending” notes below are superseded.
+
+Current addition (2026-11-17): [H01-E Home services](specs/H01-E-home-services.md) places the eight-card carousel after Why choose us and before Story. Approved introduction/short service copy comes from newsection.md; cards link to Contact, with photographs/detail pages deferred. Current sequence: hero with counters → Why choose us → Our Services → story missing state → inventory. This supersedes earlier Home ordering below; all 24 templates remain in scope. The second new section is a subsequent task.
+
+[H01-A3 Home hero redesign](specs/H01-A3-home-hero-redesign.md) now supersedes the previous hero/counter composition: the four counters are embedded in the straight-edged photographic hero, with Contact/Membership actions and a measured Home-only header overlay. Why choose us and Story follow the hero. Existing preview safeguards and remaining rebuild scope are preserved.
+
+Updated: 2026-11-17. This is the working checklist for rebuilding the UI one component at a time and then composing each existing page.
 
 ## Current foundation
 

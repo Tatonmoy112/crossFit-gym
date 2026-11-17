@@ -4,6 +4,10 @@ import { HomeWhyChooseUs } from "@/features/home/home-why-choose-us";
 import { homeWhyChooseUs } from "@/content/home";
 import Page from "@/app/(marketing)/page";
 
+vi.mock("embla-carousel-react", () => ({
+  default: () => [undefined, undefined],
+}));
+
 beforeEach(() => {
   vi.stubGlobal("matchMedia", () => ({ matches: true }));
 });
@@ -49,7 +53,7 @@ it("H01-D04: an empty collection renders no section, heading or empty grid", () 
   expect(container).toBeEmptyDOMElement();
 });
 
-it("H01-D04: actual Home keeps story directly after Why choose us without the removed services section", () => {
+it("H01-D04: actual Home places the new services section after Why choose us", () => {
   const { container } = render(<Page />);
   expect(
     screen.queryByRole("region", { name: "Features and services" }),
@@ -58,17 +62,21 @@ it("H01-D04: actual Home keeps story directly after Why choose us without the re
     container.querySelector("[data-features-wheel], [data-feature-card]"),
   ).toBeNull();
   const region = screen.getByRole("region", { name: "Why choose us" });
-  expect(region.previousElementSibling).toHaveAttribute(
-    "data-home-stats-preview",
-  );
-  expect(region.previousElementSibling?.previousElementSibling).toHaveAttribute(
-    "aria-labelledby",
-    "home-hero-title",
-  );
+  expect(region.previousElementSibling).toHaveAttribute("data-home-hero");
+  expect(
+    region.previousElementSibling?.querySelector("[data-home-stats-preview]"),
+  ).not.toBeNull();
   expect(region.nextElementSibling).toHaveAttribute(
     "aria-labelledby",
-    "home-story-title",
+    "home-services-title",
   );
+  expect(region.nextElementSibling?.nextElementSibling).toHaveAttribute(
+    "aria-labelledby",
+    "home-features-title",
+  );
+  expect(
+    region.nextElementSibling?.nextElementSibling?.nextElementSibling,
+  ).toHaveAttribute("aria-labelledby", "home-memberships-title");
   expect(container.querySelectorAll("h1")).toHaveLength(1);
   expect(screen.getByText("Our story has not been supplied yet")).toBeVisible();
 });

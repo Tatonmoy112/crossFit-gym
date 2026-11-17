@@ -83,9 +83,22 @@ test("H01-B01/B05: Home shows the missing story state after the counter and Why 
         '[aria-labelledby="home-why-choose-us-title"]',
       )!;
       return (
-        hero.nextElementSibling === counter &&
-        counter.nextElementSibling === why &&
-        why.nextElementSibling === story &&
+        hero.contains(counter) &&
+        hero.nextElementSibling === why &&
+        why.nextElementSibling?.getAttribute("aria-labelledby") ===
+          "home-services-title" &&
+        why.nextElementSibling.nextElementSibling?.getAttribute(
+          "aria-labelledby",
+        ) === "home-features-title" &&
+        why.nextElementSibling.nextElementSibling.nextElementSibling?.getAttribute(
+          "aria-labelledby",
+        ) === "home-memberships-title" &&
+        why.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling?.getAttribute(
+          "aria-labelledby",
+        ) === "home-success-stories-title" &&
+        story.previousElementSibling?.hasAttribute(
+          "data-home-success-stories",
+        ) &&
         Boolean(
           story.compareDocumentPosition(inventory) &
           Node.DOCUMENT_POSITION_FOLLOWING,

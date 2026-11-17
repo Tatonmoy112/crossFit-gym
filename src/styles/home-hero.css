@@ -1,0 +1,109 @@
+@layer components {
+  [data-site-header] {
+    position: relative;
+    z-index: 40;
+  }
+
+  [data-site-header][data-home="true"][data-overlay] {
+    position: absolute;
+    inset: 0 0 auto;
+    background: linear-gradient(
+      to bottom,
+      rgb(32 32 32 / 95%),
+      rgb(32 32 32 / 75%)
+    );
+    border-bottom: 1px solid rgb(255 255 255 / 10%);
+  }
+
+  .home-hero-content {
+    padding-top: calc(var(--home-header-height, 0px) + clamp(3rem, 6vw, 6rem));
+  }
+
+  .home-hero-gradient {
+    background: linear-gradient(
+      to right,
+      rgb(32 32 32 / 95%),
+      rgb(32 32 32 / 85%)
+    );
+  }
+
+  .home-hero-bottom-gradient {
+    background: linear-gradient(
+      to top,
+      rgb(32 32 32 / 98%) 0%,
+      rgb(32 32 32 / 80%) 24%,
+      transparent 65%
+    );
+  }
+
+  .home-stats {
+    container-type: inline-size;
+    container-name: home-stats;
+  }
+
+  .home-stats-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+
+  .home-stat:not(:first-child) {
+    padding-block-start: 1.25rem;
+  }
+
+  .home-stat-vertical {
+    display: none;
+  }
+
+  /* Query usable counter width; rem thresholds also respect enlarged text. */
+  @container home-stats (min-width: 20.5rem) {
+    .home-stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem 0;
+    }
+
+    .home-stat:not(:first-child) {
+      padding-block-start: 0;
+    }
+
+    .home-stat:nth-child(even) {
+      padding-inline-start: 1.5rem;
+    }
+
+    .home-stat:nth-child(odd) {
+      padding-inline-end: 1.5rem;
+    }
+
+    .home-stat-horizontal {
+      display: none;
+    }
+
+    .home-stat:nth-child(even) .home-stat-vertical {
+      display: block;
+    }
+  }
+
+  @container home-stats (min-width: 45rem) {
+    .home-stats-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .home-stat:not(:first-child) {
+      padding-inline: 1.5rem;
+    }
+
+    .home-stat:not(:first-child) .home-stat-vertical {
+      display: block;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .home-hero-gradient {
+      background: linear-gradient(
+        to right,
+        rgb(32 32 32 / 97%) 0%,
+        rgb(32 32 32 / 88%) max(50%, 42rem),
+        transparent 100%
+      );
+    }
+  }
+}
