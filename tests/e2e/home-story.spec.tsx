@@ -79,6 +79,9 @@ test("H01-B01/B05: Home shows the missing story state after the counter and Why 
         'nav[aria-label="Page inventory"]',
       )!;
       const counter = document.querySelector("[data-home-stats-preview]")!;
+      const categories = document.querySelector(
+        "[data-home-product-categories]",
+      )!;
       const why = document.querySelector(
         '[aria-labelledby="home-why-choose-us-title"]',
       )!;
@@ -95,7 +98,8 @@ test("H01-B01/B05: Home shows the missing story state after the counter and Why 
         ) === "home-memberships-title" &&
         why.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling?.getAttribute(
           "aria-labelledby",
-        ) === "home-success-stories-title" &&
+        ) === "home-product-categories-title" &&
+        categories.nextElementSibling === story.previousElementSibling &&
         story.previousElementSibling?.hasAttribute(
           "data-home-success-stories",
         ) &&

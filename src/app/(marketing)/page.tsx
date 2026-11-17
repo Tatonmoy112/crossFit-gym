@@ -21,6 +21,8 @@ import { homeMembershipsPreview } from "@/content/previews/home-memberships";
 import { HomeMemberships } from "@/features/home/home-memberships";
 import { homeSuccessStoriesPreview } from "@/content/previews/home-success-stories";
 import { HomeSuccessStories } from "@/features/home/home-success-stories";
+import { homeProductCategoriesPreview } from "@/content/previews/home-product-categories";
+import { HomeProductCategories } from "@/features/home/home-product-categories";
 
 export const metadata = makeMetadata(
   "One step closer",
@@ -46,6 +48,9 @@ export default function Page() {
       <HomeFeatures content={homeFeatures} />
       {site.preview && <HomeMemberships content={homeMembershipsPreview} />}
       {site.preview && (
+        <HomeProductCategories content={homeProductCategoriesPreview} />
+      )}
+      {site.preview && (
         <HomeSuccessStories content={homeSuccessStoriesPreview} />
       )}
       <HomeStory content={homeStory} />
@@ -62,18 +67,20 @@ export default function Page() {
                   </Link>
                 </li>
               ))}
-            {["programs", "coaches", "blog", "careers", "supplements"].map(
-              (kind) => (
-                <li key={kind}>
-                  <Link
-                    prefetch={false}
-                    href={"/" + kind + "/content-preview/"}
-                  >
-                    {"/" + kind + "/content-preview/"}
-                  </Link>
-                </li>
-              ),
-            )}
+            {[
+              "programs",
+              "coaches",
+              "blog",
+              "careers",
+              "supplements",
+              "products",
+            ].map((kind) => (
+              <li key={kind}>
+                <Link prefetch={false} href={"/" + kind + "/content-preview/"}>
+                  {"/" + kind + "/content-preview/"}
+                </Link>
+              </li>
+            ))}
             <li>
               <Link prefetch={false} href="/locations/uttara/">
                 /locations/uttara/

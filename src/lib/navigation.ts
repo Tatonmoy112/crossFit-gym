@@ -1,7 +1,10 @@
 import type { NavigationGroup } from "@/schemas/navigation";
 
 function normalizeNavigationPath(pathname: string | null) {
-  return pathname?.split(/[?#]/)[0].replace(/\/+$/, "") || null;
+  const path = pathname?.split(/[?#]/)[0].replace(/\/+$/, "") || null;
+  return path === "/supplements" || path?.startsWith("/supplements/")
+    ? "/products"
+    : path;
 }
 
 function currentNavigationLink(

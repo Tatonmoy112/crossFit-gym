@@ -7,7 +7,10 @@ export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!indexable) return [];
   const paths = [
-    ...routes.filter((path) => !["/privacy", "/terms"].includes(path)),
+    ...routes.filter(
+      (path) =>
+        !["/privacy", "/terms", "/products", "/supplements"].includes(path),
+    ),
     ...Object.entries(catalogs).flatMap(([kind, items]) =>
       items
         .filter((item) => item.status === "approved")

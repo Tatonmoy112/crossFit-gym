@@ -238,7 +238,7 @@ test("reduced motion, enlarged text, blocked fonts and accessibility preserve op
     section(page).getByRole("button", { name: /automatic rotation/ }),
   ).toHaveCount(0);
   await section(page).getByRole("button", { name: "Next service" }).click();
-  expect(await current(page)).toBe("strength-training");
+  await expect.poll(() => current(page)).toBe("strength-training");
   for (const width of [320, 375, 768, 1280, 1920]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.addStyleTag({

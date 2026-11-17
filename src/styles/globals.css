@@ -10,6 +10,9 @@
 @import "./home-features.css";
 @import "./home-memberships.css";
 @import "./home-success-stories.css";
+@import "./home-product-categories.css";
+@import "./products.css";
+@import "./product-details.css";
 @import "./footer.css";
 
 @custom-variant dark {

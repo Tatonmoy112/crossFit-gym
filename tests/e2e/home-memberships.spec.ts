@@ -62,7 +62,7 @@ test("disclosed preview plans follow Features with responsive centered layering 
       (node) =>
         node.previousElementSibling?.hasAttribute("data-home-features") &&
         node.nextElementSibling?.getAttribute("aria-labelledby") ===
-          "home-success-stories-title",
+          "home-product-categories-title",
     ),
   ).toBe(true);
   await expect(section(page).locator("h3")).toHaveText([

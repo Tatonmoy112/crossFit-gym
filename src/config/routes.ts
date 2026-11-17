@@ -14,6 +14,7 @@ export const routes = [
   "/contact",
   "/careers",
   "/supplements",
+  "/products",
   "/privacy",
   "/terms",
 ];

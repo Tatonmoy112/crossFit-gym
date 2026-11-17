@@ -1,5 +1,10 @@
 import { z } from "zod";
 import { routes } from "@/config/routes";
+import {
+  isProductListingHref,
+  productCategoryHref,
+} from "@/lib/products/links";
+import { productCategoryIds } from "@/config/products";
 
 export const imageSchema = z.object({
   src: z.string().startsWith("/"),
@@ -351,4 +356,54 @@ export const homeSuccessStoriesPreviewSchema = z.object({
 });
 export type HomeSuccessStoriesPreviewContent = z.infer<
   typeof homeSuccessStoriesPreviewSchema
+>;
+
+export const homeProductCategorySchema = z.object({
+  id: z.enum(productCategoryIds),
+  title: heroText,
+  description: heroText,
+  action: z.object({
+    label: heroText,
+    href: z
+      .string()
+      .refine(
+        isProductListingHref,
+        "Use Products or a recognized product category destination.",
+      ),
+  }),
+});
+export type HomeProductCategory = z.infer<typeof homeProductCategorySchema>;
+
+export const homeProductCategoriesPreviewSchema = z.object({
+  status: z.literal("preview"),
+  eyebrow: heroText,
+  heading: heroText,
+  description: heroText,
+  notice: heroText,
+  action: z.object({ label: heroText, href: z.literal("/products/") }),
+  categories: z
+    .array(homeProductCategorySchema)
+    .length(4)
+    .superRefine((categories, context) => {
+      const ids = new Set<string>();
+      categories.forEach((category, index) => {
+        if (category.action.href !== productCategoryHref(category.id))
+          context.addIssue({
+            code: "custom",
+            message:
+              "Category actions must open their matching product filter.",
+            path: [index, "action", "href"],
+          });
+        if (ids.has(category.id))
+          context.addIssue({
+            code: "custom",
+            message: "Duplicate homepage product category ID",
+            path: [index, "id"],
+          });
+        ids.add(category.id);
+      });
+    }),
+});
+export type HomeProductCategoriesPreviewContent = z.infer<
+  typeof homeProductCategoriesPreviewSchema
 >;

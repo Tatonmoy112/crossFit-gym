@@ -46,7 +46,7 @@ test("shared section containers cap at 1550px and keep responsive gutters throug
   await page.waitForLoadState("networkidle");
   await page.evaluate(() => document.fonts.ready);
   const containers = page.locator(".layout-container");
-  expect(await containers.count()).toBe(11);
+  expect(await containers.count()).toBe(12);
   for (const width of [
     1920, 320, 375, 768, 1280, 1440, 1550, 1613, 1614, 1615, 2560,
   ]) {

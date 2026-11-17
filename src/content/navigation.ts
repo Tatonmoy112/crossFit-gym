@@ -25,7 +25,7 @@ export const navigation = navigationSchema.parse([
     links: [
       { label: "Journal", href: "/blog" },
       { label: "Affiliates", href: "/affiliates" },
-      { label: "Supplements", href: "/supplements" },
+      { label: "Products", href: "/products" },
     ],
   },
   {

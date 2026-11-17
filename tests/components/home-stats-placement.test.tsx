@@ -69,13 +69,14 @@ it("H01-C06: shows a clearly labeled example counter inside the real hero before
   expect(memberships.previousElementSibling).toHaveAttribute(
     "data-home-features",
   );
-  expect(memberships.nextElementSibling?.nextElementSibling).toHaveAttribute(
-    "aria-labelledby",
-    "home-story-title",
-  );
+  expect(
+    memberships.nextElementSibling?.nextElementSibling?.nextElementSibling,
+  ).toHaveAttribute("aria-labelledby", "home-story-title");
   expect(memberships.nextElementSibling).toHaveAttribute(
-    "aria-labelledby",
-    "home-success-stories-title",
+    "data-home-product-categories",
+  );
+  expect(memberships.nextElementSibling?.nextElementSibling).toHaveAttribute(
+    "data-home-success-stories",
   );
 });
 
@@ -85,6 +86,7 @@ it("H01-C06: never renders sample figures when site preview is disabled", () => 
   expect(container.querySelector("[data-home-stats-preview]")).toBeNull();
   expect(container.querySelector("[data-hero-stats]")).toBeNull();
   expect(container.querySelector("[data-home-memberships]")).toBeNull();
+  expect(container.querySelector("[data-home-product-categories]")).toBeNull();
   expect(container.querySelector("[data-home-success-stories]")).toBeNull();
   expect(
     screen.queryByRole("region", { name: "Features and services" }),

@@ -1,0 +1,100 @@
+@layer components {
+  .product-category-card {
+    min-height: 26rem;
+    background:
+      linear-gradient(0deg, var(--background), transparent 85%),
+      linear-gradient(
+        145deg,
+        var(--secondary),
+        var(--card) 55%,
+        var(--background)
+      );
+  }
+}
+[data-home-product-categories] > .layout-container {
+  container: product-categories / inline-size;
+}
+[data-home-product-categories-carousel] [data-slot="carousel-content"] {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  outline-offset: -4px;
+}
+[data-home-product-categories-carousel] .product-categories-track {
+  align-items: center;
+  padding-block: 0.5rem;
+}
+[data-home-product-categories-carousel] [data-slot="carousel-item"] {
+  scroll-snap-align: center;
+}
+[data-home-product-categories-carousel][data-ready="true"]
+  [data-slot="carousel-content"] {
+  overflow: hidden;
+  scroll-snap-type: none;
+  touch-action: pan-y pinch-zoom;
+}
+[data-home-product-categories-carousel] [hidden] {
+  display: none;
+}
+[data-home-product-categories-carousel][data-ready="true"]
+  .product-categories-controls {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, max-content) 2.75rem;
+}
+.product-categories-controls > a {
+  min-width: 0;
+}
+.product-category-control[aria-disabled="true"] {
+  background: var(--disabled);
+  color: var(--disabled-foreground);
+  cursor: default;
+}
+@container product-categories (min-width: 40rem) {
+  [data-home-product-categories-carousel] [data-slot="carousel-item"] {
+    flex-basis: 70%;
+  }
+}
+@container product-categories (min-width: 60rem) {
+  [data-home-product-categories-carousel] [data-slot="carousel-item"] {
+    flex-basis: calc((100% - 2rem) / 3);
+    z-index: 1;
+  }
+  [data-home-product-categories-carousel][data-ready="true"]
+    .product-categories-track {
+    gap: 0;
+  }
+  [data-home-product-categories-carousel][data-ready="true"]
+    [data-slot="carousel-item"] {
+    flex-basis: calc((100% + 2rem) / 3);
+  }
+  [data-home-product-categories-carousel][data-ready="true"]
+    [data-slot="carousel-item"]
+    + [data-slot="carousel-item"] {
+    margin-left: -1rem;
+  }
+  [data-home-product-categories-carousel][data-ready="false"]
+    [data-category-index="1"]
+    .product-category-card,
+  [data-category-active] .product-category-card {
+    min-height: 30rem;
+  }
+  [data-home-product-categories-carousel] [data-category-active] {
+    z-index: 2;
+  }
+  [data-home-product-categories-carousel]
+    [data-slot="carousel-item"]:focus-within {
+    z-index: 3;
+  }
+}
+@container product-categories (max-width: 17rem) {
+  [data-home-product-categories-carousel] [data-slot="carousel-item"] {
+    flex-basis: 100%;
+  }
+  .product-category-card {
+    padding: 0.75rem;
+  }
+  [data-home-product-categories-carousel][data-ready="true"]
+    .product-categories-controls {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+}

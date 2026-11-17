@@ -1,5 +1,17 @@
 # Architecture
 
+## Reusable product details
+
+[SHOP02](specs/SHOP02-product-details.md) adds a server-composed static Products detail template with separate header, gallery, summary, description, details, review and related-product sections. Only image-gallery enhancement and sharing require client boundaries. ProductInquiryActions is shared with quick view; ProductCard supplies native detail links across listing, static fallback and related results. Validated detail content is joined by product ID and status; actual and preview collections remain separate. A neutral content-preview static parameter supports an empty approved collection without publishing samples. All new detail outputs stay noindex and outside sitemap.
+
+## Products listing and quick view
+
+[SHOP01](specs/SHOP01-products-listing.md) adds the Products route and shares its server page composition with the legacy Supplements category entrypoint. ProductsPage validates/selects content on the server and supplies the hero/introduction plus a static all-record fallback around ProductCatalog's Suspense boundary. ProductCatalog isolates URL discovery, local progressive rendering, responsive filters and modal quick view; shared ProductCard/ProductMedia modules render the same records in both modes. Product/category/copy schemas and known category destinations preserve relationship checks without loosening unrelated navigation contracts. Preview records never populate actual catalogs, disappear outside site preview and remain excluded from indexing/sitemap. Existing supplements detail shells and all original templates remain.
+
+## Homepage product categories preview
+
+[H01-I](specs/H01-I-home-product-categories.md) inserts a site.preview-gated section between Memberships and Success Stories. HomeProductCategories/ProductCategoryCard retain validated proposed category copy on the server; HomeProductCategoriesCarousel isolates finite centered Embla navigation, active layering, focus reveal, inert state and live reduced motion. The client receives composed slides and action. Scoped CSS provides intrinsic cards, desktop overlap, responsive widths and native scrolling before initialization. Existing carousel primitives, real catalogs, routes, providers and dependencies remain unchanged. SHOP01 connects the closing action to Products and the four category actions to recognized category URLs; availability and photography remain unconfirmed.
+
 ## Shared footer redesign
 
 [L03-B](specs/L03-B-footer-redesign.md) keeps one Footer after main across the entire site and custom 404. FooterCallToAction is a Server Component composing Container, SectionHeading and a Button/NavigationLink Contact action. Footer composes a second Container, white Card, BrandLink and original contact/navigation/social/legal content; the decorative wordmark is isolated from meaningful content. Validated footer content owns CTA copy, source-derived tagline and wordmark. Named Card container queries control four/two/one navigation columns and meta reflow. Local footer CSS was created before its global import. No pathname boundary, client state, provider, route, dependency or release-policy change is introduced; native no-JavaScript navigation and modal isolation remain.

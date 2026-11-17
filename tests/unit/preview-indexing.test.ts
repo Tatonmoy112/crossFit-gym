@@ -55,6 +55,9 @@ it.each([
     expect(sitemap.some((entry) => entry.url.includes("content-preview"))).toBe(
       false,
     );
+    expect(
+      sitemap.some((entry) => /\/(?:products|supplements)\/$/.test(entry.url)),
+    ).toBe(false);
     if (!expected) expect(sitemap).toEqual([]);
     else expect(sitemap.length).toBeGreaterThan(0);
   },

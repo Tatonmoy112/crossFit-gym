@@ -23,7 +23,7 @@ test("tablet and wide layouts fit the viewport", async ({ page }, info) => {
   }
 });
 test("complete route inventory loads without overflow", async ({ page }) => {
-  // This checks 23 full document loads, including hydration and network settling.
+  // This checks every planned route plus the Products addition, including hydration and network settling.
   test.setTimeout(120000);
   const paths = [
     "/",
@@ -45,6 +45,7 @@ test("complete route inventory loads without overflow", async ({ page }) => {
     "/contact/",
     "/careers/",
     "/careers/content-preview/",
+    "/products/",
     "/supplements/",
     "/supplements/content-preview/",
     "/privacy/",
@@ -68,6 +69,11 @@ test("complete route inventory loads without overflow", async ({ page }) => {
           name: "Program information is not available yet",
         }),
       ).toBeVisible();
+    } else if (["/products/", "/supplements/"].includes(path)) {
+      await expect(page.locator("[data-product-catalog]")).toHaveAttribute(
+        "data-ready",
+        "true",
+      );
     } else {
       await expect(
         page.getByText("Page components are awaiting rebuild.", {
@@ -75,7 +81,8 @@ test("complete route inventory loads without overflow", async ({ page }) => {
         }),
       ).toBeVisible();
     }
-    await expect(page.locator("form, input, dialog")).toHaveCount(0);
+    if (!["/products/", "/supplements/"].includes(path))
+      await expect(page.locator("form, input, dialog")).toHaveCount(0);
     await expect(page.getByRole("contentinfo")).toHaveCount(1);
     await expect(page.getByRole("banner")).toHaveCount(1);
     await expect(page.getByRole("main")).toHaveCount(1);
@@ -98,7 +105,7 @@ test("temporary page inventory supports navigation and recovery", async ({
 }) => {
   await page.goto("/");
   const inventory = page.getByRole("navigation", { name: "Page inventory" });
-  await expect(inventory.getByRole("link")).toHaveCount(22);
+  await expect(inventory.getByRole("link")).toHaveCount(24);
   await inventory
     .getByRole("link", { name: "/schedule/", exact: true })
     .click();
