@@ -62,4 +62,32 @@ export const faqs = faqCollectionSchema.parse([
       "The right supplement depends on your dietary needs, training routine, and personal goals. Ask for confirmed product ingredients and usage information, and consult a qualified healthcare or nutrition professional for personalized advice.",
     category: "Products",
   },
+  {
+    id: "choose-membership",
+    question: "How do I choose the right membership plan?",
+    answer:
+      "The right membership depends on your training goals, preferred workout schedule, budget, and the services you need. Speak with our team to confirm available plans and find an option that suits you.",
+    category: "Membership",
+  },
+  {
+    id: "personal-training-in-membership",
+    question: "Is personal training included in every membership?",
+    answer:
+      "Personal training is one of our gym services. Membership inclusion, session availability, and any additional cost must be confirmed with our team before you join.",
+    category: "Membership",
+  },
+  {
+    id: "membership-upgrades",
+    question: "Can I upgrade my membership later?",
+    answer:
+      "Contact our team to confirm whether membership upgrades are available under current policies and ask about any applicable charges before making a change.",
+    category: "Membership",
+  },
+  {
+    id: "membership-fees",
+    question: "Are there any additional membership fees?",
+    answer:
+      "Ask our team to confirm registration fees, service charges, and the total cost of your membership before committing. Approved fee details have not yet been supplied for publication.",
+    category: "Membership",
+  },
 ]);

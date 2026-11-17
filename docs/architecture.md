@@ -1,5 +1,9 @@
 # Architecture
 
+## Membership Plans
+
+[M01](specs/M01-membership-plans.md) composes nine server-owned sections at `/membership/`. Validated page copy and isolated page-specific preview records resolve against existing homepage plan identities; approved inventory stays separate and empty. MembershipSectionLink adds fragment focus/history through Next's patched native History API, while FaqDisclosures is reused for FAQ interaction. Pricing/comparison use explicit unknown-content states outside preview. Native table semantics/overflow and scoped container-query CSS need no client layout state. The page introduces no new route, provider, dependency, or commerce integration.
+
 ## Homepage partnership invitation
 
 [H01-K](specs/H01-K-home-affiliates.md) adds server-composed HomeAffiliates, PartnershipNetwork and PartnershipOpportunityTile. A validated invitation module owns copy and three known/unique opportunity identifiers, separate from the existing null affiliate offering. The network reuses the approved brand image and typed decorative icon mapping. Two container thresholds govern section and diagram reflow, with an additional narrow-tile adjustment. Native Contact navigation is the only action. The invitation is independent of preview flags, has no client state and adds no route or provider relationship.

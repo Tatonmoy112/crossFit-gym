@@ -1,5 +1,7 @@
 # Component rebuild plan
 
+[M01 Membership Plans](specs/M01-membership-plans.md) implements the current preview/inquiry presentation for the existing Membership template: hero, introduction, illustrative pricing, proposed benefits/comparison, joining steps, FAQ, final CTA and pending information. Confirmed plan content, policies and any approved billing/registration integration remain future work. The real catalog remains empty; page previews disappear when preview mode is disabled. The earlier Affiliates section is reconnected to Home to complete its already-approved integration.
+
 [H01-K homepage Affiliates](specs/H01-K-home-affiliates.md) implements the approved partnership invitation between Product Categories and Success Stories. All-server composition supplies the charcoal introduction, circular gym hub, light opportunity tiles and Contact action. The separate Affiliates template, actual partner records and any referral/commission offering remain pending. Earlier homepage adjacency notes below are historical.
 
 [H01-J homepage FAQ](specs/H01-J-home-faq.md) implements the six-question Home section after Success Stories and before Story. Shared FAQ records, native disclosures, fine-pointer hover previews, click persistence, touch/keyboard controls and a Contact action are included. This factual section renders outside preview mode. The broader FAQ discovery/search/category page in step 9 remains pending; this change does not mark that page rebuilt.

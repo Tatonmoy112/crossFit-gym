@@ -69,6 +69,14 @@ test("complete route inventory loads without overflow", async ({ page }) => {
           name: "Program information is not available yet",
         }),
       ).toBeVisible();
+    } else if (path === "/membership/") {
+      await expect(
+        page.getByRole("heading", {
+          level: 1,
+          name: "Your Fitness. Your Goals. Your Membership.",
+        }),
+      ).toBeVisible();
+      await expect(page.locator("[data-membership-tier]")).toHaveCount(3);
     } else if (["/products/", "/supplements/"].includes(path)) {
       await expect(page.locator("[data-product-catalog]")).toHaveAttribute(
         "data-ready",

@@ -14,7 +14,7 @@ describe("homepage FAQ content", () => {
       "gym-visit",
       "choosing-supplements",
     ]);
-    expect(faqs).toHaveLength(9);
+    expect(faqs).toHaveLength(13);
     expect(
       faqs.filter((item) => ["location", "contact", "hours"].includes(item.id)),
     ).toHaveLength(3);

@@ -12,7 +12,7 @@ export const homeMembershipsPreview = homeMembershipsPreviewSchema.parse({
   supportingText: "Your journey. Your pace. Your membership.",
   notice:
     "Illustrative membership plans. Benefits and prices are not confirmed gym offerings.",
-  action: { label: "Ask about memberships", href: "/contact/" },
+  action: { label: "View Membership Plans", href: "/membership/" },
   plans: [
     {
       id: "essential",

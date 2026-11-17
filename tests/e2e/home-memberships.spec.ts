@@ -78,8 +78,16 @@ test("disclosed preview plans follow Services with responsive centered layering 
   );
   await expect(section(page).locator("img")).toHaveCount(0);
   await expect(section(page).locator("a")).toHaveCount(4);
-  for (const link of await section(page).locator("a").all())
+  for (const link of await section(page)
+    .getByRole("link", { name: /^Choose / })
+    .all())
     await expect(link).toHaveAttribute("href", "/contact/");
+  await expect(
+    section(page).getByRole("link", {
+      name: "View Membership Plans",
+      exact: true,
+    }),
+  ).toHaveAttribute("href", "/membership/");
   await expect(status(page)).toHaveText("Membership plan 2 of 3");
   for (const width of widths) {
     await page.setViewportSize({ width, height: 1100 });
@@ -190,6 +198,16 @@ test("finite boundaries retain keyboard focus and each plan opens Contact", asyn
     await page.goBack();
     await expect(carousel(page)).toHaveAttribute("data-ready", "true");
   }
+  await section(page)
+    .getByRole("link", { name: "View Membership Plans", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/membership\/$/);
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: "Your Fitness. Your Goals. Your Membership.",
+    }),
+  ).toBeVisible();
 });
 
 test("real mouse/touch drag moves one plan and never starts automatic rotation", async ({
@@ -332,6 +350,11 @@ test("without JavaScript all preview disclosures and Contact actions remain avai
       .getByRole("link", { name: "Choose Elite", exact: true })
       .click();
     await expect(page).toHaveURL(/\/contact\/$/);
+    await page.goBack();
+    await section(page)
+      .getByRole("link", { name: "View Membership Plans", exact: true })
+      .click();
+    await expect(page).toHaveURL(/\/membership\/$/);
   } finally {
     await context.close();
   }

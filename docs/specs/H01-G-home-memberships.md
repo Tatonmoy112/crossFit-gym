@@ -8,7 +8,7 @@ Implemented 2026-11-17 from the owner-approved plan and travel-card reference su
 
 `src/content/previews/home-memberships.ts` holds separately Zod-validated design examples: Essential, Performance and Elite, in that order. The section uses the supplied introduction, supporting text, descriptions and four homepage benefits per plan. It never populates the real empty memberships catalog. The typed record requires preview status, nonblank copy, three unique IDs, the middle plan featured, existing route destinations and optional future local image metadata.
 
-Every card says “Price to be confirmed.” There are no amounts, currency placeholders, billing periods, durations, discounts, savings or Offer structured data. Performance uses FEATURED PLAN rather than an unverified popularity claim. Each Choose action and the final Ask about memberships action opens the existing Contact shell; there is no checkout, delivery, selected-plan prefill or new backend.
+Every card says “Price to be confirmed.” There are no amounts, currency placeholders, billing periods, durations, discounts, savings or Offer structured data. Performance uses FEATURED PLAN rather than an unverified popularity claim. Each Choose action opens Contact. Following M01, the final View Membership Plans action opens the Membership Plans page at `/membership/`. There is no checkout, delivery, selected-plan prefill or new backend.
 
 The visible local disclosure is “Illustrative membership plans. Benefits and prices are not confirmed gym offerings.” The homepage gates the entire section with site.preview. Disabling preview removes its introduction, cards and actions together. Existing noindex and content/legal/release gates remain intact. Real fees, benefits and terms must be approved separately.
 

@@ -3,7 +3,7 @@ import { expect, it } from "vitest";
 import { HomeMemberships } from "@/features/home/home-memberships";
 import { homeMembershipsPreview } from "@/content/previews/home-memberships";
 
-it("renders disclosed server-owned examples, unique plans and native Contact links before initialization", () => {
+it("renders disclosed examples, plan inquiry links and the Membership page action before initialization", () => {
   const root = document.createElement("div");
   root.innerHTML = renderToStaticMarkup(
     <HomeMemberships content={homeMembershipsPreview} />,
@@ -24,8 +24,13 @@ it("renders disclosed server-owned examples, unique plans and native Contact lin
   ).toHaveLength(0);
   expect(root.querySelectorAll("a")).toHaveLength(4);
   expect(root.querySelectorAll("button[hidden]")).toHaveLength(2);
-  for (const link of root.querySelectorAll("a"))
+  for (const link of root.querySelectorAll("[data-membership-plan] a"))
     expect(link.getAttribute("href")).toMatch(/^\/contact\/?$/);
+  expect(
+    [...root.querySelectorAll("a")]
+      .find((link) => link.textContent === "View Membership Plans")
+      ?.getAttribute("href"),
+  ).toMatch(/^\/membership\/?$/);
   homeMembershipsPreview.plans.forEach((plan, index) => {
     const card = root.querySelectorAll("[data-membership-plan]")[index];
     expect(card.querySelector("h3")).toHaveTextContent(plan.name);

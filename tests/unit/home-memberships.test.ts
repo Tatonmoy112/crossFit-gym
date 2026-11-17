@@ -57,8 +57,8 @@ it("keeps the supplied three plan examples separate from real memberships and pr
     "Illustrative membership plans. Benefits and prices are not confirmed gym offerings.",
   );
   expect(homeMembershipsPreview.action).toEqual({
-    label: "Ask about memberships",
-    href: "/contact/",
+    label: "View Membership Plans",
+    href: "/membership/",
   });
   homeMembershipsPreview.plans.forEach((plan) => {
     expect(plan.priceLabel).toBe("Price to be confirmed");

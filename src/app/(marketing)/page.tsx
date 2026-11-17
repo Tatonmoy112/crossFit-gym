@@ -25,6 +25,8 @@ import { homeProductCategoriesPreview } from "@/content/previews/home-product-ca
 import { HomeProductCategories } from "@/features/home/home-product-categories";
 import { homeFaq, homeFaqItems } from "@/content/home-faq";
 import { HomeFaq } from "@/features/home/home-faq";
+import { homeAffiliates } from "@/content/home-affiliates";
+import { HomeAffiliates } from "@/features/home/home-affiliates";
 
 export const metadata = makeMetadata(
   "One step closer",
@@ -53,6 +55,7 @@ export default function Page() {
       {site.preview && (
         <HomeProductCategories content={homeProductCategoriesPreview} />
       )}
+      <HomeAffiliates content={homeAffiliates} />
       {site.preview && (
         <HomeSuccessStories content={homeSuccessStoriesPreview} />
       )}

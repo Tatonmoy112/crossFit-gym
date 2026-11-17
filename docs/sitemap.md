@@ -1,5 +1,7 @@
 # Complete sitemap
 
+M01 update (2026-11-17): `/membership/` now composes the nine-section Membership Plans page with isolated illustrative tiers and explicit noindex while examples are displayed. Existing canonical/navigation destinations remain unchanged; no `/membership-plans/` alias or new template is added. Outside preview, sample plans/comparison/benefits are replaced by safe pending-content states and guidance.
+
 H01-K update (2026-11-17): Home adds the partnership invitation between Product Categories and Success Stories. This adds no route/template or sitemap entry. The existing `/affiliates/` shell remains available for its later page rebuild; the homepage CTA opens Contact.
 
 H01-J update (2026-11-17): Home now includes six FAQ disclosures after Success Stories and before Our Story. This adds no template or sitemap entry; `/faq/` remains its existing route shell for a later rebuild.

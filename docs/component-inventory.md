@@ -1,5 +1,7 @@
 # Component inventory
 
+[M01 Membership Plans](specs/M01-membership-plans.md) adds a server assembly with hero, introduction, pricing, benefits, comparison, joining, FAQ, final CTA and information sections, plus a tier card and related section-heading pattern. Shared breadcrumbs/actions/empty states/FAQ primitives remain unchanged. MembershipSectionLink isolates fragment focus/history behavior; other new presentation stays server-rendered. Page-specific previews do not alter the Home membership cards.
+
 [H01-K homepage Affiliates](specs/H01-K-home-affiliates.md) adds HomeAffiliates, PartnershipNetwork and PartnershipOpportunityTile as Server Components. They reuse Container, SectionHeading, Button, NavigationLink and approved brand metadata. Scoped CSS draws an intrinsic partnership-opportunity diagram with three informational tiles; no shared primitive or client boundary changes. This invitation now sits between Product Categories and Success Stories, and remains available when previews are disabled.
 
 [H01-J homepage FAQ](specs/H01-J-home-faq.md) adds server-composed HomeFaq and FaqRow with the client FaqDisclosures enhancement. The six native disclosures reuse Container, SectionHeading, Button and NavigationLink; all other UI primitive contracts remain unchanged. FAQ now follows Success Stories and precedes Story, including a factual six-answer presentation when previews are disabled. The standalone FAQ page is still a shell.

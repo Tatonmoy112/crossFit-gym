@@ -1,20 +1,22 @@
-import Link from "next/link";
 import { metadata as makeMetadata } from "@/lib/seo";
+import { site } from "@/content/site";
+import { membershipPage, membershipPageFaqs } from "@/content/membership-page";
+import { getMembershipPageData } from "@/lib/membership/page-data";
+import { MembershipPage } from "@/features/membership/membership-page";
 
 export const metadata = makeMetadata(
-  "Membership",
-  "Speak to Crossfit Gym about current membership options, prices and joining information.",
+  membershipPage.seo.title,
+  membershipPage.seo.description,
   "/membership",
+  site.preview,
 );
 
 export default function Page() {
   return (
-    <section className="layout-container py-8">
-      <h1>Membership</h1>
-      <p>Page components are awaiting rebuild.</p>
-      <Link prefetch={false} href="/">
-        Back to home
-      </Link>
-    </section>
+    <MembershipPage
+      content={membershipPage}
+      data={getMembershipPageData(site.preview)}
+      faqs={membershipPageFaqs}
+    />
   );
 }
