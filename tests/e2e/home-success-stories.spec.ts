@@ -61,16 +61,15 @@ async function accessible(page: Page) {
   ).toEqual([]);
 }
 
-test("three disclosed stories form a responsive asymmetric section between Product Categories and FAQ", async ({
+test("three disclosed stories form a responsive asymmetric section between Affiliates and FAQ", async ({
   page,
 }, info) => {
   await ready(page);
   expect(
     await section(page).evaluate(
       (node) =>
-        node.previousElementSibling?.hasAttribute(
-          "data-home-product-categories",
-        ) && node.nextElementSibling?.hasAttribute("data-home-faq"),
+        node.previousElementSibling?.hasAttribute("data-home-affiliates") &&
+        node.nextElementSibling?.hasAttribute("data-home-faq"),
     ),
   ).toBe(true);
   await expect(section(page).getByRole("note")).toHaveText(

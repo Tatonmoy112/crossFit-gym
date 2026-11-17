@@ -1,5 +1,7 @@
 # Component rebuild plan
 
+[H01-K homepage Affiliates](specs/H01-K-home-affiliates.md) implements the approved partnership invitation between Product Categories and Success Stories. All-server composition supplies the charcoal introduction, circular gym hub, light opportunity tiles and Contact action. The separate Affiliates template, actual partner records and any referral/commission offering remain pending. Earlier homepage adjacency notes below are historical.
+
 [H01-J homepage FAQ](specs/H01-J-home-faq.md) implements the six-question Home section after Success Stories and before Story. Shared FAQ records, native disclosures, fine-pointer hover previews, click persistence, touch/keyboard controls and a Contact action are included. This factual section renders outside preview mode. The broader FAQ discovery/search/category page in step 9 remains pending; this change does not mark that page rebuilt.
 
 [SHOP02](specs/SHOP02-product-details.md) implements the approved master-first reusable Products detail composition for all ten illustrative records. Native listing/media/quick-view links now open these pages. The original 24 templates remain alongside the approved Products listing and detail additions (26 templates including custom 404). Earlier notes deferring individual product pages are superseded. Approved inventory, photos, prices and manufacturer information remain pending; no purchase or review-submission integration is added.

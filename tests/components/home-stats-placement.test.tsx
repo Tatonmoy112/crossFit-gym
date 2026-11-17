@@ -71,19 +71,20 @@ it("H01-C06: shows a clearly labeled example counter inside the real hero before
   );
   const features = memberships.nextElementSibling!;
   expect(features).toHaveAttribute("data-home-features");
-  expect(
-    features.nextElementSibling?.nextElementSibling?.nextElementSibling,
-  ).toHaveAttribute("data-home-faq");
-  expect(
-    features.nextElementSibling?.nextElementSibling?.nextElementSibling
-      ?.nextElementSibling,
-  ).toHaveAttribute("aria-labelledby", "home-story-title");
   expect(features.nextElementSibling).toHaveAttribute(
     "data-home-product-categories",
   );
-  expect(features.nextElementSibling?.nextElementSibling).toHaveAttribute(
+  const affiliates = features.nextElementSibling?.nextElementSibling;
+  expect(affiliates).toHaveAttribute("data-home-affiliates");
+  expect(affiliates?.nextElementSibling).toHaveAttribute(
     "data-home-success-stories",
   );
+  expect(affiliates?.nextElementSibling?.nextElementSibling).toHaveAttribute(
+    "data-home-faq",
+  );
+  expect(
+    affiliates?.nextElementSibling?.nextElementSibling?.nextElementSibling,
+  ).toHaveAttribute("aria-labelledby", "home-story-title");
 });
 
 it("H01-C06: never renders sample figures when site preview is disabled", () => {
@@ -94,6 +95,12 @@ it("H01-C06: never renders sample figures when site preview is disabled", () => 
   expect(container.querySelector("[data-home-memberships]")).toBeNull();
   expect(container.querySelector("[data-home-product-categories]")).toBeNull();
   expect(container.querySelector("[data-home-success-stories]")).toBeNull();
+  const affiliates = container.querySelector("[data-home-affiliates]");
+  expect(affiliates).toBeInTheDocument();
+  expect(affiliates?.previousElementSibling).toHaveAttribute(
+    "data-home-features",
+  );
+  expect(affiliates?.nextElementSibling).toHaveAttribute("data-home-faq");
   expect(container.querySelector("[data-home-faq]")).toBeInTheDocument();
   expect(container.querySelectorAll("[data-faq-row]")).toHaveLength(6);
   expect(

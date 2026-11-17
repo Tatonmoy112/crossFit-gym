@@ -1,5 +1,7 @@
 # Component inventory
 
+[H01-K homepage Affiliates](specs/H01-K-home-affiliates.md) adds HomeAffiliates, PartnershipNetwork and PartnershipOpportunityTile as Server Components. They reuse Container, SectionHeading, Button, NavigationLink and approved brand metadata. Scoped CSS draws an intrinsic partnership-opportunity diagram with three informational tiles; no shared primitive or client boundary changes. This invitation now sits between Product Categories and Success Stories, and remains available when previews are disabled.
+
 [H01-J homepage FAQ](specs/H01-J-home-faq.md) adds server-composed HomeFaq and FaqRow with the client FaqDisclosures enhancement. The six native disclosures reuse Container, SectionHeading, Button and NavigationLink; all other UI primitive contracts remain unchanged. FAQ now follows Success Stories and precedes Story, including a factual six-answer presentation when previews are disabled. The standalone FAQ page is still a shell.
 
 [SHOP02](specs/SHOP02-product-details.md) adds ProductDetailPage, ProductDetailHeader, ProductGallery, ProductSummary, ProductAvailabilityInfo, ProductInquiryActions, ProductDescription, ProductDetails, ProductReviewsEmpty, RelatedProducts and ProductStructurePreview as server compositions. ProductImageGallery and ProductShare isolate local browser state. Existing cards, quick view, Breadcrumbs, Container, Button, NavigationLink and Dialog are reused; no dependency or global store is added.

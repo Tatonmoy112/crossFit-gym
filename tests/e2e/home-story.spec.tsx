@@ -100,7 +100,9 @@ test("H01-B01/B05: Home shows the missing story state after the counter and Why 
           "aria-labelledby",
         ) === "home-product-categories-title" &&
         categories.nextElementSibling ===
-          story.previousElementSibling?.previousElementSibling &&
+          story.previousElementSibling?.previousElementSibling
+            ?.previousElementSibling &&
+        categories.nextElementSibling?.hasAttribute("data-home-affiliates") &&
         story.previousElementSibling?.hasAttribute("data-home-faq") &&
         story.previousElementSibling?.previousElementSibling?.hasAttribute(
           "data-home-success-stories",

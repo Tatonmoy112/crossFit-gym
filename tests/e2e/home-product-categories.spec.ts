@@ -58,7 +58,7 @@ test("four disclosed categories follow Features with centered layering and usabl
     await section(page).evaluate(
       (node) =>
         node.previousElementSibling?.hasAttribute("data-home-features") &&
-        node.nextElementSibling?.hasAttribute("data-home-success-stories"),
+        node.nextElementSibling?.hasAttribute("data-home-affiliates"),
     ),
   ).toBe(true);
   await expect(section(page).getByRole("note")).toHaveText(

@@ -61,7 +61,7 @@ test("services use approved copy, responsive card counts and the reference compo
         root.previousElementSibling?.getAttribute("aria-labelledby") ===
           "home-why-choose-us-title" &&
         root.nextElementSibling?.getAttribute("aria-labelledby") ===
-          "home-features-title",
+          "home-memberships-title",
     ),
   ).toBe(true);
   for (const width of [320, 375, 768, 1280, 1920]) {

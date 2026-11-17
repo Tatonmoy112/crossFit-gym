@@ -1,5 +1,9 @@
 # Architecture
 
+## Homepage partnership invitation
+
+[H01-K](specs/H01-K-home-affiliates.md) adds server-composed HomeAffiliates, PartnershipNetwork and PartnershipOpportunityTile. A validated invitation module owns copy and three known/unique opportunity identifiers, separate from the existing null affiliate offering. The network reuses the approved brand image and typed decorative icon mapping. Two container thresholds govern section and diagram reflow, with an additional narrow-tile adjustment. Native Contact navigation is the only action. The invitation is independent of preview flags, has no client state and adds no route or provider relationship.
+
 ## Homepage FAQ
 
 [H01-J](specs/H01-J-home-faq.md) adds a Server Component section and row composition, with native disclosure HTML passed into a small client interaction boundary. Shared FAQ records are validated once, and ordered homepage IDs are resolved with duplicate/missing-reference checks. The enhancement keeps pointer previews, click persistence and focus protection local; no provider or shared store is introduced. Native summary activation and the real Contact link remain usable without JavaScript. Scoped container-query CSS aligns desktop answers beside questions with a stacked fallback. The factual section is independent of illustrative preview flags; `/faq/` remains a separate pending page rebuild.

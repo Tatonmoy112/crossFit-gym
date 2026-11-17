@@ -1,0 +1,204 @@
+.home-affiliates {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+.home-affiliates-container {
+  container: home-affiliates / inline-size;
+}
+
+.home-affiliates-layout {
+  display: grid;
+  gap: 2.5rem;
+  min-inline-size: 0;
+}
+
+.affiliates-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.affiliates-eyebrow::before {
+  content: "";
+  inline-size: 2rem;
+  block-size: 2px;
+  flex: 0 0 auto;
+  background: var(--primary);
+}
+
+.home-affiliates-action {
+  min-inline-size: 0;
+}
+
+.partnership-network {
+  container: partnership-network / inline-size;
+  min-inline-size: 0;
+  margin: 0;
+}
+
+.partnership-network-caption {
+  margin-block-end: 2rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.partnership-network-layout {
+  display: grid;
+  align-items: center;
+  gap: 3rem;
+}
+
+.partnership-hub {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  min-inline-size: 0;
+  color: var(--foreground);
+}
+
+.partnership-hub-mark {
+  display: grid;
+  place-items: center;
+  inline-size: min(100%, 9rem);
+  aspect-ratio: 1;
+  padding: 1.5rem;
+  border: 1px solid var(--primary);
+  border-radius: 50%;
+  background: var(--background);
+}
+
+.partnership-hub-mark img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  object-fit: contain;
+}
+
+.partnership-opportunities {
+  display: grid;
+  gap: 1rem;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.partnership-opportunity {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  min-inline-size: 0;
+  min-block-size: 6rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  color: var(--foreground);
+  background: var(--background);
+}
+
+.partnership-opportunity-icon {
+  display: grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border-radius: 50%;
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+/* Decorative paths use the section's yellow, across nested light tiles. */
+.partnership-opportunity::before,
+.partnership-opportunity::after,
+.partnership-hub::after {
+  position: absolute;
+  pointer-events: none;
+  border-color: var(--primary);
+}
+
+.partnership-opportunity:first-child::before {
+  content: "";
+  inset-block-start: -3rem;
+  inset-inline-start: 50%;
+  block-size: 3rem;
+  border-inline-start: 1px solid var(--primary);
+}
+
+@container partnership-network (min-width: 32rem) {
+  .partnership-network-layout {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  .partnership-hub::after {
+    content: "";
+    inset-inline-start: calc(50% + 4.5rem);
+    inset-block-start: 4.5rem;
+    inline-size: calc(50% - 3rem);
+    border-block-start: 1px solid var(--primary);
+  }
+
+  .partnership-opportunity::before,
+  .partnership-opportunity:first-child::before {
+    content: "";
+    inset-block-start: 50%;
+    inset-inline-start: -1.5rem;
+    inline-size: 1.5rem;
+    block-size: 0;
+    border-inline-start: 0;
+    border-block-start: 1px solid var(--primary);
+  }
+
+  .partnership-opportunity::after {
+    content: "";
+    inset-inline-start: -1.5rem;
+    inset-block: 0 -1rem;
+    border-inline-start: 1px solid var(--primary);
+  }
+
+  .partnership-opportunity:first-child::after {
+    inset-block-start: 50%;
+  }
+
+  .partnership-opportunity:last-child::after {
+    inset-block-end: 50%;
+  }
+}
+
+@container home-affiliates (min-width: 60rem) {
+  .home-affiliates-layout {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: clamp(2rem, 4cqi, 4rem);
+    row-gap: 2rem;
+  }
+
+  .home-affiliates-intro {
+    grid-area: 1 / 1;
+    align-self: end;
+  }
+
+  .home-affiliates-intro h2 {
+    max-inline-size: 18ch;
+  }
+
+  .partnership-network {
+    grid-area: 1 / 2 / 3 / 3;
+  }
+
+  .home-affiliates-action {
+    grid-area: 2 / 1;
+    align-self: start;
+  }
+}
+
+@container partnership-network (max-width: 20rem) {
+  .partnership-opportunity {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
