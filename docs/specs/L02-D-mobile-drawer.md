@@ -1,5 +1,7 @@
 # L02-D: Branded mobile drawer
 
+L02-E refines the trigger to an accessible icon-only button and replaces the header/drawer mark with the supplied transparent PNG. See [the header refinement](L02-E-header-refinement.md); drawer layout and behavior below remain current.
+
 Date: 2026-11-18. Implements the owner-approved charcoal/yellow, right-hand drawer with expandable navigation groups. Supersedes L02-B's floating light panel and permanently expanded mobile list; desktop dropdowns and the static footer remain unchanged.
 
 ## Layout and visual design

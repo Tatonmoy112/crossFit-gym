@@ -4,6 +4,7 @@ import { Container } from "@/components/shared/container";
 import { Card } from "@/components/ui/card";
 import { NavigationLink } from "@/components/ui/navigation-link";
 import { footerContent } from "@/content/footer";
+import { navigationBrandImage } from "@/content/brand";
 import { navigation } from "@/content/navigation";
 
 const footerTextLinkClass =
@@ -18,7 +19,10 @@ function Footer() {
           <Card className="footer-panel min-w-0 gap-8 overflow-visible rounded-[2rem] border border-border p-4 ring-0 md:p-10">
             <div className="footer-panel-main">
               <div className="min-w-0 space-y-4">
-                <BrandLink className="max-w-full flex-wrap" />
+                <BrandLink
+                  image={navigationBrandImage}
+                  className="max-w-full flex-wrap bg-transparent hover:bg-transparent hover:text-link active:bg-transparent active:text-link"
+                />
                 <p className="m-0 text-base font-medium">
                   {footerContent.tagline}
                 </p>

@@ -324,7 +324,7 @@ test("L02-B05: reduced motion, failed fonts/mark and forced colors retain operat
   let blocked = 0;
   let blockedMark = 0;
   await page.route(
-    /(?:\.woff2(?:\?.*)?$|\/images\/brand\/brand-mark\.webp$)/,
+    /(?:\.woff2(?:\?.*)?$|\/images\/brand\/(?:brand-mark\.webp|logo_without-bg\.png)$)/,
     (route) => {
       if (route.request().resourceType() === "font") blocked++;
       else blockedMark++;

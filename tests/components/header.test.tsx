@@ -27,6 +27,18 @@ it("L01-B01: banner composes the real brand and navigation without taking page h
     within(banner).getByRole("link", { name: "Crossfit Gym home" }),
   ).toHaveAttribute("href", "/");
   expect(within(banner).getByRole("presentation")).toHaveAttribute("alt", "");
+  expect(within(banner).getByRole("presentation")).toHaveAttribute(
+    "src",
+    "/images/brand/logo_without-bg.png",
+  );
+  expect(within(banner).getByRole("presentation")).toHaveAttribute(
+    "width",
+    "1254",
+  );
+  expect(within(banner).getByRole("presentation")).toHaveAttribute(
+    "height",
+    "1254",
+  );
   expect(within(banner).queryAllByRole("heading")).toHaveLength(0);
 });
 

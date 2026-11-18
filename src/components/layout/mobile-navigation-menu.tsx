@@ -95,10 +95,11 @@ function MobileNavigationGroups({
         <DialogTrigger asChild>
           <Button
             variant="ghost"
-            className="not-disabled:hover:bg-transparent not-disabled:hover:text-foreground not-disabled:active:bg-transparent not-disabled:active:text-foreground hover:underline focus-visible:underline"
+            size="icon"
+            aria-label="Menu"
+            className="size-11 shrink-0 not-disabled:hover:bg-transparent not-disabled:hover:text-foreground not-disabled:active:border-transparent not-disabled:active:bg-transparent not-disabled:active:text-foreground"
           >
-            <MenuIcon aria-hidden="true" />
-            Menu
+            <MenuIcon aria-hidden="true" className="size-6" />
           </Button>
         </DialogTrigger>
         <DialogPortal>
@@ -144,7 +145,7 @@ function MobileNavigationGroups({
                   ref={closeButton}
                   variant="ghost"
                   size="icon"
-                  className="mobile-drawer-close shrink-0 not-disabled:hover:bg-transparent not-disabled:hover:text-foreground not-disabled:active:bg-transparent not-disabled:active:text-foreground"
+                  className="mobile-drawer-close shrink-0 not-disabled:hover:bg-transparent not-disabled:hover:text-foreground not-disabled:active:border-transparent not-disabled:active:bg-transparent not-disabled:active:text-foreground"
                 >
                   <XIcon aria-hidden="true" className="size-5" />
                   <span className="sr-only">Close menu</span>

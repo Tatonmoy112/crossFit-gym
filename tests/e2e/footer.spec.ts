@@ -140,6 +140,41 @@ test("L03-A04: responsive geometry, focus order, header isolation and accessibil
   for (const width of widths) {
     await page.setViewportSize({ width, height: 900 });
     await fits(page);
+    const brand = footer(page).getByRole("link", { name: "Crossfit Gym home" });
+    const image = brand.locator("img");
+    await expect(image).toHaveAttribute(
+      "src",
+      "/images/brand/logo_without-bg.png",
+    );
+    await expect(image).toHaveCSS("width", "44px");
+    await expect(image).toHaveCSS("height", "44px");
+    await expect(image).toHaveCSS("object-fit", "contain");
+    await expect(image).toHaveCSS("border-radius", "0px");
+    await expect
+      .poll(() =>
+        image.evaluate((node) => (node as HTMLImageElement).naturalWidth),
+      )
+      .toBe(1254);
+    const color = await brand.evaluate((node) => getComputedStyle(node).color);
+    await brand.hover();
+    await expect(brand).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+    await expect(brand).toHaveCSS("color", color);
+    await page.mouse.down();
+    try {
+      await expect(brand).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+      await expect(brand).toHaveCSS("color", color);
+    } finally {
+      await page.mouse.move(0, 0);
+      await page.mouse.up();
+    }
+    await page.keyboard.press("Tab");
+    await brand.focus();
+    await expect(brand).toHaveCSS("outline-width", "3px");
+    await expect(brand).toHaveCSS("outline-style", "solid");
+    await brand.evaluate((node) => node.blur());
+    await footer(page).screenshot({
+      path: info.outputPath(`footer-logo-${width}.png`),
+    });
     const geometry = await footer(page).evaluate((node) => {
       const panel = node.querySelector(".footer-panel")!;
       const style = getComputedStyle(panel);
@@ -308,16 +343,20 @@ test("L03-A04/A05: blocked fonts/mark and user preferences preserve footer links
   page,
 }, info) => {
   let blocked = 0;
+  let blockedLogo = 0;
   await page.route(
-    /(?:\.woff2(?:\?.*)?$|\/images\/brand\/brand-mark\.webp$)/,
+    /(?:\.woff2(?:\?.*)?$|\/images\/brand\/(?:brand-mark\.webp|logo_without-bg\.png)$)/,
     (route) => {
       blocked++;
+      if (route.request().url().endsWith("/images/brand/logo_without-bg.png"))
+        blockedLogo++;
       return route.abort();
     },
   );
   await page.emulateMedia({ reducedMotion: "reduce" });
   await ready(page);
   expect(blocked).toBeGreaterThan(0);
+  expect(blockedLogo).toBeGreaterThan(0);
   for (const width of widths) {
     await page.setViewportSize({ width, height: 900 });
     await fits(page);

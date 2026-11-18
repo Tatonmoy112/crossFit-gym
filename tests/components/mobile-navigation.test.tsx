@@ -38,6 +38,9 @@ it("L02-B01: preserves the grouped content only in the open named modal", () => 
   render(<MobileNavigation />);
   const trigger = screen.getByRole("button", { name: "Menu" });
   expect(trigger).toHaveAttribute("type", "button");
+  expect(trigger).toHaveAccessibleName("Menu");
+  expect(trigger.textContent).toBe("");
+  expect(trigger.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
   expect(trigger).toHaveAttribute("aria-expanded", "false");
   expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
   const dialog = open();
@@ -79,6 +82,11 @@ it("L02-B01: preserves the grouped content only in the open named modal", () => 
   expect(
     within(dialog).getByRole("link", { name: "Crossfit Gym home" }),
   ).toHaveAttribute("href", "/");
+  expect(
+    within(dialog)
+      .getByRole("link", { name: "Crossfit Gym home" })
+      .querySelector("img"),
+  ).toHaveAttribute("src", "/images/brand/logo_without-bg.png");
   expect(
     within(dialog)
       .getByRole("link", { name: "Contact the gym" })

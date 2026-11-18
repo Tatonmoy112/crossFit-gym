@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 const banner = (page: Page) => page.getByRole("banner");
 const desktop = (page: Page) =>
@@ -44,6 +44,8 @@ async function closedModal(page: Page) {
 async function currentLink(page: Page, label: string, group = "Training") {
   if ((await page.viewportSize())!.width < 1024) {
     await mobile(page).click();
+    // Audit and interact with the settled drawer, after its opacity/slide entry.
+    await expect(panel(page)).toHaveCSS("transform", "none");
     const trigger = panel(page).getByRole("button", {
       name: group,
       exact: true,
@@ -55,6 +57,78 @@ async function currentLink(page: Page, label: string, group = "Training") {
   await desktop(page).getByRole("button", { name: group }).click();
   return desktop(page).getByRole("link", { name: label, exact: true });
 }
+
+test("header uses the supplied transparent logo and an icon-only menu without interaction fills", async ({
+  page,
+}, info) => {
+  await ready(page);
+  const logo = banner(page).getByRole("link", { name: "Crossfit Gym home" });
+  const logoPath = "/images/brand/logo_without-bg.png";
+  await expect(logo.locator("img")).toHaveAttribute("src", logoPath);
+  await expect(
+    page.getByRole("contentinfo").locator("img").first(),
+  ).toHaveAttribute("src", logoPath);
+  async function transparent(control: Locator, button = false) {
+    await control.hover();
+    await expect(control).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+    await page.mouse.down();
+    try {
+      await expect(control).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+      if (button)
+        await expect(control).toHaveCSS("border-color", "rgba(0, 0, 0, 0)");
+    } finally {
+      // Release outside the control to inspect :active without navigation.
+      await page.mouse.move(0, 899);
+      await page.mouse.up();
+    }
+    await page.keyboard.press("Tab");
+    await control.focus();
+    await expect(control).toHaveCSS("outline-width", "3px");
+    await expect(control).toHaveCSS("outline-style", "solid");
+  }
+  for (const width of [320, 375, 768, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await transparent(logo);
+    await expect(logo.locator("img")).toHaveCSS("width", "44px");
+    await expect(logo.locator("img")).toHaveCSS("height", "44px");
+    await expect(logo.locator("img")).toHaveCSS("object-fit", "contain");
+    if (width < 1024) {
+      const trigger = mobile(page);
+      await expect(trigger).toHaveText("");
+      await expect(trigger.locator("svg")).toHaveAttribute(
+        "aria-hidden",
+        "true",
+      );
+      await expect(trigger.locator("svg path")).toHaveCount(3);
+      await expect(trigger.locator("svg")).toHaveCSS("width", "24px");
+      await expect(trigger).toHaveCSS("width", "44px");
+      await expect(trigger).toHaveCSS("height", "44px");
+      await transparent(trigger, true);
+      expect((await trigger.boundingBox())!.y).toBeLessThan(
+        (await logo.boundingBox())!.y + (await logo.boundingBox())!.height,
+      );
+      await trigger.click();
+      await expect(panel(page)).toHaveCSS("transform", "none");
+      const drawerLogo = panel(page).getByRole("link", {
+        name: "Crossfit Gym home",
+      });
+      await expect(drawerLogo.locator("img")).toHaveAttribute("src", logoPath);
+      await transparent(drawerLogo);
+      const close = panel(page).getByRole("button", { name: "Close menu" });
+      await transparent(close, true);
+      await page.keyboard.press("Escape");
+      await expect(trigger).toBeFocused();
+    }
+    await fits(page);
+    await page.evaluate(() => {
+      if (document.activeElement instanceof HTMLElement)
+        document.activeElement.blur();
+    });
+    await banner(page).screenshot({
+      path: info.outputPath(`header-refined-${width}.png`),
+    });
+  }
+});
 
 test("L01-B01/B02/B03: actual header, first skip, responsive exposure and breakpoint focus cleanup", async ({
   page,
@@ -276,7 +350,7 @@ test("L01-B02/B05: charcoal shell, enlargement, accessibility and preference/fai
   });
   let blocked = 0;
   await page.route(
-    /(?:\.woff2(?:\?.*)?$|\/images\/brand\/brand-mark\.webp$)/,
+    /(?:\.woff2(?:\?.*)?$|\/images\/brand\/(?:brand-mark\.webp|logo_without-bg\.png)$)/,
     (route) => {
       blocked++;
       return route.abort();

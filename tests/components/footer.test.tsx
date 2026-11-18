@@ -12,6 +12,13 @@ it("L03-A01: footer owns its landmark and exposes all original groups and destin
   expect(
     within(footer).getByRole("link", { name: "Crossfit Gym home" }),
   ).toHaveAttribute("href", "/");
+  const logo = within(footer)
+    .getByRole("link", { name: "Crossfit Gym home" })
+    .querySelector("img");
+  expect(logo).toHaveAttribute("src", "/images/brand/logo_without-bg.png");
+  expect(logo).toHaveAttribute("width", "1254");
+  expect(logo).toHaveAttribute("height", "1254");
+  expect(logo).toHaveAttribute("alt", "");
   const nav = within(footer).getByRole("navigation", {
     name: "Footer navigation",
   });
