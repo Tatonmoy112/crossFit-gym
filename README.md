@@ -6,6 +6,8 @@ A Next.js App Router, React, strict TypeScript and Tailwind project with impleme
 
 ## Current state
 
+[GitHub CI and Vercel client preview](docs/vercel-client-preview.md) fixes Linux-sensitive font tests by loading the primary web font independently of Next's local Arial fallback. Primary-font failure still fails; production fonts and design are unchanged. Node 24/pnpm 10.34.9 are pinned, pnpm owns the sole lockfile, route types are generated before TypeScript, and CI uploads browser failure evidence. Vercel uses the existing static export with explicit install/build/output settings. All **357 unit/component tests**, typecheck, lint, formatting, build, **29-HTML export audit** and **367 browser cases with three intentional skips** pass locally. GitHub push/Ubuntu verification and live Vercel deployment remain pending network/account access; see the QA checklist and deployment guide.
+
 [L03-C footer logo alignment](docs/specs/L03-C-footer-logo.md) applies the supplied transparent PNG to the footer, matching the header and drawer at 44px. Its logo link keeps its text color with transparent hover/pressed backgrounds and visible keyboard focus. Footer navigation remains static, and its CTA/contact/wordmark layout is preserved. All **357 unit/component tests**, typecheck, lint, formatting, build and the **29-HTML export audit** pass. All **363 applicable browser cases are verified across the full and targeted runs**, with three intentional skips; the targeted header rerun fixes an accessibility audit that sampled the drawer during its entrance animation. Reviewed six footer widths, enlarged text and failed-image captures. See the QA checklist for exact results and review limits.
 
 [L02-E header refinement](docs/specs/L02-E-header-refinement.md) replaces the visible mobile Menu label with a 24px three-line icon in a 44px button, preserving its accessible name and drawer behavior. Header/drawer branding uses the supplied transparent PNG; L03-C subsequently extends it to the footer. Header branding and menu/close controls use transparent hover/pressed backgrounds and retain visible keyboard focus. All **357 unit/component tests**, typecheck, lint, formatting, final build and **29-HTML export audit** pass. The full browser suite passes **363 cases with three intentional skips**; responsive header/drawer captures were reviewed. See the QA checklist for executed verification and review limits.
@@ -89,6 +91,8 @@ npm.cmd exec --yes --package=pnpm@10.34.9 -- pnpm dev
 
 The project pins pnpm 10.34.9. Use that version and preserve `pnpm-lock.yaml`.
 
+`pnpm typecheck` generates Next.js route types first. `next-env.d.ts` is generated and ignored; it is no longer committed or manually restored between development and production builds.
+
 ## Verify
 
 ```sh
@@ -158,7 +162,7 @@ Run `pnpm check:release` to see outstanding approval requirements. It intentiona
 
 Before public launch: finish content and visual review, supply approved legal documents, configure the real domain in `.env.local`, set `site.preview` to `false`, and explicitly enable `NEXT_PUBLIC_SITE_INDEXABLE=true`. Preview detail pages remain noindex. The indexing configuration also requires an HTTPS site URL.
 
-Deploy the contents of `out/` to a static host that supports directory indexes and serves `404.html` with a 404 status. Do not use an SPA catch-all to `index.html`. Verify nested URLs, redirects, canonical URLs, MIME types and security headers on the selected host. No hosted site was registered or published because release inputs and a hosting destination are missing.
+Deploy the contents of `out/` to a static host that supports directory indexes and serves `404.html` with a 404 status. Do not use an SPA catch-all to `index.html`. Verify nested URLs, redirects, canonical URLs, MIME types and security headers on the selected host. The [Vercel client-preview guide](docs/vercel-client-preview.md) defines the selected host's build settings, environment variables and signed-out client checks. A live deployment must be verified before reporting it as published; client-preview hosting does not resolve the public-launch requirements above.
 
 ## Documentation
 

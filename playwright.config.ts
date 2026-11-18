@@ -6,6 +6,7 @@ export default defineConfig({
   fullyParallel: true,
   workers: 2,
   timeout: 60000,
+  reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : "list",
   use: {
     baseURL,
     trace: "retain-on-failure",

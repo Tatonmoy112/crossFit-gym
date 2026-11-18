@@ -1,5 +1,8 @@
 node_modules/
 .next/
+next-env.d.ts
+.vercel/
+package-lock.json
 out/
 coverage/
 test-results/

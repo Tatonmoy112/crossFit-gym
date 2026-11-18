@@ -1,5 +1,6 @@
 import { expect, test, type CDPSession, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import { loadPrimaryFont } from "./helpers/primary-font";
 
 const roles = [
   { id: "body-400", className: "font-sans", family: "Inter", weight: 400 },
@@ -66,29 +67,7 @@ async function renderedFonts(session: CDPSession, selector: string) {
 
 async function assertLoadedRoles(page: Page, session: CDPSession) {
   for (const role of roles) {
-    const loaded = await page.locator(`#${role.id}`).evaluate(async (node) => {
-      const style = getComputedStyle(node);
-      const faces = await document.fonts.load(
-        `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`,
-      );
-      // Next also registers a local system fallback face; inspect the primary
-      // web face here and verify the font actually used through Chromium below.
-      const primary = style.fontFamily
-        .split(",")[0]
-        .replace(/["']/g, "")
-        .trim();
-      return {
-        synthesis: style.fontSynthesis,
-        faces: faces
-          .filter((face) => face.family.replace(/["']/g, "") === primary)
-          .map((face) => ({
-            status: face.status,
-            display: face.display,
-            style: face.style,
-            weight: face.weight,
-          })),
-      };
-    });
+    const loaded = await page.locator(`#${role.id}`).evaluate(loadPrimaryFont);
     expect(loaded.faces, role.id).not.toHaveLength(0);
     expect(loaded.synthesis, role.id).toBe("none");
     for (const face of loaded.faces) {
@@ -163,6 +142,58 @@ test("F01-A01: selected font roles render from licensed local WOFF2 assets", asy
   } finally {
     await session.detach();
   }
+});
+
+test("primary web fonts still load when the generated local fallback is unavailable", async ({
+  page,
+}) => {
+  let replacedFallbacks = 0;
+  await page.route("**/*.css", async (route) => {
+    const response = await route.fetch();
+    const body = (await response.text()).replace(
+      /local\(["']?Arial["']?\)/g,
+      () => {
+        replacedFallbacks++;
+        return 'local("CrossfitMissingFallbackForTest")';
+      },
+    );
+    await route.fulfill({ response, body });
+  });
+  await page.goto("/");
+  await addRoleProbes(page);
+  expect(replacedFallbacks).toBeGreaterThanOrEqual(2);
+  // Reproduce the old Linux failure, then verify every intended web-font role
+  // still loads and actually renders without depending on that fallback.
+  await expect(
+    page.locator("#body-400").evaluate(async (node) => {
+      const style = getComputedStyle(node);
+      await document.fonts.load(
+        `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`,
+      );
+    }),
+  ).rejects.toThrow(/NetworkError|network error/i);
+  const session = await inspectFonts(page);
+  try {
+    await assertLoadedRoles(page, session);
+  } finally {
+    await session.detach();
+  }
+});
+
+test("primary-font loading rejects when the actual WOFF2 requests fail", async ({
+  page,
+}) => {
+  let blocked = 0;
+  await page.route(/\.woff2(?:\?.*)?$/, (route) => {
+    blocked++;
+    return route.abort("failed");
+  });
+  await page.goto("/");
+  await addRoleProbes(page);
+  await expect(
+    page.locator("#body-400").evaluate(loadPrimaryFont),
+  ).rejects.toThrow(/NetworkError|network error/i);
+  expect(blocked).toBeGreaterThan(0);
 });
 
 test("F01-A02: delayed fonts keep fallback readable then swap to local faces", async ({

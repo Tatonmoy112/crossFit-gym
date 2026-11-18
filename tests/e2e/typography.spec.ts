@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { loadPrimaryFont } from "./helpers/primary-font";
 
 const widths = [320, 375, 768, 1280, 1920];
 const roles = [
@@ -177,20 +178,7 @@ test("F01-C01: fluid hierarchy uses the approved local families and metrics", as
       for (const role of roles) {
         const style = await page
           .locator(`#type-${role.id}`)
-          .evaluate(async (node) => {
-            const s = getComputedStyle(node);
-            await document.fonts.load(
-              `${s.fontWeight} ${s.fontSize} ${s.fontFamily}`,
-            );
-            return {
-              size: parseFloat(s.fontSize),
-              weight: s.fontWeight,
-              leading: parseFloat(s.lineHeight),
-              spacing: s.letterSpacing,
-              transform: s.textTransform,
-              synthesis: s.fontSynthesis,
-            };
-          });
+          .evaluate(loadPrimaryFont);
         const size = Math.min(
           role.max,
           Math.max(role.min, role.base + role.vw * width),
