@@ -1,0 +1,267 @@
+@layer components {
+  .mobile-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgb(0 0 0 / 65%);
+    backdrop-filter: blur(4px);
+  }
+  .mobile-drawer {
+    position: fixed;
+    inset: 0 0 0 auto;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+    background: var(--background);
+    color: var(--foreground);
+    border-left: 1px solid
+      color-mix(in srgb, var(--foreground) 12%, transparent);
+    box-shadow: -1rem 0 4rem rgb(0 0 0 / 30%);
+  }
+  .mobile-drawer-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: 12px;
+    padding: max(20px, env(safe-area-inset-top))
+      max(24px, env(safe-area-inset-right)) 20px
+      max(24px, env(safe-area-inset-left));
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--foreground) 12%, transparent);
+  }
+  .mobile-drawer-header::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: var(--primary);
+  }
+  .mobile-drawer-brand {
+    min-width: 0;
+    flex: 1;
+  }
+  .mobile-drawer-brand img {
+    max-width: 44px;
+    max-height: 44px;
+  }
+  .mobile-drawer-close {
+    align-self: flex-start;
+  }
+  .mobile-drawer-scroll {
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-color: var(--input) var(--background);
+  }
+  .mobile-drawer-body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 12px max(24px, env(safe-area-inset-right))
+      max(24px, env(safe-area-inset-bottom))
+      max(24px, env(safe-area-inset-left));
+  }
+  .mobile-drawer-group {
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--foreground) 12%, transparent);
+  }
+  .mobile-drawer-group-heading {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+  .mobile-drawer-group-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 56px;
+    padding: 16px 4px;
+    gap: 16px;
+    border: 0;
+    background: transparent;
+    color: var(--foreground);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .mobile-drawer-group-trigger > span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .mobile-drawer-group-trigger[data-current="true"] {
+    color: var(--primary);
+  }
+  .mobile-drawer-group-trigger:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .mobile-drawer-chevron {
+    flex-shrink: 0;
+    transition: transform var(--motion-duration-control) var(--motion-easing);
+  }
+  .mobile-drawer-group-trigger[data-state="open"] .mobile-drawer-chevron {
+    transform: rotate(180deg);
+  }
+  .mobile-drawer-group-content {
+    overflow: hidden;
+  }
+  .mobile-drawer-links {
+    list-style: none;
+    margin: 0;
+    padding: 6px 6px 14px;
+  }
+  .mobile-drawer-link {
+    position: relative;
+    min-height: 48px;
+    font-size: 1.125rem;
+    line-height: 1.45;
+  }
+  .mobile-drawer-link[aria-current]::before {
+    content: "";
+    position: absolute;
+    inset: 0.75rem auto 0.75rem 4px;
+    width: 2px;
+    background: var(--primary);
+  }
+  .mobile-drawer-contact-area {
+    margin-top: auto;
+    padding-top: 12px;
+  }
+  .mobile-drawer-contact {
+    min-height: 48px;
+  }
+  .mobile-drawer-call {
+    min-height: 48px;
+    margin-top: 12px;
+  }
+  .mobile-drawer-call > span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .mobile-drawer-location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 8px 0 0;
+    color: color-mix(in srgb, var(--foreground) 70%, transparent);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .mobile-drawer-location svg {
+    flex-shrink: 0;
+  }
+}
+
+@media (width >= 480px) {
+  .mobile-drawer {
+    width: min(448px, calc(100vw - 32px));
+    border-radius: 24px 0 0 24px;
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .mobile-drawer-group-trigger:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+.mobile-drawer[data-state="open"] {
+  animation: mobile-drawer-in var(--motion-duration-overlay)
+    var(--motion-easing);
+}
+.mobile-drawer[data-state="closed"] {
+  animation: mobile-drawer-out var(--motion-duration-overlay)
+    var(--motion-easing);
+}
+.mobile-drawer-backdrop[data-state="open"] {
+  animation: mobile-backdrop-in var(--motion-duration-overlay)
+    var(--motion-easing);
+}
+.mobile-drawer-backdrop[data-state="closed"] {
+  animation: mobile-backdrop-out var(--motion-duration-overlay)
+    var(--motion-easing);
+}
+.mobile-drawer-group-content[data-state="open"] {
+  animation: mobile-group-in var(--motion-duration-overlay) var(--motion-easing);
+}
+.mobile-drawer-group-content[data-state="closed"] {
+  animation: mobile-group-out var(--motion-duration-overlay)
+    var(--motion-easing);
+}
+@keyframes mobile-drawer-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes mobile-drawer-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+@keyframes mobile-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes mobile-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes mobile-group-in {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+@keyframes mobile-group-out {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+@media (forced-colors: active) {
+  .mobile-drawer-group,
+  .mobile-drawer-header {
+    border-color: CanvasText;
+  }
+  .mobile-drawer-link[aria-current] {
+    border-inline-start: 2px solid Highlight;
+  }
+}

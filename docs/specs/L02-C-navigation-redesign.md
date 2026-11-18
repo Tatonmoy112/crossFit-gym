@@ -2,6 +2,8 @@
 
 Date: 2026-11-18. Revised at the owner's request: footer dropdowns are removed, the earlier visible-column layout is restored, and header/footer navigation background highlights are removed. Earlier shared-dropdown verification remains historical in the QA checklist.
 
+The mobile presentation is subsequently redesigned in [L02-D](L02-D-mobile-drawer.md): a branded charcoal drawer with one expandable group at a time and native Contact/Call actions. This specification's desktop dropdown and static footer behavior remains current.
+
 ## Header interaction and styling
 
 The server-composed Header passes validated records to the header-only client DropdownNavigation through DesktopNavigationMenu. Its props are groups and optional className; there is no footer placement API or footer disclosure state. The mobile header dialog receives the same expanded content. State stays local, without dependencies, providers, backend or URL writes.

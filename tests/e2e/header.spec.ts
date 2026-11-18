@@ -44,6 +44,12 @@ async function closedModal(page: Page) {
 async function currentLink(page: Page, label: string, group = "Training") {
   if ((await page.viewportSize())!.width < 1024) {
     await mobile(page).click();
+    const trigger = panel(page).getByRole("button", {
+      name: group,
+      exact: true,
+    });
+    if ((await trigger.getAttribute("aria-expanded")) !== "true")
+      await trigger.click();
     return panel(page).getByRole("link", { name: label, exact: true });
   }
   await desktop(page).getByRole("button", { name: group }).click();

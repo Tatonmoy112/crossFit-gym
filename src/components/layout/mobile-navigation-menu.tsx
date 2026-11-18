@@ -1,9 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { MenuIcon, XIcon } from "lucide-react";
-import { Dialog as DialogPrimitive } from "radix-ui";
+import {
+  ArrowUpRightIcon,
+  ChevronDownIcon,
+  MapPinIcon,
+  MenuIcon,
+  PhoneIcon,
+  XIcon,
+} from "lucide-react";
+import {
+  Accordion as AccordionPrimitive,
+  Dialog as DialogPrimitive,
+} from "radix-ui";
 import { cn } from "cn";
 import { Button } from "@/components/ui/button";
 import { NavigationLink } from "@/components/ui/navigation-link";
@@ -19,9 +29,12 @@ import {
 } from "@/lib/navigation";
 import type { NavigationGroup } from "@/schemas/navigation";
 import { useNavigationFocus } from "@/hooks/use-navigation-focus";
+import type { MobileDrawerContent } from "@/content/mobile-navigation";
 
 type MobileNavigationProps = {
   groups: readonly NavigationGroup[];
+  brand: ReactNode;
+  content: MobileDrawerContent;
   className?: string;
 };
 const desktopQuery = "(min-width: 64rem)";
@@ -33,6 +46,8 @@ function MobileNavigationMenu(props: MobileNavigationProps) {
 
 function MobileNavigationGroups({
   groups,
+  brand,
+  content,
   className,
   path,
 }: MobileNavigationProps & { path: string | null }) {
@@ -42,6 +57,14 @@ function MobileNavigationGroups({
   const { onFocusCapture, onBlurCapture, restoreFocus } =
     useNavigationFocus(root);
   const current = currentNavigationLink(groups, path);
+  const initialGroup =
+    groups.find((group) =>
+      group.links.some((link) => link.href === current?.href),
+    )?.label ??
+    groups.find((group) => group.label === "Training")?.label ??
+    groups[0]?.label ??
+    "";
+  const [expandedGroup, setExpandedGroup] = useState(initialGroup);
 
   useEffect(() => {
     const media = window.matchMedia(desktopQuery);
@@ -62,7 +85,13 @@ function MobileNavigationGroups({
       onBlurCapture={onBlurCapture}
       className={cn("min-w-0 max-w-full lg:hidden", className)}
     >
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog
+        open={open}
+        onOpenChange={(nextOpen) => {
+          if (nextOpen) setExpandedGroup(initialGroup);
+          setOpen(nextOpen);
+        }}
+      >
         <DialogTrigger asChild>
           <Button
             variant="ghost"
@@ -75,13 +104,25 @@ function MobileNavigationGroups({
         <DialogPortal>
           <DialogPrimitive.Overlay
             data-mobile-backdrop
-            className="fixed inset-0 z-50 bg-black/50"
+            className="mobile-drawer-backdrop"
           />
           <DialogPrimitive.Content
             data-mobile-panel
-            data-surface="light"
+            data-surface="charcoal"
             aria-describedby={undefined}
-            className="fixed top-4 right-4 z-50 flex h-[calc(100dvh-2rem)] max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-96 flex-col rounded-overlay border border-input bg-background text-foreground shadow-xl"
+            className="mobile-drawer"
+            onClick={(event) => {
+              if (
+                event.target instanceof Element &&
+                event.target.closest("a[href]") &&
+                !event.ctrlKey &&
+                !event.metaKey &&
+                !event.shiftKey &&
+                !event.altKey &&
+                event.button === 0
+              )
+                setOpen(false);
+            }}
             onOpenAutoFocus={(event) => {
               event.preventDefault();
               closeButton.current?.focus();
@@ -93,61 +134,103 @@ function MobileNavigationGroups({
               }
             }}
           >
-            <div className="flex shrink-0 items-start justify-between gap-2 border-b border-input p-4">
-              <DialogPrimitive.Title className="type-control-strong min-w-0 [overflow-wrap:anywhere]">
-                Site navigation
-              </DialogPrimitive.Title>
+            <DialogPrimitive.Title className="sr-only">
+              {content.title}
+            </DialogPrimitive.Title>
+            <div className="mobile-drawer-header">
+              {brand}
               <DialogClose asChild>
                 <Button
                   ref={closeButton}
                   variant="ghost"
                   size="icon"
-                  className="shrink-0 not-disabled:hover:bg-transparent not-disabled:hover:text-foreground not-disabled:active:bg-transparent not-disabled:active:text-foreground"
+                  className="mobile-drawer-close shrink-0 not-disabled:hover:bg-transparent not-disabled:hover:text-foreground not-disabled:active:bg-transparent not-disabled:active:text-foreground"
                 >
-                  <XIcon aria-hidden="true" />
+                  <XIcon aria-hidden="true" className="size-5" />
                   <span className="sr-only">Close menu</span>
                 </Button>
               </DialogClose>
             </div>
-            <nav
-              aria-label="Primary navigation"
-              className="min-h-0 overflow-y-auto overscroll-contain p-4"
-            >
-              {groups.map((group) => (
-                <section key={group.label} className="mb-6 last:mb-0">
-                  <h3 className="type-control-strong mb-2">{group.label}</h3>
-                  <ul className="m-0 list-none p-2">
-                    {group.links.map((link) => (
-                      <li key={link.href}>
-                        <NavigationLink
-                          href={link.href}
-                          aria-current={
-                            link.href === current?.href
-                              ? path === link.href
-                                ? "page"
-                                : "location"
-                              : undefined
-                          }
-                          className="flex w-full bg-transparent text-foreground no-underline hover:bg-transparent hover:text-foreground hover:underline active:bg-transparent active:text-foreground focus-visible:underline aria-[current=page]:underline aria-[current=location]:font-semibold aria-[current=location]:underline aria-[current=location]:decoration-2"
-                          onClick={(event) => {
-                            if (
-                              !event.ctrlKey &&
-                              !event.metaKey &&
-                              !event.shiftKey &&
-                              !event.altKey &&
-                              event.button === 0
-                            )
-                              setOpen(false);
-                          }}
-                        >
-                          {link.label}
-                        </NavigationLink>
-                      </li>
+            <div className="mobile-drawer-scroll">
+              <div className="mobile-drawer-body">
+                <nav aria-label="Primary navigation">
+                  <AccordionPrimitive.Root
+                    type="single"
+                    collapsible
+                    value={expandedGroup}
+                    onValueChange={setExpandedGroup}
+                  >
+                    {groups.map((group) => (
+                      <AccordionPrimitive.Item
+                        key={group.label}
+                        value={group.label}
+                        className="mobile-drawer-group"
+                      >
+                        <AccordionPrimitive.Header asChild>
+                          <h3 className="mobile-drawer-group-heading">
+                            <AccordionPrimitive.Trigger
+                              className="mobile-drawer-group-trigger"
+                              data-current={group.links.some(
+                                (link) => link.href === current?.href,
+                              )}
+                            >
+                              <span>{group.label}</span>
+                              <ChevronDownIcon
+                                className="mobile-drawer-chevron size-5"
+                                aria-hidden="true"
+                              />
+                            </AccordionPrimitive.Trigger>
+                          </h3>
+                        </AccordionPrimitive.Header>
+                        <AccordionPrimitive.Content className="mobile-drawer-group-content">
+                          <ul className="mobile-drawer-links">
+                            {group.links.map((link) => (
+                              <li key={link.href}>
+                                <NavigationLink
+                                  href={link.href}
+                                  aria-current={
+                                    link.href === current?.href
+                                      ? path === link.href
+                                        ? "page"
+                                        : "location"
+                                      : undefined
+                                  }
+                                  className="mobile-drawer-link flex w-full bg-transparent px-4 py-3 text-foreground no-underline hover:bg-transparent hover:text-foreground hover:underline active:bg-transparent active:text-foreground focus-visible:underline aria-[current=page]:text-primary aria-[current=page]:underline aria-[current=location]:font-semibold aria-[current=location]:text-primary aria-[current=location]:underline aria-[current=location]:decoration-2"
+                                >
+                                  {link.label}
+                                </NavigationLink>
+                              </li>
+                            ))}
+                          </ul>
+                        </AccordionPrimitive.Content>
+                      </AccordionPrimitive.Item>
                     ))}
-                  </ul>
-                </section>
-              ))}
-            </nav>
+                  </AccordionPrimitive.Root>
+                </nav>
+                <div className="mobile-drawer-contact-area">
+                  <Button
+                    asChild
+                    className="mobile-drawer-contact w-full rounded-full px-5 py-3 text-primary-foreground no-underline hover:bg-primary-hover hover:text-primary-foreground active:bg-primary-active active:text-primary-foreground"
+                  >
+                    <NavigationLink href={content.contact.href}>
+                      {content.contact.label}
+                      <ArrowUpRightIcon aria-hidden="true" />
+                    </NavigationLink>
+                  </Button>
+                  <NavigationLink
+                    href={content.phone.href}
+                    className="mobile-drawer-call flex w-full justify-center bg-transparent px-2 py-3 text-foreground no-underline hover:bg-transparent hover:text-foreground hover:underline active:bg-transparent active:text-foreground focus-visible:underline"
+                  >
+                    <PhoneIcon aria-hidden="true" className="size-4" />
+                    <span>{content.phone.label}</span>
+                  </NavigationLink>
+                  <p className="mobile-drawer-location">
+                    <MapPinIcon aria-hidden="true" className="size-4" />
+                    <span>{content.location}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
           </DialogPrimitive.Content>
         </DialogPortal>
       </Dialog>

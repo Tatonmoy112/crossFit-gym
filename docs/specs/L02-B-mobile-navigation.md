@@ -1,5 +1,7 @@
 # L02-B: Mobile navigation
 
+2026-11-18 visual/interaction revision: [L02-D branded mobile drawer](L02-D-mobile-drawer.md) replaces the floating light panel with a full-height charcoal drawer, expandable groups and supplied contact actions. The following record describes the earlier implementation and verification.
+
 Status: **verified for the documented isolated scope**. Date: 2026-11-16. Roadmap item 2 of 13 in the [pre-Home checklist](../pre-home-checklist.md).
 
 ## Purpose and boundary

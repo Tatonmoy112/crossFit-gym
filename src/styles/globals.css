@@ -20,6 +20,7 @@
 @import "./contact-page.css";
 @import "./footer.css";
 @import "./navigation.css";
+@import "./mobile-navigation.css";
 
 @custom-variant dark {
   @scope (.dark, [data-surface="charcoal"]) to (.light, [data-surface="light"], [data-surface="yellow"]) {

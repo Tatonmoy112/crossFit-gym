@@ -28,6 +28,7 @@ const dialog = (page: Page) =>
 async function open(page: Page) {
   await menu(page).click();
   await expect(dialog(page)).toBeVisible();
+  await expect(dialog(page)).toHaveCSS("transform", "none");
 }
 async function unlocked(page: Page) {
   await expect
@@ -50,6 +51,7 @@ async function fits(page: Page) {
     (await page.viewportSize())!.width,
   );
   for (const node of await dialog(page).locator("button, a").all()) {
+    if (!(await node.isVisible())) continue;
     expect(
       await node.evaluate((node) => node.scrollWidth <= node.clientWidth + 1),
     ).toBe(true);
@@ -70,7 +72,7 @@ test("L02-B01/B02/B03: modal keyboard, current state, dismissal, selection and r
   const close = page.getByRole("button", { name: "Close menu" });
   await expect(close).toBeFocused();
   await expect(dialog(page).getByRole("heading")).toHaveCount(5);
-  await expect(dialog(page).getByRole("link")).toHaveCount(14);
+  await expect(dialog(page).getByRole("link")).toHaveCount(6);
   await expect(
     dialog(page).getByRole("link", { name: "Membership", exact: true }),
   ).toHaveAttribute("aria-current", "page");
@@ -79,13 +81,13 @@ test("L02-B01/B02/B03: modal keyboard, current state, dismissal, selection and r
   await expect(page.locator("body")).toHaveCSS("overflow", "hidden");
   await page.keyboard.press("Shift+Tab");
   await expect(
-    dialog(page).getByRole("link", { name: "Locations", exact: true }),
+    dialog(page).getByRole("link", { name: "Crossfit Gym home", exact: true }),
   ).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(close).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
-    dialog(page).getByRole("link", { name: "Our story" }),
+    dialog(page).getByRole("button", { name: "About", exact: true }),
   ).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(menu(page)).toBeFocused();
@@ -95,11 +97,13 @@ test("L02-B01/B02/B03: modal keyboard, current state, dismissal, selection and r
   await close.click();
   await expect(menu(page)).toBeFocused();
   await open(page);
+  await page.setViewportSize({ width: 768, height: 812 });
   await page.mouse.click(2, 2);
   await expect(dialog(page)).toHaveCount(0);
   await expect(menu(page)).toBeFocused();
   await unlocked(page);
   await open(page);
+  await page.setViewportSize({ width: 375, height: 812 });
   // Test-only route context change; no application route or public fixture.
   await page
     .locator("#mobile-navigation-fixture button")
@@ -109,7 +113,7 @@ test("L02-B01/B02/B03: modal keyboard, current state, dismissal, selection and r
   await unlocked(page);
   await open(page);
   await expect(
-    dialog(page).getByRole("link", { name: "Contact" }),
+    dialog(page).getByRole("link", { name: "Contact", exact: true }),
   ).toHaveAttribute("aria-current", "page");
   await dialog(page)
     .getByRole("link", { name: "Contact", exact: true })
@@ -131,10 +135,22 @@ test("L02-B04: mobile breakpoint, scrollable short viewport and enlarged text", 
 }, info) => {
   await page.setViewportSize({ width: 375, height: 812 });
   await mount(page);
-  for (const width of [320, 375, 768, 1023]) {
+  for (const width of [320, 375, 390, 480, 768, 1023]) {
     await page.setViewportSize({ width, height: 568 });
     await open(page);
+    await expect(dialog(page)).toHaveCSS("height", "568px");
+    await expect(dialog(page)).toHaveCSS(
+      "width",
+      width < 480 ? `${width}px` : "448px",
+    );
     await fits(page);
+    await page.screenshot({
+      path: info.outputPath(`drawer-${width}.png`),
+      animations: "disabled",
+    });
+    await dialog(page)
+      .getByRole("button", { name: "Visit us", exact: true })
+      .click();
     const contact = dialog(page).getByRole("link", {
       name: "Contact",
       exact: true,
@@ -163,11 +179,13 @@ test("L02-B04: mobile breakpoint, scrollable short viewport and enlarged text", 
       "html{font-size:200%!important} #mobile-navigation-fixture *, [data-mobile-panel] * {line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}",
   });
   await open(page);
-  await expect(dialog(page).getByRole("link").first()).toHaveCSS(
-    "font-size",
-    "32px",
-  );
+  await expect(
+    dialog(page).getByRole("navigation").getByRole("link").first(),
+  ).toHaveCSS("font-size", "36px");
   await fits(page);
+  await dialog(page)
+    .getByRole("button", { name: "Visit us", exact: true })
+    .click();
   await dialog(page)
     .getByRole("link", { name: "Contact", exact: true })
     .focus();
@@ -198,13 +216,10 @@ test("L02-B05: semantic surfaces, visible focus, modal axe audit and geometry", 
       .analyze();
     expect(closedAudit.violations).toEqual([]);
     await open(page);
-    await expect(dialog(page)).toHaveAttribute("data-surface", "light");
-    await expect(dialog(page)).toHaveCSS(
-      "background-color",
-      "rgb(255, 255, 255)",
-    );
-    await expect(dialog(page)).toHaveCSS("color", "rgb(23, 23, 23)");
-    await expect(dialog(page)).toHaveCSS("border-radius", "16px");
+    await expect(dialog(page)).toHaveAttribute("data-surface", "charcoal");
+    await expect(dialog(page)).toHaveCSS("background-color", "rgb(32, 32, 32)");
+    await expect(dialog(page)).toHaveCSS("color", "rgb(255, 255, 255)");
+    await expect(dialog(page)).toHaveCSS("border-radius", "0px");
     const close = page.getByRole("button", { name: "Close menu" });
     await close.focus();
     await expect(close).toHaveCSS("outline-width", "3px");
@@ -215,25 +230,117 @@ test("L02-B05: semantic surfaces, visible focus, modal axe audit and geometry", 
     expect(audit.violations).toEqual([]);
     await page.screenshot({
       path: info.outputPath(`mobile-navigation-${surface}.png`),
+      animations: "disabled",
     });
     await page.keyboard.press("Escape");
   }
 });
 
-test("L02-B05: reduced motion, blocked fonts and forced colors retain operation", async ({
+test("branded drawer exposes every destination through exclusive groups and keeps contact actions native", async ({
+  page,
+}, info) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.waitForLoadState("networkidle");
+  const trigger = page
+    .getByRole("banner")
+    .getByRole("button", { name: "Menu", exact: true });
+  await trigger.click();
+  const panel = dialog(page);
+  const nav = panel.getByRole("navigation", { name: "Primary navigation" });
+  await expect(
+    panel.getByRole("link", { name: "Crossfit Gym home", exact: true }),
+  ).toBeVisible();
+  const destinations: string[] = [];
+  for (const [label, count] of [
+    ["About", 4],
+    ["Training", 3],
+    ["Explore", 5],
+    ["Visit us", 2],
+  ] as const) {
+    const group = nav.getByRole("button", { name: label, exact: true });
+    if ((await group.getAttribute("aria-expanded")) !== "true")
+      await group.click();
+    await expect(nav.getByRole("link")).toHaveCount(count);
+    await expect(
+      nav.locator('[data-state="open"][data-radix-collection-item]'),
+    ).toHaveCount(1);
+    destinations.push(
+      ...(await nav
+        .getByRole("link")
+        .evaluateAll((links) =>
+          links.map((link) => link.getAttribute("href")!),
+        )),
+    );
+  }
+  expect(new Set(destinations).size).toBe(14);
+  await panel.getByRole("button", { name: "Close menu" }).click();
+  await expect(panel).toHaveCount(0);
+  await trigger.click();
+  await expect(
+    nav.getByRole("button", { name: "Training", exact: true }),
+  ).toHaveAttribute("aria-expanded", "true");
+  await panel.screenshot({
+    path: info.outputPath("branded-drawer-phone.png"),
+    animations: "disabled",
+  });
+  await panel
+    .getByRole("link", { name: "Contact the gym", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/contact\/$/);
+  await expect(panel).toHaveCount(0);
+  await trigger.click();
+  await expect(
+    nav.getByRole("button", { name: "Visit us", exact: true }),
+  ).toHaveAttribute("aria-expanded", "true");
+  await page.evaluate(() =>
+    document.addEventListener(
+      "click",
+      (event) => {
+        if (
+          event.target instanceof Element &&
+          event.target.closest('a[href^="tel:"]')
+        )
+          event.preventDefault();
+      },
+      { once: true },
+    ),
+  );
+  await panel
+    .getByRole("link", { name: "Call 01323-275695", exact: true })
+    .click();
+  await expect(panel).toHaveCount(0);
+  await trigger.click();
+  await panel
+    .getByRole("link", { name: "Crossfit Gym home", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(panel).toHaveCount(0);
+});
+
+test("L02-B05: reduced motion, failed fonts/mark and forced colors retain operation", async ({
   page,
 }) => {
   let blocked = 0;
-  await page.route(/\.woff2(?:\?.*)?$/, (route) => {
-    blocked++;
-    return route.abort();
-  });
+  let blockedMark = 0;
+  await page.route(
+    /(?:\.woff2(?:\?.*)?$|\/images\/brand\/brand-mark\.webp$)/,
+    (route) => {
+      if (route.request().resourceType() === "font") blocked++;
+      else blockedMark++;
+      return route.abort();
+    },
+  );
   await page.emulateMedia({ reducedMotion: "reduce", forcedColors: "active" });
   await page.setViewportSize({ width: 320, height: 568 });
   await mount(page);
   expect(blocked).toBeGreaterThan(0);
   await expect(menu(page)).toHaveCSS("transition-property", "none");
   await open(page);
+  expect(blockedMark).toBeGreaterThan(0);
+  await expect(
+    dialog(page).getByRole("link", { name: "Crossfit Gym home", exact: true }),
+  ).toBeVisible();
   const close = page.getByRole("button", { name: "Close menu" });
   await expect(close).toBeFocused();
   await expect(close).toHaveCSS("outline-width", "3px");
