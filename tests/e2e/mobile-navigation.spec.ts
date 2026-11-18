@@ -70,7 +70,7 @@ test("L02-B01/B02/B03: modal keyboard, current state, dismissal, selection and r
   const close = page.getByRole("button", { name: "Close menu" });
   await expect(close).toBeFocused();
   await expect(dialog(page).getByRole("heading")).toHaveCount(5);
-  await expect(dialog(page).getByRole("link")).toHaveCount(4);
+  await expect(dialog(page).getByRole("link")).toHaveCount(14);
   await expect(
     dialog(page).getByRole("link", { name: "Membership", exact: true }),
   ).toHaveAttribute("aria-current", "page");
@@ -79,7 +79,7 @@ test("L02-B01/B02/B03: modal keyboard, current state, dismissal, selection and r
   await expect(page.locator("body")).toHaveCSS("overflow", "hidden");
   await page.keyboard.press("Shift+Tab");
   await expect(
-    dialog(page).getByRole("link", { name: "Contact", exact: true }),
+    dialog(page).getByRole("link", { name: "Locations", exact: true }),
   ).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(close).toBeFocused();

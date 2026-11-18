@@ -6,8 +6,9 @@ import { navigation } from "@/content/navigation";
 import { navigationSchema } from "@/schemas/navigation";
 import { homeFeatures } from "@/content/home-features";
 import { footerContent } from "@/content/footer";
+import { maintenancePages } from "@/content/maintenance";
 
-it("registers only implemented pages and rejects retired destinations", () => {
+it("registers implemented and maintenance pages while rejecting unavailable detail/legal destinations", () => {
   expect(routes).toEqual([
     "/",
     "/about",
@@ -15,10 +16,11 @@ it("registers only implemented pages and rejects retired destinations", () => {
     "/contact",
     "/products",
     "/supplements",
+    ...maintenancePages.map((page) => page.path),
   ]);
   for (const href of [
-    "/programs",
-    "/coaches",
+    "/programs/content-preview",
+    "/coaches/content-preview",
     "/locations/uttara",
     "/privacy",
     "/terms",
@@ -43,7 +45,7 @@ it("registers only implemented pages and rejects retired destinations", () => {
   expect(footerContent.legalNotice).toBe("Legal text is awaiting approval.");
 });
 
-it("contains no placeholder page files or temporary homepage inventory", () => {
+it("keeps the completed pages and ten maintenance routes without the old homepage inventory", () => {
   function pages(dir: string): string[] {
     return readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>
       entry.isDirectory()
@@ -54,7 +56,7 @@ it("contains no placeholder page files or temporary homepage inventory", () => {
     );
   }
   const files = pages("src/app");
-  expect(files).toHaveLength(7);
+  expect(files).toHaveLength(17);
   for (const file of files)
     expect(readFileSync(file, "utf8")).not.toContain(
       "Page components are awaiting rebuild.",

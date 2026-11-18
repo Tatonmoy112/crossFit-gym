@@ -1,4 +1,6 @@
-// Public destinations with implemented page content.
+import { maintenancePages } from "@/content/maintenance";
+
+// Registered public destinations, including explicitly non-indexed maintenance pages.
 export const routes = [
   "/",
   "/about",
@@ -6,4 +8,5 @@ export const routes = [
   "/contact",
   "/products",
   "/supplements",
+  ...maintenancePages.map((page) => page.path),
 ];

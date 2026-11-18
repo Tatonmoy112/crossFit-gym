@@ -64,7 +64,10 @@ function MobileNavigationGroups({
     >
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="ghost">
+          <Button
+            variant="ghost"
+            className="not-disabled:hover:bg-transparent not-disabled:hover:text-foreground not-disabled:active:bg-transparent not-disabled:active:text-foreground hover:underline focus-visible:underline"
+          >
             <MenuIcon aria-hidden="true" />
             Menu
           </Button>
@@ -99,7 +102,7 @@ function MobileNavigationGroups({
                   ref={closeButton}
                   variant="ghost"
                   size="icon"
-                  className="shrink-0"
+                  className="shrink-0 not-disabled:hover:bg-transparent not-disabled:hover:text-foreground not-disabled:active:bg-transparent not-disabled:active:text-foreground"
                 >
                   <XIcon aria-hidden="true" />
                   <span className="sr-only">Close menu</span>
@@ -125,7 +128,7 @@ function MobileNavigationGroups({
                                 : "location"
                               : undefined
                           }
-                          className="flex w-full aria-[current=location]:font-semibold aria-[current=location]:decoration-2"
+                          className="flex w-full bg-transparent text-foreground no-underline hover:bg-transparent hover:text-foreground hover:underline active:bg-transparent active:text-foreground focus-visible:underline aria-[current=page]:underline aria-[current=location]:font-semibold aria-[current=location]:underline aria-[current=location]:decoration-2"
                           onClick={(event) => {
                             if (
                               !event.ctrlKey &&

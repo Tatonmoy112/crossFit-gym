@@ -18,6 +18,7 @@ async function fits(page: Page) {
     (await page.viewportSize())!.width,
   );
   for (const link of await footer(page).getByRole("link").all()) {
+    if (!(await link.isVisible())) continue;
     const box = (await link.boundingBox())!;
     expect(box.height).toBeGreaterThanOrEqual(44);
     expect(box.width).toBeGreaterThanOrEqual(44);
@@ -35,7 +36,10 @@ async function fits(page: Page) {
       .locator("h2,address,p:not(.footer-wordmark),a")
       .evaluateAll((nodes) =>
         nodes
-          .filter((node) => node.scrollWidth > node.clientWidth + 1)
+          .filter(
+            (node) =>
+              node.checkVisibility() && node.scrollWidth > node.clientWidth + 1,
+          )
           .map((node) => ({
             text: node.textContent,
             width: node.clientWidth,
@@ -63,7 +67,10 @@ test("L03-A01/A02/A03/A05: actual footer, native contacts and soft internal navi
     footer(page)
       .getByRole("navigation", { name: "Footer navigation" })
       .getByRole("link"),
-  ).toHaveCount(4);
+  ).toHaveCount(14);
+  await expect(
+    footer(page).locator("details,summary,button,[data-dropdown-panel]"),
+  ).toHaveCount(0);
   await expect(footer(page).locator("address")).toHaveText(site.address);
   const phone = footer(page).getByRole("link", {
     name: site.phone,
@@ -347,7 +354,7 @@ test("L03-A01/A02/A03: footer content and navigation work without JavaScript", a
     const page = await context.newPage();
     await page.goto("/about/");
     await expect(footer(page)).toHaveCount(1);
-    await expect(footer(page).getByRole("link")).toHaveCount(10);
+    await expect(footer(page).getByRole("link")).toHaveCount(20);
     await expect(
       footer(page).getByRole("heading", {
         name: "Your Stronger Future Starts Here.",

@@ -34,7 +34,10 @@ it("L03-A01: footer owns its landmark and exposes all original groups and destin
   expect(
     within(footer).queryByRole("heading", { level: 1 }),
   ).not.toBeInTheDocument();
-  expect(within(footer).queryByRole("button")).not.toBeInTheDocument();
+  expect(
+    nav.querySelectorAll("details, summary, button, [data-dropdown-panel]"),
+  ).toHaveLength(0);
+  expect(within(nav).getAllByRole("link")).toHaveLength(14);
 });
 
 it("L03-B: server-composes the approved CTA, light panel and decorative wordmark", () => {
@@ -61,7 +64,7 @@ it("L03-B: server-composes the approved CTA, light panel and decorative wordmark
   expect(wordmark).toHaveAttribute("inert");
   expect(wordmark).toHaveTextContent("CROSSFIT GYM");
   expect(wordmark.querySelector("a,button,[tabindex]")).toBeNull();
-  expect(within(footer).getAllByRole("link")).toHaveLength(10);
+  expect(footer.querySelectorAll("a")).toHaveLength(20);
   expect(footer.textContent).not.toMatch(
     /Nexiron|Nexion|copyright|all rights reserved|newsletter|©/i,
   );

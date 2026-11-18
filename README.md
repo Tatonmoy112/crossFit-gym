@@ -1,10 +1,12 @@
 # Crossfit Gym · Uttara
 
-2026-11-18 route cleanup: only Home, About, Membership, Contact, Products and the Supplements listing remain as public page destinations, with ten populated product detail previews while preview is enabled. Placeholder routes and the temporary Home inventory are removed. Shared navigation exposes implemented destinations; equipment/coaching/space inquiries go to Contact. Legal approval records/notices, content catalogs, assets and indexing/release safeguards remain intact. Historical 24-template inventories below describe the earlier project scope, not current exported routes.
+2026-11-18 navigation redesign: the header keeps hover/click dropdowns and the footer shows always-visible link columns, sharing fourteen destinations. Navigation uses text/underline feedback with transparent backgrounds; footer dropdowns are removed. Programs, Coaches, Facilities, Schedule, Gallery, FAQ, Blog, Affiliates, Locations and Careers have returned as explicit, non-indexed maintenance pages at their own URLs. Completed pages and populated product examples remain. The original 24-template plan remains the long-term scope; this update restores main destinations only. Unavailable detail/structure-preview and legal URLs still return 404. See [the navigation specification](docs/specs/L02-C-navigation-redesign.md) and [current route inventory](docs/sitemap.md).
 
 A Next.js App Router, React, strict TypeScript and Tailwind project with implemented gym pages and a static product preview. It exports static files to `out/`.
 
 ## Current state
+
+[L02-C navigation redesign](docs/specs/L02-C-navigation-redesign.md) keeps header dropdowns, restores the footer's server-rendered link columns and uses text/underline feedback without navigation background fills in the desktop header, mobile menu and footer. Fourteen destinations and ten static maintenance pages remain available. The footer CTA and brand treatment are preserved. All **351 unit/component tests**, typecheck, lint, formatting, production build and the **29-HTML export audit** pass. The complete final browser run passes **359 cases with three intentional skips**. Reviewed desktop/mobile captures; manual device/screen-reader review and owner visual approval remain pending. Earlier shared-dropdown verification in the QA checklist is historical.
 
 [S02-C breadcrumb removal](docs/specs/S02-C-breadcrumb-removal.md) removes breadcrumb navigation from every page, including product details and previews. Existing navigation, page content and indexing protections remain. Unused application code/content/styles and dedicated tests are retired; installed UI primitives remain available. Earlier breadcrumb notes below describe historical behavior.
 

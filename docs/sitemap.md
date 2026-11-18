@@ -1,20 +1,39 @@
 # Current route inventory
 
-Updated 2026-11-18 after the owner requested removal of all unfinished pages. This supersedes the earlier 24-template preservation scope.
+Updated 2026-11-18 for header dropdowns, restored static footer navigation and all ten planned main maintenance destinations. This supersedes the main-route removal in S04. The complete original 24-template plan remains the long-term scope; unfinished detail templates are not fabricated or restored by this change.
 
-| Page            | Route                | Status                                                       |
-| --------------- | -------------------- | ------------------------------------------------------------ |
-| Home            | `/`                  | Implemented; temporary page inventory removed                |
-| About           | `/about/`            | Complete section composition                                 |
-| Membership      | `/membership/`       | Implemented with disclosed illustrative plans in preview     |
-| Contact         | `/contact/`          | Working phone, Maps/social links; disabled message preview   |
-| Products        | `/products/`         | Implemented listing and discovery                            |
-| Supplements     | `/supplements/`      | Implemented filtered product listing                         |
-| Product details | `/products/[id]/`    | Ten populated illustrative records, preview-only and noindex |
-| Not found       | Unknown/removed URLs | Custom 404 with Home recovery                                |
+| Page            | Route                    | Status                                                       |
+| --------------- | ------------------------ | ------------------------------------------------------------ |
+| Home            | `/`                      | Implemented                                                  |
+| About           | `/about/`                | Complete section composition                                 |
+| Membership      | `/membership/`           | Implemented with disclosed illustrative plans in preview     |
+| Contact         | `/contact/`              | Phone, Maps/social links and disabled message preview        |
+| Products        | `/products/`             | Implemented listing and discovery                            |
+| Supplements     | `/supplements/`          | Implemented filtered product listing                         |
+| Product details | `/products/[id]/`        | Ten populated illustrative records, preview-only and noindex |
+| Programs        | `/programs/`             | Under maintenance                                            |
+| Coaches         | `/coaches/`              | Under maintenance                                            |
+| Facilities      | `/facilities/`           | Under maintenance                                            |
+| Schedule        | `/schedule/`             | Under maintenance                                            |
+| Gallery         | `/gallery/`              | Under maintenance                                            |
+| FAQ             | `/faq/`                  | Under maintenance; existing Home FAQ remains available       |
+| Blog            | `/blog/`                 | Under maintenance                                            |
+| Affiliates      | `/affiliates/`           | Under maintenance                                            |
+| Locations       | `/locations/`            | Under maintenance                                            |
+| Careers         | `/careers/`              | Under maintenance                                            |
+| Not found       | Unknown/unavailable URLs | Custom 404 with Home recovery                                |
 
-Removed placeholder URLs: Programs and its structure preview, Coaches and its structure preview, Facilities, Schedule, Gallery, FAQ, Blog and its structure preview, Affiliates, Locations and Uttara detail, Careers and its structure preview, Privacy, Terms, the supplement structure preview and the product structure preview. Existing catalog data, legal approval records, assets, homepage sections and shared components remain available for later work.
+Every maintenance destination has its own static page, page-name H1, explicit status, preparation message and working Home/Contact links. There is no redirect or shared maintenance URL. These pages describe website preparation, not a gym closure, confirmed business service or completion date.
 
-Shared header/footer groups now expose Our story, Membership, Products and Contact. Home equipment/coaching/space actions use clearly labelled Contact inquiries; other completed-page links stay in place. Home FAQ remains available in its existing section. No replacement routes, redirects or new pages are added. Removed URLs deliberately return 404.
+Shared navigation contains four groups and fourteen destinations:
 
-The sitemap remains empty while preview indexing is disabled. If indexing is explicitly enabled after release approval, only the implemented Home, About, Membership and Contact pages are included; product examples/listings remain excluded. Robots rules and release gates are unchanged. With no product records, the reserved static-export parameter reaches notFound(). The export normalizer removes its generated artifact so static hosts return 404 rather than a blank 200 response.
+- About: Our story, Coaches, Facilities, Careers.
+- Training: Membership, Programs, Schedule.
+- Explore: Products, Gallery, FAQ, Blog, Affiliates.
+- Visit us: Contact, Locations.
+
+Header dropdowns open downward on desktop with fine-pointer hover previews, click pinning/toggling, keyboard/touch alternatives and native no-JavaScript disclosures. The footer renders four group headings and all fourteen links directly in responsive one-, two- or four-column layouts, with no dropdowns or disclosure controls. Header/mobile/footer navigation uses transparent backgrounds and text/underline feedback; panel surfaces, the footer CTA and brand treatment remain. The mobile header dialog includes the same destinations. Native links remain in the server-rendered HTML.
+
+Unavailable URLs still return 404: program/coach/blog/career/supplement/product structure previews, unpopulated dynamic detail URLs, `/locations/uttara/`, `/privacy/` and `/terms/`. Real content catalogs, supplied assets and legal approval records remain available for later work. No preview records or business claims are added.
+
+The XML sitemap remains empty while preview indexing is disabled. Even if indexing is later enabled after release approval, all ten maintenance pages and product example listings remain excluded. Maintenance metadata always uses `noindex, nofollow`. Existing robots rules, preview protection and public-launch gates remain. Empty product-catalog reserved output is still removed by the export normalizer.

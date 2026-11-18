@@ -32,7 +32,7 @@ async function fits(page: Page) {
   ).toBe(true);
   for (const node of await page
     .locator(
-      "#desktop-navigation-fixtures button, #desktop-navigation-fixtures a",
+      "#desktop-navigation-fixtures summary, #desktop-navigation-fixtures button, #desktop-navigation-fixtures a",
     )
     .all()) {
     if (!(await node.isVisible())) continue;
@@ -75,10 +75,10 @@ test("L02-A01/A02/A03: actual client disclosures preserve current links keyboard
   await expect(training).toHaveAttribute("aria-expanded", "false");
   await expect(menu.getByRole("link")).toHaveCount(0);
   for (const [label, count] of [
-    ["About", 1],
-    ["Training", 1],
-    ["Explore", 1],
-    ["Visit us", 1],
+    ["About", 4],
+    ["Training", 3],
+    ["Explore", 5],
+    ["Visit us", 2],
   ] as const) {
     const trigger = menu.getByRole("button", { name: label });
     await trigger.click();
@@ -159,18 +159,20 @@ test("L02-A04: desktop breakpoint readable surfaces panel geometry focus and ref
     await trigger.press("ArrowDown");
     const link = menu.getByRole("link", { name: "Membership", exact: true });
     await expect(link).toBeFocused();
-    await expect(trigger).toHaveCSS(
-      "background-color",
-      surface === "charcoal" ? "rgb(23, 23, 23)" : "rgb(245, 245, 245)",
-    );
+    await expect(trigger).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
     await expect(trigger).toHaveCSS(
       "color",
-      surface === "charcoal" ? "rgb(245, 245, 245)" : "rgb(23, 23, 23)",
+      surface === "charcoal" ? "rgb(255, 255, 255)" : "rgb(23, 23, 23)",
     );
+    await expect(link).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+    await expect(link).toHaveCSS("text-decoration-line", "underline");
     await expect(link).toHaveCSS("outline-width", "3px");
     expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     const panel = link.locator("xpath=ancestor::div[@data-desktop-panel]");
-    await expect(panel).toHaveCSS("border-radius", "16px");
+    await expect(panel.locator(".dropdown-links")).toHaveCSS(
+      "border-radius",
+      "16px",
+    );
     const box = (await panel.boundingBox())!,
       linkBox = (await link.boundingBox())!;
     expect(box.x).toBeGreaterThanOrEqual(0);
@@ -232,7 +234,7 @@ test("L02-A05: font fallback reduced motion and forced colors preserve keyboard 
     const { nodeId } = await session.send("DOM.querySelector", {
       nodeId: root.nodeId,
       selector:
-        '#desktop-navigation-fixtures [data-surface="light"] nav button',
+        '#desktop-navigation-fixtures [data-surface="light"] nav summary',
     });
     const { fonts } = await session.send("CSS.getPlatformFontsForNode", {
       nodeId,

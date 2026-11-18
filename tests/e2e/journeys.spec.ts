@@ -45,7 +45,7 @@ test("removed placeholder URLs use the custom 404 with native recovery", async (
 }) => {
   for (const path of removedRoutes)
     expect((await request.get(path)).status(), path).toBe(404);
-  expect((await page.goto("/programs/"))?.status()).toBe(404);
+  expect((await page.goto("/programs/content-preview/"))?.status()).toBe(404);
   await expect(
     page.getByRole("heading", { name: "404", exact: true }),
   ).toBeVisible();

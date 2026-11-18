@@ -58,6 +58,17 @@ it.each([
     expect(
       sitemap.some((entry) => /\/(?:products|supplements)\/$/.test(entry.url)),
     ).toBe(false);
+    const { maintenancePages } = await import("@/content/maintenance");
+    for (const page of maintenancePages) {
+      expect(
+        sitemap.some(
+          (entry) => new URL(entry.url).pathname === `${page.path}/`,
+        ),
+      ).toBe(false);
+      expect(
+        metadata(page.title, "Being prepared", page.path, true).robots,
+      ).toEqual({ index: false, follow: false });
+    }
     if (!expected) expect(sitemap).toEqual([]);
     else expect(sitemap.length).toBeGreaterThan(0);
   },

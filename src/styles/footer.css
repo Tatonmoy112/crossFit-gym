@@ -34,6 +34,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 2rem 1.5rem;
+    align-self: start;
   }
   .footer-meta {
     display: grid;
@@ -77,11 +78,11 @@
   }
 }
 @container footer-panel (min-width: 64rem) {
-  .footer-panel-main {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
-  }
   .footer-navigation {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .footer-panel-main {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
   }
 }
 @media (forced-colors: active) {

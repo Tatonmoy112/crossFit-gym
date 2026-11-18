@@ -6,6 +6,9 @@ import { NavigationLink } from "@/components/ui/navigation-link";
 import { footerContent } from "@/content/footer";
 import { navigation } from "@/content/navigation";
 
+const footerTextLinkClass =
+  "footer-text-link bg-transparent text-foreground no-underline hover:bg-transparent hover:text-foreground hover:underline active:bg-transparent active:text-foreground focus-visible:bg-transparent focus-visible:underline";
+
 function Footer() {
   return (
     <footer data-site-footer data-surface="light">
@@ -24,10 +27,16 @@ function Footer() {
                   {footerContent.address}
                 </address>
                 <div className="flex flex-wrap gap-2">
-                  <NavigationLink href={footerContent.phone.href}>
+                  <NavigationLink
+                    href={footerContent.phone.href}
+                    className={footerTextLinkClass}
+                  >
                     {footerContent.phone.label}
                   </NavigationLink>
-                  <NavigationLink href={footerContent.directions.href}>
+                  <NavigationLink
+                    href={footerContent.directions.href}
+                    className={footerTextLinkClass}
+                  >
                     {footerContent.directions.label}
                   </NavigationLink>
                 </div>
@@ -47,7 +56,7 @@ function Footer() {
                         <li key={link.href}>
                           <NavigationLink
                             href={link.href}
-                            className="flex w-full px-2"
+                            className={`flex w-full px-2 ${footerTextLinkClass}`}
                           >
                             {link.label}
                           </NavigationLink>
@@ -65,7 +74,10 @@ function Footer() {
               >
                 {footerContent.socials.map((link) => (
                   <li key={link.href}>
-                    <NavigationLink href={link.href}>
+                    <NavigationLink
+                      href={link.href}
+                      className={footerTextLinkClass}
+                    >
                       {link.label}
                     </NavigationLink>
                   </li>
@@ -76,7 +88,10 @@ function Footer() {
                   <ul className="m-0 flex list-none flex-wrap gap-2 p-2">
                     {group.links.map((link) => (
                       <li key={link.href}>
-                        <NavigationLink href={link.href}>
+                        <NavigationLink
+                          href={link.href}
+                          className={footerTextLinkClass}
+                        >
                           {link.label}
                         </NavigationLink>
                       </li>
