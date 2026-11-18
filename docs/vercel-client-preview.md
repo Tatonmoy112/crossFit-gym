@@ -13,6 +13,7 @@ The shared test helper now loads only the primary computed family with its style
 - Node is pinned to `24.x`; pnpm remains `10.34.9`. `pnpm-lock.yaml` is the only package manager lockfile. Do not regenerate it with npm.
 - `pnpm typecheck` runs `next typegen` before TypeScript. `next-env.d.ts` is generated locally, ignored and removed from version control; do not restore mode-specific imports manually.
 - GitHub Actions retains the complete quality workflow on Ubuntu and both browser configurations. Browser failures upload `playwright-report/` and `test-results/` for seven days. Traces/screenshots remain available without skipping checks or adding retries.
+- The Membership FAQ browser test parks the mouse outside the FAQ before switching from its hover exercise to keyboard assertions, then waits for the first answer to open before tabbing. Thirty desktop repetitions pass; this prevents keyboard scrolling from turning the stationary mouse into a competing hover action. No application behavior or retry setting is changed.
 - Current executed results and limitations are recorded in `docs/qa-checklist.md`.
 
 ## GitHub delivery

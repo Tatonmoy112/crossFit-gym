@@ -186,8 +186,12 @@ test("membership FAQs use the shared mouse, touch and keyboard disclosure behavi
     await expect(first).toHaveAttribute("open", "");
     await faq(page).locator("h2").hover();
     await expect(first).not.toHaveAttribute("open");
+    // Keyboard scrolling must not move another FAQ under the stationary mouse
+    // and start a new hover preview during the keyboard-only assertions.
+    await page.mouse.move(0, 0);
     await first.locator("summary").focus();
     await page.keyboard.press("Enter");
+    await expect(first).toHaveAttribute("open", "");
     await page.keyboard.press("Tab");
     await expect(second.locator("summary")).toBeFocused();
     await page.keyboard.press("Space");
