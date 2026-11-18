@@ -1,13 +1,7 @@
 import { z } from "zod";
 import { routes } from "@/config/routes";
-import { locations } from "@/content/locations";
 
-const destinations = new Set([
-  ...routes,
-  ...locations
-    .filter((location) => location.status === "approved")
-    .map((location) => `/locations/${location.slug}`),
-]);
+const destinations = new Set(routes);
 
 export const navigationSchema = z
   .array(

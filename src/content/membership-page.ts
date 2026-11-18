@@ -9,7 +9,6 @@ export const membershipPage = membershipPageSchema.parse({
     description:
       "Learn about gym membership options at Crossfit Gym. Contact our team to confirm current prices, benefits, access conditions and joining arrangements.",
   },
-  breadcrumb: { home: "Home", current: "Membership Plans" },
   hero: {
     eyebrow: "MEMBERSHIP PLANS",
     heading: "Your Fitness. Your Goals. Your Membership.",

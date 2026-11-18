@@ -9,6 +9,9 @@ import {
   validateProductDetails,
 } from "@/lib/products/catalog";
 import { productDetailHref } from "@/lib/products/links";
+import ProductPage, {
+  generateStaticParams,
+} from "@/app/(marketing)/products/[slug]/page";
 
 const flags = vi.hoisted(() => ({ preview: true }));
 vi.mock("@/content/site", async () => {
@@ -26,6 +29,14 @@ vi.mock("@/content/site", async () => {
 });
 afterEach(() => {
   flags.preview = true;
+});
+
+it("keeps the empty-catalog export fallback a 404 instead of publishing a blank page", async () => {
+  flags.preview = false;
+  expect(generateStaticParams()).toEqual([{ slug: "content-preview" }]);
+  await expect(
+    ProductPage({ params: Promise.resolve({ slug: "content-preview" }) }),
+  ).rejects.toMatchObject({ digest: "NEXT_HTTP_ERROR_FALLBACK;404" });
 });
 
 it("matches every supplied example to its exact detailed copy and missing manufacturer fields", () => {
@@ -116,9 +127,9 @@ it("rejects reserved IDs, blank copy and repeated specification labels", () => {
   expect(() => productDetailHref("content-preview")).toThrow();
 });
 
-it("provides ten separate paths plus a neutral export path and reserves unknown IDs for 404", () => {
-  expect(productDetailParams()).toHaveLength(11);
-  expect(productDetailParams()[0]).toEqual({ slug: "content-preview" });
+it("provides ten populated paths and reserves unknown IDs for 404", () => {
+  expect(productDetailParams()).toHaveLength(10);
+  expect(productDetailParams()[0]).toEqual({ slug: "whey-protein-powder" });
   expect(productDetailHref(previewProducts[0].id)).toBe(
     "/products/whey-protein-powder/",
   );
@@ -126,9 +137,9 @@ it("provides ten separate paths plus a neutral export path and reserves unknown 
   expect(findProductDetail("content-preview")).toBeUndefined();
 });
 
-it("keeps only the neutral path with no sample records outside preview", () => {
+it("exports no sample records outside preview", () => {
   flags.preview = false;
-  expect(productDetailParams()).toEqual([{ slug: "content-preview" }]);
+  expect(productDetailParams()).toEqual([]);
   for (const product of previewProducts)
     expect(findProductDetail(product.id)).toBeUndefined();
 });

@@ -170,6 +170,7 @@ test("automatic rotation respects visibility, hover, focus, explicit play and pa
   expect(await current(page)).toBe("hiit-conditioning");
   await rotation.click();
   await page.locator("[data-home-hero]").scrollIntoViewIfNeeded();
+  await expect(carousel(page)).not.toBeInViewport();
   await page.clock.runFor(10000);
   expect(await current(page)).toBe("hiit-conditioning");
 });

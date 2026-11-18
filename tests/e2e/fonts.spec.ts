@@ -108,7 +108,7 @@ async function assertLoadedRoles(page: Page, session: CDPSession) {
       `${role.id}: ${JSON.stringify(actual)}`,
     ).toBe(true);
   }
-  const body = await renderedFonts(session, "main > section > p");
+  const body = await renderedFonts(session, "[data-home-about] .about-copy p");
   expect(
     body.some((font) => font.isCustomFont && font.familyName === "Inter"),
   ).toBe(true);
@@ -250,11 +250,14 @@ test("F01-A03: blocked fonts preserve fallback, wrapping, focus and navigation",
       page.getByRole("button", { name: "Font fixture checked" }),
     ).toBeVisible();
     await page
-      .getByRole("navigation", { name: "Page inventory" })
-      .getByRole("link", { name: "/schedule/", exact: true })
+      .getByRole("contentinfo")
+      .getByRole("link", { name: "Membership", exact: true })
       .click();
     await expect(
-      page.getByRole("heading", { name: "Schedule", exact: true }),
+      page.getByRole("heading", {
+        name: "Your Fitness. Your Goals. Your Membership.",
+        exact: true,
+      }),
     ).toBeVisible();
   } finally {
     await session.detach();
@@ -265,14 +268,14 @@ test("F01-A04: font integration preserves preview metadata and indexing safeguar
   page,
   request,
 }) => {
-  await page.goto("/programs/content-preview/");
+  await page.goto("/products/whey-protein-powder/");
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     "content",
     "noindex, nofollow",
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    /\/programs\/content-preview\/$/,
+    /\/products\/whey-protein-powder\/$/,
   );
   await expect(page.getByRole("main")).toHaveCount(1);
   const sitemap = await request.get("/sitemap.xml");

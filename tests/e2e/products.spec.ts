@@ -172,6 +172,9 @@ test("homepage actions reach all products or the matching category and legacy Su
 }) => {
   await page.goto("/");
   const home = page.locator("[data-home-product-categories]");
+  await expect(
+    home.locator("[data-home-product-categories-carousel]"),
+  ).toHaveAttribute("data-ready", "true");
   await home
     .getByRole("link", { name: "View All Product", exact: true })
     .click();
@@ -218,7 +221,7 @@ test("homepage actions reach all products or the matching category and legacy Su
   await expect(cards(page)).toHaveCount(9);
   expect(
     (await page.request.get("/supplements/content-preview/")).status(),
-  ).toBe(200);
+  ).toBe(404);
 });
 
 test("hover intent cancels on exit and scroll, opens only once, and touch uses explicit quick view", async ({

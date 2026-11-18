@@ -4,7 +4,7 @@ import { homeFeatures } from "@/content/home-features";
 import { homeFeaturesSchema } from "@/schemas/content";
 import { routes } from "@/config/routes";
 
-it("uses the six supplied features, descriptions and button labels verbatim in source order", () => {
+it("preserves supplied features and descriptions with actions matching available pages", () => {
   const source = readFileSync("newsection.md", "utf8")
     .split("# **03.")[1]
     .split("# **04.")[0];
@@ -17,11 +17,20 @@ it("uses the six supplied features, descriptions and button labels verbatim in s
     expect(title).toBeGreaterThanOrEqual(position);
     position = source.indexOf(item.description, title);
     expect(position).toBeGreaterThan(title);
-    expect(source).toContain(`CTA: ${item.actionLabel}`);
     expect(routes).toContain(item.href.slice(0, -1));
     expect(item.image).toBeUndefined();
   }
   expect(homeFeatures.action.href).toBe("/contact/");
+  expect(
+    homeFeatures.items.map((item) => [item.actionLabel, item.href]),
+  ).toEqual([
+    ["Ask About Equipment", "/contact/"],
+    ["Ask About Coaching", "/contact/"],
+    ["Ask About Training Spaces", "/contact/"],
+    ["Discover Our Community", "/membership/"],
+    ["Ask About Our Space", "/contact/"],
+    ["Learn Our Approach", "/contact/"],
+  ]);
 });
 
 it.each([

@@ -17,6 +17,7 @@
 @import "./membership-page.css";
 @import "./products.css";
 @import "./product-details.css";
+@import "./contact-page.css";
 @import "./footer.css";
 
 @custom-variant dark {

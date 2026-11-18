@@ -66,10 +66,10 @@ it("L02-B01: preserves the grouped content only in the open named modal", () => 
 });
 
 it.each([
-  ["/programs/", "Programs", "page"],
-  ["/programs/content-preview/", "Programs", "location"],
-  ["/locations/uttara/", "Uttara, Dhaka", "page"],
-  ["/locations/uttara/details?topic=visit#main", "Uttara, Dhaka", "location"],
+  ["/membership/", "Membership", "page"],
+  ["/products/whey-protein-powder/", "Products", "location"],
+  ["/contact/", "Contact", "page"],
+  ["/contact/details?topic=visit#main", "Contact", "location"],
 ])(
   "L02-B02: precise current destination for %s",
   (pathname, label, current) => {
@@ -125,10 +125,10 @@ it("L02-B03: modified selection remains open; ordinary selection closes", () => 
 it("L02-B03: pathname changes close the menu and refresh current state", () => {
   const { rerender } = render(<MobileNavigation />);
   open();
-  route.pathname = "/programs/";
+  route.pathname = "/membership/";
   rerender(<MobileNavigation />);
   expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   expect(
-    within(open()).getByRole("link", { name: "Programs" }),
+    within(open()).getByRole("link", { name: "Membership" }),
   ).toHaveAttribute("aria-current", "page");
 });

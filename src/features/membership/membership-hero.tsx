@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/shared/container";
-import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { NavigationLink } from "@/components/ui/navigation-link";
 import { homeHero } from "@/content/home";
@@ -21,12 +20,6 @@ export function MembershipHero({
       aria-labelledby="membership-title"
     >
       <Container className="membership-container py-8 md:py-12">
-        <Breadcrumbs
-          items={[
-            { label: content.breadcrumb.home, href: "/" },
-            { label: content.breadcrumb.current },
-          ]}
-        />
         <div className="membership-hero-layout">
           <header className="grid min-w-0 content-center gap-5">
             <p className="membership-eyebrow m-0">{content.hero.eyebrow}</p>

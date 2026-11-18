@@ -9,6 +9,16 @@ async function ready(page: Page, path: string) {
   await page.waitForLoadState("networkidle");
   await page.evaluate(() => document.fonts.ready);
 }
+async function resize(page: Page, width: number) {
+  await page.setViewportSize({ width, height: 1000 });
+  // Let viewport media/container queries and the compositor commit before measuring.
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+      ),
+  );
+}
 async function fits(page: Page) {
   expect(
     await page.evaluate(
@@ -31,7 +41,7 @@ test("Home About sits immediately below the hero, reflows and opens the complete
   ).toBe(true);
   await expect(page.locator("#home-story-title")).toHaveCount(0);
   for (const width of [320, 375, 768, 1280, 1920]) {
-    await page.setViewportSize({ width, height: 1000 });
+    await resize(page, width);
     await homeSection(page).scrollIntoViewIfNeeded();
     await fits(page);
     const boxes = await homeSection(page).evaluate((node) => ({
@@ -95,16 +105,11 @@ test("About page preserves all sections, responsive layouts, metadata and access
     "content",
     /noindex/,
   );
-  if (await page.evaluate(() => matchMedia("(hover: hover)").matches)) {
-    const home = page
-      .getByRole("navigation", { name: "Breadcrumb" })
-      .getByRole("link", { name: "Home", exact: true });
-    await home.hover();
-    await expect(home).toHaveCSS("color", "rgb(255, 204, 0)");
-    await page.mouse.move(0, 0);
-  }
+  await expect(
+    page.getByRole("navigation", { name: /breadcrumb/i }),
+  ).toHaveCount(0);
   for (const width of [320, 375, 768, 1280, 1920]) {
-    await page.setViewportSize({ width, height: 1000 });
+    await resize(page, width);
     await fits(page);
     if ([375, 1280].includes(width))
       await page.screenshot({
@@ -180,8 +185,8 @@ test("About content and links work without JavaScript", async ({
     await expect(page).toHaveURL(/\/contact\/$/);
     await page.goBack();
     await page
-      .getByRole("navigation", { name: "Breadcrumb" })
-      .getByRole("link", { name: "Home", exact: true })
+      .getByRole("banner")
+      .getByRole("link", { name: "Crossfit Gym home" })
       .click();
     await expect(page).toHaveURL(/\/$/);
   } finally {
@@ -201,7 +206,7 @@ test("enlarged text, failed images/fonts and reduced motion retain readable Abou
         "html{font-size:200%!important} [data-home-about] p,[data-about-page] p{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}",
     });
     for (const width of [320, 768, 1280]) {
-      await page.setViewportSize({ width, height: 1000 });
+      await resize(page, width);
       await fits(page);
     }
     const target = path === "/" ? homeSection(page) : about(page);

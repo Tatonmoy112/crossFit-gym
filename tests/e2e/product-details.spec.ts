@@ -88,6 +88,7 @@ test("all ten products have distinct static content and protected metadata while
   test.setTimeout(120000);
   for (const product of previewProducts) {
     await ready(page, `/products/${product.id}/`);
+    await expect(page.locator('[data-slot="breadcrumb"]')).toHaveCount(0);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
       product.name,
     );
@@ -112,12 +113,10 @@ test("all ten products have distinct static content and protected metadata while
     ).toHaveCount(0);
   }
   expect((await request.get("/products/not-a-product/")).status()).toBe(404);
-  await page.goto("/products/content-preview/");
-  await expect(page.locator("[data-product-structure-preview]")).toBeVisible();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "Product details · structure preview",
-  );
-  await expect(page.locator("[data-product-card]")).toHaveCount(0);
+  expect((await page.goto("/products/content-preview/"))?.status()).toBe(404);
+  await expect(
+    page.getByRole("heading", { name: "404", exact: true }),
+  ).toBeVisible();
 });
 
 test("listing titles, images and quick view open details while browser Back restores discovery", async ({
@@ -158,7 +157,7 @@ test("listing titles, images and quick view open details while browser Back rest
   await expect(page).toHaveURL(new RegExp(`${master}$`));
 });
 
-test("native disclosures, category breadcrumbs, related links and confirmed inquiry actions work", async ({
+test("native disclosures, related category links and confirmed inquiry actions work", async ({
   page,
 }) => {
   await ready(page);
@@ -183,8 +182,8 @@ test("native disclosures, category breadcrumbs, related links and confirmed inqu
     "Creatine Monohydrate",
   );
   await detail(page)
-    .getByRole("navigation", { name: "Breadcrumb" })
-    .getByRole("link", { name: "Supplements", exact: true })
+    .locator(".product-related")
+    .getByRole("link", { name: "Explore Supplements", exact: true })
     .press("Enter");
   await expect(page).toHaveURL(/category=sports-nutrition/);
   await expect(page.locator("[data-product-card]")).toHaveCount(4);
@@ -313,6 +312,9 @@ test("the real gallery supports approved-image thumbnails, finite keys, touch an
     "tests/fixtures/product-gallery.browser.tsx",
   );
   await page.goto("/about/");
+  // Settle the real page before injecting a separate React root into main.
+  // Initial App Router hydration can otherwise remove the specimen.
+  await page.waitForLoadState("networkidle");
   await page.evaluate(() => {
     const root = document.createElement("div");
     root.id = "product-gallery-fixture";

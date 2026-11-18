@@ -4,7 +4,7 @@ The approved plan uses Whey Protein Powder as the master composition, then reuse
 
 ## Routes and content
 
-`/products/[slug]/` statically generates each visible product ID. Listing names and media are native detail links; the hover dialog retains its explicit Quick view control and adds View full details. Category breadcrumbs and related cards return to the existing discovery flow.
+`/products/[slug]/` statically generates each visible product ID. Listing names and media are native detail links; the hover dialog retains its explicit Quick view control and adds View full details. Existing category links and related cards return to the existing discovery flow.
 
 `src/content/previews/product-details.ts` holds the supplied section-4 headlines, descriptions, highlights, intended audiences, usage/exercise guidance and specification labels. Unresolved specification values are null and render as “To be confirmed.” Product records retain null prices and empty image arrays. The empty approved collection lives separately in `src/content/product-details.ts`. Zod and relationship validation reject missing, duplicate, orphaned and status-mismatched detail records. Never treat illustrative nutrition copy as verified manufacturer information.
 

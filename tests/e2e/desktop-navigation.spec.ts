@@ -9,7 +9,7 @@ test.beforeAll(async () => {
   );
 });
 
-async function mount(page: Page, path = "/programs/") {
+async function mount(page: Page, path = "/membership/") {
   await page.goto(path);
   await page.evaluate(() => {
     const root = document.createElement("div");
@@ -54,16 +54,10 @@ test("L02-A01/A02/A03: actual client disclosures preserve current links keyboard
   await training.focus();
   await page.keyboard.press("Enter");
   await page.keyboard.press("ArrowDown");
-  const programs = menu.getByRole("link", { name: "Programs", exact: true });
+  const programs = menu.getByRole("link", { name: "Membership", exact: true });
   await expect(programs).toBeFocused();
   await expect(programs).toHaveAttribute("aria-current", "page");
   await expect(menu.locator("[aria-current]")).toHaveCount(1);
-  await page.keyboard.press("Tab");
-  await expect(
-    menu.getByRole("link", { name: "Class schedule" }),
-  ).toBeFocused();
-  await page.keyboard.press("Shift+Tab");
-  await expect(programs).toBeFocused();
   await page.keyboard.press("Shift+Tab");
   await expect(training).toBeFocused();
   await page.keyboard.press("Tab");
@@ -81,10 +75,10 @@ test("L02-A01/A02/A03: actual client disclosures preserve current links keyboard
   await expect(training).toHaveAttribute("aria-expanded", "false");
   await expect(menu.getByRole("link")).toHaveCount(0);
   for (const [label, count] of [
-    ["About", 5],
-    ["Training", 4],
-    ["Explore", 3],
-    ["Visit us", 3],
+    ["About", 1],
+    ["Training", 1],
+    ["Explore", 1],
+    ["Visit us", 1],
   ] as const) {
     const trigger = menu.getByRole("button", { name: label });
     await trigger.click();
@@ -99,19 +93,16 @@ test("L02-A01/A02/A03: actual client disclosures preserve current links keyboard
     "content",
     /noindex/,
   );
-  await mount(page, "/programs/content-preview/");
-  await nav(page).getByRole("button", { name: "Training" }).click();
+  await mount(page, "/products/whey-protein-powder/");
+  await nav(page).getByRole("button", { name: "Explore" }).click();
   await expect(
-    nav(page).getByRole("link", { name: "Programs", exact: true }),
+    nav(page).getByRole("link", { name: "Products", exact: true }),
   ).toHaveAttribute("aria-current", "location");
-  await mount(page, "/locations/uttara/");
+  await mount(page, "/contact/");
   await nav(page).getByRole("button", { name: "Visit us" }).click();
   await expect(
-    nav(page).getByRole("link", { name: "Uttara, Dhaka" }),
+    nav(page).getByRole("link", { name: "Contact" }),
   ).toHaveAttribute("aria-current", "page");
-  await expect(
-    nav(page).getByRole("link", { name: "Locations", exact: true }),
-  ).not.toHaveAttribute("aria-current");
 });
 
 test("L02-A04: desktop breakpoint readable surfaces panel geometry focus and reflow", async ({
@@ -166,7 +157,7 @@ test("L02-A04: desktop breakpoint readable surfaces panel geometry focus and ref
     await expect(trigger).toHaveCSS("outline-offset", "3px");
     await trigger.press("Enter");
     await trigger.press("ArrowDown");
-    const link = menu.getByRole("link", { name: "Programs", exact: true });
+    const link = menu.getByRole("link", { name: "Membership", exact: true });
     await expect(link).toBeFocused();
     await expect(trigger).toHaveCSS(
       "background-color",

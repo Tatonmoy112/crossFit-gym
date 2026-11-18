@@ -156,9 +156,7 @@ test("L01-A01/A02: identity navigates Home and delivers a small local mark with 
   await link.focus();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/$/);
-  await expect(
-    page.getByRole("navigation", { name: "Page inventory" }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     "content",
     /noindex/,

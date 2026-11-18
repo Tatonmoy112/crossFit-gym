@@ -1,3 +1,4 @@
+import { mountContentFixture } from "./helpers/content-fixture";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import AxeBuilder from "@axe-core/playwright";
@@ -11,7 +12,7 @@ const widths = [
   320, 375, 767, 768, 1023, 1024, 1280, 1550, 1613, 1614, 1615, 1920, 2560,
 ];
 async function ready(page: Page) {
-  await page.goto("/programs/");
+  await mountContentFixture(page);
   await page.waitForLoadState("networkidle");
 }
 
@@ -46,7 +47,7 @@ test("shared section containers cap at 1550px and keep responsive gutters throug
   await page.waitForLoadState("networkidle");
   await page.evaluate(() => document.fonts.ready);
   const containers = page.locator(".layout-container");
-  expect(await containers.count()).toBe(14);
+  expect(await containers.count()).toBe(13);
   for (const width of [
     1920, 320, 375, 768, 1280, 1440, 1550, 1613, 1614, 1615, 2560,
   ]) {
@@ -74,7 +75,7 @@ test("shared section containers cap at 1550px and keep responsive gutters throug
   });
 });
 
-test("S03-A02/A04: Programs owns a full-width section with one constrained inner wrapper", async ({
+test("S03-A02/A04: component specimen owns a full-width section with one constrained inner wrapper", async ({
   page,
 }, info) => {
   await ready(page);
@@ -87,7 +88,11 @@ test("S03-A02/A04: Programs owns a full-width section with one constrained inner
     await geometry(inner, section, width);
   }
   await expect(
-    inner.getByRole("heading", { name: "Programs", level: 1, exact: true }),
+    inner.getByRole("heading", {
+      name: "Component specimen",
+      level: 1,
+      exact: true,
+    }),
   ).toHaveCount(1);
   await expect(
     inner.getByText(
@@ -103,7 +108,7 @@ test("S03-A02/A04: Programs owns a full-width section with one constrained inner
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    /\/programs\/$/,
+    /\/about\/$/,
   );
   for (const width of [375, 1280]) {
     await page.setViewportSize({ width, height: 900 });
@@ -223,13 +228,6 @@ test("S03-A04: keyboard recovery and static content survive font and preference 
   await expect(page.getByRole("main")).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
-    page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("link", {
-      name: "Home",
-      exact: true,
-    }),
-  ).toBeFocused();
-  await page.keyboard.press("Tab");
-  await expect(
     page.getByRole("link", { name: "Back to home", exact: true }),
   ).toBeFocused();
 });
@@ -245,18 +243,20 @@ test("S03-A04: server-rendered wrapper preserves content and navigation without 
   });
   try {
     const page = await context.newPage();
-    await page.goto("/programs/");
+    await mountContentFixture(page);
     const section = page.locator("main > section");
     await geometry(section.locator(":scope > div"), section, 375);
     await page.setViewportSize({ width: 1920, height: 1000 });
     await geometry(section.locator(":scope > div"), section, 1920);
     await expect(
-      page.getByRole("heading", { level: 1, name: "Programs", exact: true }),
+      page.getByRole("heading", {
+        level: 1,
+        name: "Component specimen",
+        exact: true,
+      }),
     ).toBeVisible();
     await page.getByRole("link", { name: "Back to home", exact: true }).click();
-    await expect(
-      page.getByRole("navigation", { name: "Page inventory" }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   } finally {
     await context.close();
   }

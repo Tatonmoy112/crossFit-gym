@@ -73,7 +73,7 @@ const mount = () =>
       introduction={<h2 id="title">Features</h2>}
     >
       <CarouselItem>
-        <a href="/facilities/">Explore Equipment</a>
+        <a href="/contact/">Ask About Equipment</a>
       </CarouselItem>
     </HomeFeaturesCarousel>,
   );

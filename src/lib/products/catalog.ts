@@ -40,10 +40,7 @@ export function findProductDetail(id: string) {
   return { product, detail };
 }
 export function productDetailParams() {
-  return [
-    { slug: "content-preview" },
-    ...visibleProducts().map((product) => ({ slug: product.id })),
-  ];
+  return visibleProducts().map((product) => ({ slug: product.id }));
 }
 export function relatedProducts(product: Product) {
   return visibleProducts()

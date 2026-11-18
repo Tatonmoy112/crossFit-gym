@@ -95,10 +95,10 @@ test("features follow Memberships with split introduction, staggered cards and y
     });
   }
   const link = section(page).getByRole("link", {
-    name: "Explore Equipment",
+    name: "Ask About Equipment",
     exact: true,
   });
-  await expect(link).toHaveAttribute("href", "/facilities/");
+  await expect(link).toHaveAttribute("href", "/contact/");
   expect(
     parseFloat(
       await link.evaluate((node) => getComputedStyle(node).borderRadius),
@@ -175,9 +175,9 @@ test("manual arrows loop, keyboard focus reveals visible cards and CTA navigatio
   await next(page).click();
   await expect(position(page)).toHaveText("Feature 02 of 6");
   await section(page)
-    .getByRole("link", { name: "Meet Our Coaches", exact: true })
+    .getByRole("link", { name: "Ask About Coaching", exact: true })
     .click();
-  await expect(page).toHaveURL(/\/coaches\/$/);
+  await expect(page).toHaveURL(/\/contact\/$/);
   await page.goBack();
   await expect(carousel(page)).toHaveAttribute("data-ready", "true");
 });

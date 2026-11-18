@@ -1,20 +1,15 @@
-import Link from "next/link";
 import { metadata as makeMetadata } from "@/lib/seo";
+import { contactPage } from "@/content/contact-page";
+import { site } from "@/content/site";
+import { ContactPage } from "@/features/contact/contact-page";
 
 export const metadata = makeMetadata(
-  "Contact",
-  "Call Crossfit Gym at 01323-275695 or find the gym at Sector 12, Uttara, Dhaka.",
+  contactPage.seo.title,
+  contactPage.seo.description,
   "/contact",
+  site.preview,
 );
 
 export default function Page() {
-  return (
-    <section className="layout-container py-8">
-      <h1>Contact</h1>
-      <p>Page components are awaiting rebuild.</p>
-      <Link prefetch={false} href="/">
-        Back to home
-      </Link>
-    </section>
-  );
+  return <ContactPage content={contactPage} preview={site.preview} />;
 }

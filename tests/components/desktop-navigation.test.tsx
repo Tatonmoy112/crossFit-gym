@@ -83,15 +83,10 @@ it("L02-A01/A03: exposes genuine disclosure buttons and only the selected group'
 });
 
 it.each([
-  ["/programs/", "Training", "Programs", "page"],
-  ["/programs/content-preview/", "Training", "Programs", "location"],
-  ["/locations/uttara/", "Visit us", "Uttara, Dhaka", "page"],
-  [
-    "/locations/uttara/details?topic=visit#main",
-    "Visit us",
-    "Uttara, Dhaka",
-    "location",
-  ],
+  ["/membership/", "Training", "Membership", "page"],
+  ["/products/whey-protein-powder/", "Explore", "Products", "location"],
+  ["/contact/", "Visit us", "Contact", "page"],
+  ["/contact/details?topic=visit#main", "Visit us", "Contact", "location"],
 ])(
   "L02-A02: chooses one precise current link for %s",
   (pathname, group, label, current) => {
@@ -130,7 +125,7 @@ it("L02-A03: panel entry and Escape return focus to the same disclosure", () => 
   const trigger = screen.getByRole("button", { name: "Training" });
   fireEvent.click(trigger);
   fireEvent.keyDown(trigger, { key: "ArrowDown" });
-  const first = screen.getByRole("link", { name: "Programs" });
+  const first = screen.getByRole("link", { name: "Membership" });
   expect(first).toHaveFocus();
   fireEvent.keyDown(first, { key: "Escape" });
   expect(trigger).toHaveFocus();
@@ -162,7 +157,7 @@ it("L02-A02/A03: pathname changes reset the open group without losing current se
   const { rerender } = render(<DesktopNavigation />);
   fireEvent.click(screen.getByRole("button", { name: "About" }));
   expect(screen.getByRole("link", { name: "Our story" })).toBeVisible();
-  route.pathname = "/programs/";
+  route.pathname = "/membership/";
   rerender(<DesktopNavigation />);
   expect(screen.getByRole("button", { name: "About" })).toHaveAttribute(
     "aria-expanded",
@@ -170,7 +165,7 @@ it("L02-A02/A03: pathname changes reset the open group without losing current se
   );
   expect(screen.queryAllByRole("link")).toHaveLength(0);
   fireEvent.click(screen.getByRole("button", { name: "Training" }));
-  expect(screen.getByRole("link", { name: "Programs" })).toHaveAttribute(
+  expect(screen.getByRole("link", { name: "Membership" })).toHaveAttribute(
     "aria-current",
     "page",
   );

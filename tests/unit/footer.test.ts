@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 import { footerContent, footerContentSchema } from "@/content/footer";
 import { site } from "@/content/site";
 
-it("L03-A02/A03: footer content preserves supplied values and registered legal destinations", () => {
+it("L03-A02/A03: footer content preserves supplied values and the legal approval limitation", () => {
   const content = footerContentSchema.parse(footerContent);
   expect(content).toMatchObject({
     tagline: site.tagline,
@@ -20,15 +20,7 @@ it("L03-A02/A03: footer content preserves supplied values and registered legal d
       { label: "Facebook", href: site.facebook },
       { label: "Instagram", href: site.instagram },
     ],
-    legal: [
-      {
-        label: "Legal",
-        links: [
-          { label: "Privacy", href: "/privacy" },
-          { label: "Terms", href: "/terms" },
-        ],
-      },
-    ],
+    legal: [],
     legalNotice: "Legal text is awaiting approval.",
   });
 });

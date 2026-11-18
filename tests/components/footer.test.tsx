@@ -61,7 +61,7 @@ it("L03-B: server-composes the approved CTA, light panel and decorative wordmark
   expect(wordmark).toHaveAttribute("inert");
   expect(wordmark).toHaveTextContent("CROSSFIT GYM");
   expect(wordmark.querySelector("a,button,[tabindex]")).toBeNull();
-  expect(within(footer).getAllByRole("link")).toHaveLength(23);
+  expect(within(footer).getAllByRole("link")).toHaveLength(10);
   expect(footer.textContent).not.toMatch(
     /Nexiron|Nexion|copyright|all rights reserved|newsletter|©/i,
   );
@@ -89,18 +89,14 @@ it("L03-A02: supplied contacts and social links stay native and missing hours st
   expect(footer.querySelector("form, input, [href^='mailto:']")).toBeNull();
 });
 
-it("L03-A03: legal routes are discoverable with an explicit approval limitation", () => {
+it("L03-A03: unwritten legal routes stay hidden with an explicit approval limitation", () => {
   render(<Footer />);
-  const legal = screen.getByRole("navigation", { name: "Legal" });
-  expect(within(legal).getAllByRole("link")).toHaveLength(2);
-  expect(within(legal).getByRole("link", { name: "Privacy" })).toHaveAttribute(
-    "href",
-    expect.stringMatching(/^\/privacy\/?$/),
-  );
-  expect(within(legal).getByRole("link", { name: "Terms" })).toHaveAttribute(
-    "href",
-    expect.stringMatching(/^\/terms\/?$/),
-  );
+  expect(
+    screen.queryByRole("navigation", { name: "Legal" }),
+  ).not.toBeInTheDocument();
+  expect(
+    screen.queryByRole("link", { name: /^(Privacy|Terms)$/ }),
+  ).not.toBeInTheDocument();
   expect(
     screen.getByText("Legal text is awaiting approval."),
   ).toBeInTheDocument();

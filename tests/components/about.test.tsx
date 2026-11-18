@@ -46,10 +46,8 @@ it("composes all nine About sections with semantic headings and working membersh
     aboutPage.hero.heading,
   );
   expect(
-    screen
-      .getByRole("navigation", { name: "Breadcrumb" })
-      .querySelector('[aria-current="page"]'),
-  ).toHaveTextContent("About Us");
+    screen.queryByRole("navigation", { name: /breadcrumb/i }),
+  ).not.toBeInTheDocument();
   const ids = [...container.querySelectorAll("[id]")].map((node) => node.id);
   expect(new Set(ids).size).toBe(ids.length);
   for (const section of container.querySelectorAll("[data-about-section]")) {

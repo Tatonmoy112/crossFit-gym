@@ -21,7 +21,6 @@ export const aboutPage = aboutPageSchema.parse({
     title: "About Us | Our Story & Fitness Philosophy",
     description: `Discover the story behind ${site.name}, our mission, values, and commitment to creating a motivating fitness environment for every fitness journey.`,
   },
-  breadcrumb: { home: "Home", current: "About Us" },
   hero: {
     eyebrow: "GET TO KNOW US",
     heading: "Built for Strength. Driven by Passion.",

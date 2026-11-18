@@ -115,7 +115,11 @@ test("native section navigation focuses its destination and plan inquiries reach
     .click();
   await expect(page).toHaveURL(/\/contact\/$/);
   await expect(
-    page.getByRole("heading", { level: 1, name: "Contact", exact: true }),
+    page.getByRole("heading", {
+      level: 1,
+      name: "Let's Connect. Your Fitness Journey Matters.",
+      exact: true,
+    }),
   ).toBeVisible();
   await page.goBack();
   await expect(page).toHaveURL(/\/membership\/#membership-plans$/);

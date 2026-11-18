@@ -1,8 +1,16 @@
 # Architecture
 
+2026-11-18 route cleanup: only Home, About, Membership, Contact, Products and the Supplements listing remain as public page destinations, with ten populated product detail previews while preview is enabled. Placeholder routes and the temporary Home inventory are removed. Shared navigation exposes implemented destinations; equipment/coaching/space inquiries go to Contact. Legal approval records/notices, content catalogs, assets and indexing/release safeguards remain intact. Historical 24-template inventories below describe the earlier project scope, not current exported routes.
+
+[S02-C breadcrumb removal](specs/S02-C-breadcrumb-removal.md) retires application breadcrumbs across all pages (2026-11-18). Existing header, recovery, category and footer links provide navigation. Unused breadcrumb props, content/schema fields, styles, wrapper and dedicated tests are removed; installed UI primitives remain available. Earlier breadcrumb verification notes are historical.
+
+## Contact Us
+
+[C01](specs/C01-contact-page.md) composes six independent Server Component sections under `src/features/contact/`. Dedicated content/schema modules own supplied copy and source-derived contact values. Container, SectionHeading, Card, Button/NavigationLink and native input primitives are reused. Only existing FaqDisclosures needs a client boundary; Contact FAQs remain separate from shared records. The preview uses disabled controls/fieldset without a form or handler and disappears outside preview. Named container queries reflow page/cards/fields under enlarged text. Existing inquiry transport, homepage, shared layout, dependencies and release guards remain unchanged.
+
 ## About page and homepage introduction
 
-[A01 / H01-L](specs/A01-about.md) replaces the retired HomeStory placeholder with HomeAbout immediately below the hero. The existing About route composes nine focused Server Components. A dedicated Zod contract owns both content shapes, validates known route destinations and item identities/icons, and reuses the approved gym image. AboutSectionHeading/AboutCopy reuse real typography patterns; native Button/NavigationLink/Breadcrumbs provide all navigation. Scoped container-query CSS reflows presentation without client state. No route, dependency, data provider or release flag changes.
+[A01 / H01-L](specs/A01-about.md) replaces the retired HomeStory placeholder with HomeAbout immediately below the hero. The existing About route composes nine focused Server Components. A dedicated Zod contract owns both content shapes, validates known route destinations and item identities/icons, and reuses the approved gym image. AboutSectionHeading/AboutCopy reuse real typography patterns; native Button/NavigationLink provide all navigation. Scoped container-query CSS reflows presentation without client state. No route, dependency, data provider or release flag changes.
 
 ## Membership Plans
 
@@ -14,11 +22,11 @@
 
 ## Homepage FAQ
 
-[H01-J](specs/H01-J-home-faq.md) adds a Server Component section and row composition, with native disclosure HTML passed into a small client interaction boundary. Shared FAQ records are validated once, and ordered homepage IDs are resolved with duplicate/missing-reference checks. The enhancement keeps pointer previews, click persistence and focus protection local; no provider or shared store is introduced. Native summary activation and the real Contact link remain usable without JavaScript. Scoped container-query CSS aligns desktop answers beside questions with a stacked fallback. The factual section is independent of illustrative preview flags; `/faq/` remains a separate pending page rebuild.
+[H01-J](specs/H01-J-home-faq.md) adds a Server Component section and row composition, with native disclosure HTML passed into a small client interaction boundary. Shared FAQ records are validated once, and ordered homepage IDs are resolved with duplicate/missing-reference checks. The enhancement keeps pointer previews, click persistence and focus protection local; no provider or shared store is introduced. Native summary activation and the real Contact link remain usable without JavaScript. Scoped container-query CSS aligns desktop answers beside questions with a stacked fallback. The factual section is independent of illustrative preview flags; the standalone FAQ placeholder route is removed.
 
 ## Reusable product details
 
-[SHOP02](specs/SHOP02-product-details.md) adds a server-composed static Products detail template with separate header, gallery, summary, description, details, review and related-product sections. Only image-gallery enhancement and sharing require client boundaries. ProductInquiryActions is shared with quick view; ProductCard supplies native detail links across listing, static fallback and related results. Validated detail content is joined by product ID and status; actual and preview collections remain separate. A neutral content-preview static parameter supports an empty approved collection without publishing samples. All new detail outputs stay noindex and outside sitemap.
+[SHOP02](specs/SHOP02-product-details.md) adds a server-composed static Products detail template with separate preview notice, gallery, summary, description, details, review and related-product sections. Only image-gallery enhancement and sharing require client boundaries. ProductInquiryActions is shared with quick view; ProductCard supplies native detail links across listing, static fallback and related results. Validated detail content is joined by product ID and status; actual and preview collections remain separate. The empty structure-preview page is retired. With an empty approved collection, a reserved parameter reaches notFound() to satisfy Next static-export validation. The existing export normalization script removes only its generated output directory, ensuring static hosts return 404; populated detail pages remain intact. All new detail outputs stay noindex and outside sitemap.
 
 ## Products listing and quick view
 
@@ -54,7 +62,7 @@
 
 ## Current reset state
 
-The UI was reset on 2026-11-15. All 24 templates remain in Next.js App Router as Server Component route shells. Each route renders a heading and recovery links; Programs now replaces its rebuild notice with a conditional empty-content explanation. Other routes retain their rebuild notice. The homepage temporarily links to every currently exported page. The new root header composes BrandLink and both navigation variants. The root footer reuses original destinations and supplied contact/social channels. The global preview notice is removed; local missing-content and example-statistics disclosures remain. Other page sections and interactive features await rebuilding.
+The earlier UI reset preserved route shells. The 2026-11-18 cleanup removes the unfinished page files and temporary inventory, retaining six implemented top-level pages and populated product details. The root header/footer continue to share validated navigation; local example disclosures and preview protections remain.
 
 The root layout provides document metadata, a first-tab skip link, the server-composed Header, a focusable main landmark and the server-rendered Footer after main. At the owner's request the full official shadcn/ui library was subsequently installed: 63 local UI modules, support hooks/utilities and components.json. The configuration uses Radix Nova, neutral colors, Lucide icons, RSC and TSX. Global CSS imports Tailwind 4, shadcn and animation styles, defines light/dark tokens and preserves focus/reduced motion. Temporary document defaults live in the base layer. The pnpm 10.34.9 lockfile was updated in place for library dependencies.
 

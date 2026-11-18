@@ -14,7 +14,7 @@ When `site.preview` is false, the resolver returns no sample plans, comparison r
 
 ## Composition and behavior
 
-Nine section components, a tier card, section heading and server page assembly live under the Membership feature. Shared Container, Breadcrumbs, SectionHeading, Button, NavigationLink, ContentState, FaqRow and FaqDisclosures are reused. Server Components own business content. The existing FAQ enhancer and the small MembershipSectionLink client boundary handle only interactions.
+Nine section components, a tier card, section heading and server page assembly live under the Membership feature. Shared Container, SectionHeading, Button, NavigationLink, ContentState, FaqRow and FaqDisclosures are reused. Server Components own business content. The existing FAQ enhancer and the small MembershipSectionLink client boundary handle only interactions.
 
 MembershipSectionLink keeps real fragment hrefs. Its unmodified activation uses Next's documented patched History API, focuses the target section and scrolls immediately, preserving the router snapshot for Back after a Contact visit. Repeated activation does not add duplicate history entries. Modified/new-tab activations and missing targets retain native behavior. Without JavaScript the anchors/disclosures/table/Contact links remain functional. No global state or custom navigation service is added.
 

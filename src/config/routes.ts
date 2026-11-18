@@ -1,20 +1,9 @@
+// Public destinations with implemented page content.
 export const routes = [
   "/",
   "/about",
-  "/programs",
-  "/coaches",
-  "/facilities",
-  "/schedule",
   "/membership",
-  "/gallery",
-  "/faq",
-  "/blog",
-  "/affiliates",
-  "/locations",
   "/contact",
-  "/careers",
-  "/supplements",
   "/products",
-  "/privacy",
-  "/terms",
+  "/supplements",
 ];

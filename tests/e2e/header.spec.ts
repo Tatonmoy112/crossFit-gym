@@ -8,7 +8,7 @@ const mobile = (page: Page) =>
   banner(page).getByRole("button", { name: "Menu", exact: true });
 const panel = (page: Page) =>
   page.getByRole("dialog", { name: "Site navigation" });
-async function ready(page: Page, path = "/programs/") {
+async function ready(page: Page, path = "/membership/") {
   await page.goto(path);
   await page.waitForLoadState("networkidle");
 }
@@ -123,8 +123,8 @@ test("L01-B01/B02/B03: actual header, first skip, responsive exposure and breakp
   await banner(page).screenshot({
     path: info.outputPath("header-desktop.png"),
   });
-  const recovery = page.getByRole("link", {
-    name: "Back to home",
+  const recovery = banner(page).getByRole("link", {
+    name: "Crossfit Gym home",
     exact: true,
   });
   await recovery.focus();
@@ -147,9 +147,7 @@ test("L01-B01/B05: static brand and page recovery remain usable without JavaScri
     await expect(banner(page)).toHaveCount(1);
     await expect(page.getByRole("main")).toHaveCount(1);
     await expect(
-      page
-        .getByRole("navigation", { name: "Breadcrumb" })
-        .getByRole("link", { name: "Home", exact: true }),
+      banner(page).getByRole("link", { name: "Crossfit Gym home" }),
     ).toBeVisible();
     await banner(page).getByRole("link", { name: "Crossfit Gym home" }).click();
     await expect(page).toHaveURL(/\/$/);
@@ -178,17 +176,21 @@ test("L01-B04: hydrated App Router links, same-page dismissal, history and curre
     document.documentElement.dataset.headerDocument = token;
     return token;
   });
-  await (await currentLink(page, "Programs")).click();
-  await expect(page).toHaveURL(/\/programs\/$/);
+  await (await currentLink(page, "Membership")).click();
+  await expect(page).toHaveURL(/\/membership\/$/);
   await expect(
-    page.getByRole("heading", { level: 1, name: "Programs", exact: true }),
+    page.getByRole("heading", {
+      level: 1,
+      name: "Your Fitness. Your Goals. Your Membership.",
+      exact: true,
+    }),
   ).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute(
     "data-header-document",
     token,
   );
   await closedModal(page);
-  let link = await currentLink(page, "Programs");
+  let link = await currentLink(page, "Membership");
   await expect(link).toHaveAttribute("aria-current", "page");
   await link.click();
   await closedModal(page);
@@ -200,9 +202,9 @@ test("L01-B04: hydrated App Router links, same-page dismissal, history and curre
     token,
   );
   // Open a menu before traversing history to detect stale open state.
-  await currentLink(page, "Programs");
+  await currentLink(page, "Membership");
   await page.goBack();
-  await expect(page).toHaveURL(/\/programs\/$/);
+  await expect(page).toHaveURL(/\/membership\/$/);
   await closedModal(page);
   await expect(desktop(page).getByRole("link")).toHaveCount(0);
   await page.goForward();
@@ -217,25 +219,23 @@ test("L01-B04: hydrated App Router links, same-page dismissal, history and curre
     "data-header-document",
     token,
   );
-  await expect(
-    page.getByRole("navigation", { name: "Page inventory" }),
-  ).toBeVisible();
-  await ready(page, "/programs/content-preview/");
-  link = await currentLink(page, "Programs");
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await ready(page, "/products/whey-protein-powder/");
+  link = await currentLink(page, "Products", "Explore");
   await expect(link).toHaveAttribute("aria-current", "location");
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
     "content",
     /noindex/,
   );
-  await ready(page, "/locations/uttara/");
-  link = await currentLink(page, "Uttara, Dhaka", "Visit us");
+  await ready(page, "/contact/");
+  link = await currentLink(page, "Contact", "Visit us");
   await expect(link).toHaveAttribute("aria-current", "page");
   await ready(page, "/not-a-page/");
   await expect(banner(page)).toHaveCount(1);
   await expect(
     page.getByRole("heading", { name: "404", exact: true }),
   ).toBeVisible();
-  await currentLink(page, "Programs");
+  await currentLink(page, "Membership");
   await expect(page.locator("[aria-current]")).toHaveCount(0);
 });
 
@@ -254,7 +254,7 @@ test("L01-B02/B05: charcoal shell, enlargement, accessibility and preference/fai
       ).violations,
     ).toEqual([]);
   await audit();
-  await currentLink(page, "Programs");
+  await currentLink(page, "Membership");
   await audit();
   await page.keyboard.press("Escape");
   await page.addStyleTag({
@@ -285,6 +285,6 @@ test("L01-B02/B05: charcoal shell, enlargement, accessibility and preference/fai
   await expect(brand).toHaveCSS("outline-width", "3px");
   await expect(brand).toHaveCSS("transition-property", "none");
   await fits(page);
-  await currentLink(page, "Programs");
+  await currentLink(page, "Membership");
   await page.keyboard.press("Escape");
 });

@@ -1,3 +1,4 @@
+import { mountContentFixture } from "./helpers/content-fixture";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import AxeBuilder from "@axe-core/playwright";
@@ -9,7 +10,7 @@ const { SectionHeading } = loadServerComponent<
 >("src/components/shared/section-heading.tsx");
 const widths = [320, 375, 768, 1280, 1920];
 async function ready(page: Page) {
-  await page.goto("/programs/");
+  await mountContentFixture(page);
   await page.waitForLoadState("networkidle");
 }
 async function mount(page: Page) {
@@ -223,7 +224,11 @@ test("S03-B04: integrated heading preserves page semantics and keyboard access u
   await ready(page);
   expect(blocked).toBeGreaterThan(0);
   await expect(
-    page.getByRole("heading", { level: 1, name: "Programs", exact: true }),
+    page.getByRole("heading", {
+      level: 1,
+      name: "Component specimen",
+      exact: true,
+    }),
   ).toHaveCount(1);
   const heading = page.getByRole("heading", {
     level: 2,
@@ -251,13 +256,6 @@ test("S03-B04: integrated heading preserves page semantics and keyboard access u
   await expect(page.getByRole("main")).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
-    page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("link", {
-      name: "Home",
-      exact: true,
-    }),
-  ).toBeFocused();
-  await page.keyboard.press("Tab");
-  await expect(
     page.getByRole("link", { name: "Back to home", exact: true }),
   ).toBeFocused();
 });
@@ -273,7 +271,7 @@ test("S03-B04: heading and recovery remain available without JavaScript", async 
   });
   try {
     const page = await context.newPage();
-    await page.goto("/programs/");
+    await mountContentFixture(page);
     await expect(
       page.getByRole("heading", {
         level: 2,
@@ -281,9 +279,7 @@ test("S03-B04: heading and recovery remain available without JavaScript", async 
       }),
     ).toBeVisible();
     await page.getByRole("link", { name: "Back to home", exact: true }).click();
-    await expect(
-      page.getByRole("navigation", { name: "Page inventory" }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   } finally {
     await context.close();
   }

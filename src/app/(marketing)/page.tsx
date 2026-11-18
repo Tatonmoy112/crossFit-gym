@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { metadata as makeMetadata } from "@/lib/seo";
-import { routes } from "@/config/routes";
 import { site } from "@/content/site";
 import { homeHero, homeStats, homeWhyChooseUs } from "@/content/home";
 import { HomeHero } from "@/features/home/home-hero";
@@ -48,7 +46,6 @@ export default function Page() {
       <HomeServices content={homeServices} />
       {site.preview && <HomeMemberships content={homeMembershipsPreview} />}
       <HomeFeatures content={homeFeatures} />
-      {/* {site.preview && <HomeMemberships content={homeMembershipsPreview} />} */}
       {site.preview && (
         <HomeProductCategories content={homeProductCategoriesPreview} />
       )}
@@ -57,41 +54,6 @@ export default function Page() {
         <HomeSuccessStories content={homeSuccessStoriesPreview} />
       )}
       <HomeFaq content={homeFaq} items={homeFaqItems} />
-      <section className="layout-container py-8">
-        <p>Page components are awaiting rebuild.</p>
-        <nav aria-label="Page inventory">
-          <ul>
-            {routes
-              .filter((path) => path !== "/")
-              .map((path) => (
-                <li key={path}>
-                  <Link prefetch={false} href={path + "/"}>
-                    {path}/
-                  </Link>
-                </li>
-              ))}
-            {[
-              "programs",
-              "coaches",
-              "blog",
-              "careers",
-              "supplements",
-              "products",
-            ].map((kind) => (
-              <li key={kind}>
-                <Link prefetch={false} href={"/" + kind + "/content-preview/"}>
-                  {"/" + kind + "/content-preview/"}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <Link prefetch={false} href="/locations/uttara/">
-                /locations/uttara/
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </section>
     </>
   );
 }

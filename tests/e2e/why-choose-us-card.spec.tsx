@@ -10,7 +10,7 @@ const { WhyChooseUsCard } = loadServerComponent<
 >("src/features/home/why-choose-us-card.tsx");
 
 async function mount(page: Page, long = false) {
-  await page.goto("/programs/");
+  await page.goto("/about/");
   await page.waitForLoadState("networkidle");
   const markup = renderToStaticMarkup(
     <section

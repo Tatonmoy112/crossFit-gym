@@ -5,12 +5,12 @@ test("key templates have no automated WCAG AA violations", async ({ page }) => {
   const violations: { path: string; id: string; nodes: string[][] }[] = [];
   for (const path of [
     "/",
-    "/programs/",
+    "/about/",
     "/contact/",
-    "/faq/",
-    "/gallery/",
-    "/locations/uttara/",
-    "/programs/content-preview/",
+    "/membership/",
+    "/products/",
+    "/supplements/",
+    "/products/whey-protein-powder/",
   ]) {
     await page.goto(path);
     await page.locator("body").waitFor();

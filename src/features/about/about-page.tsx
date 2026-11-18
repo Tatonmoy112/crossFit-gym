@@ -12,7 +12,7 @@ import { AboutFinalCta } from "./about-final-cta";
 export function AboutPage({ content }: { content: AboutPageContent }) {
   return (
     <div data-about-page data-surface="light">
-      <AboutHero content={content.hero} breadcrumb={content.breadcrumb} />
+      <AboutHero content={content.hero} />
       <AboutStory content={content.story} />
       <AboutPurpose content={content.purpose} />
       <AboutValues content={content.values} />

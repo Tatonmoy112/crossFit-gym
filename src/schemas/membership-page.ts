@@ -14,7 +14,6 @@ const emptyState = z.object({ title: text, description: text });
 
 export const membershipPageSchema = z.object({
   seo: z.object({ title: text, description: text }),
-  breadcrumb: z.object({ home: text, current: text }),
   hero: membershipSectionSchema.extend({
     explore: z.object({ label: text, href: z.literal("#membership-plans") }),
     contact: contactAction,

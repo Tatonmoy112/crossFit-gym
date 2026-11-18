@@ -34,7 +34,6 @@ export function ProductDetailPage({
       <Container className="product-detail-container">
         <ProductDetailHeader
           product={product}
-          category={category}
           previewNotice={productDetailCopy.previewNotice}
         />
         <div className="product-detail-layout">

@@ -2,7 +2,7 @@ import { homeFeaturesSchema } from "@/schemas/content";
 
 // Owner-supplied homepage copy: newsection.md, section 03.
 // Homepage implementation requested 2026-11-17. Photography and detail pages
-// remain pending; existing destination pages retain their current content state.
+// remain pending; inquiries use the implemented Contact page.
 export const homeFeatures = homeFeaturesSchema.parse({
   eyebrow: "WHY CHOOSE US",
   heading: "Everything You Need. Nothing Holding You Back.",
@@ -15,24 +15,24 @@ export const homeFeatures = homeFeaturesSchema.parse({
       title: "Modern Equipment",
       description:
         "Train with quality equipment designed for a wide range of fitness goals.",
-      actionLabel: "Explore Equipment",
-      href: "/facilities/",
+      actionLabel: "Ask About Equipment",
+      href: "/contact/",
     },
     {
       id: "expert-guidance",
       title: "Expert Guidance",
       description:
         "Get the direction and encouragement to train with purpose and confidence.",
-      actionLabel: "Meet Our Coaches",
-      href: "/coaches/",
+      actionLabel: "Ask About Coaching",
+      href: "/contact/",
     },
     {
       id: "dedicated-training-zones",
       title: "Dedicated Training Zones",
       description:
         "Find the right space for strength, cardio, and movement-based workouts.",
-      actionLabel: "Explore Our Facilities",
-      href: "/facilities/",
+      actionLabel: "Ask About Training Spaces",
+      href: "/contact/",
     },
     {
       id: "supportive-community",
@@ -47,8 +47,8 @@ export const homeFeatures = homeFeaturesSchema.parse({
       title: "Clean & Comfortable Space",
       description:
         "Feel at ease in a welcoming and thoughtfully maintained training environment.",
-      actionLabel: "View Our Space",
-      href: "/facilities/",
+      actionLabel: "Ask About Our Space",
+      href: "/contact/",
     },
     {
       id: "progress-focused-training",

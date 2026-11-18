@@ -1,9 +1,17 @@
-import { readdir, copyFile, mkdir } from "node:fs/promises";
+import { readdir, copyFile, mkdir, rm } from "node:fs/promises";
 import { resolve, relative, sep, dirname } from "node:path";
 // Next 16.4's exporter replaces forward slashes when flattening segment paths.
 // On Windows its collected paths contain backslashes, leaving nested directories.
 // Add the protocol's flat filenames without modifying Next or requiring host rewrites.
 const root = resolve("out");
+// Empty product catalogs need a reserved static parameter for Next's export
+// validation. notFound() can still emit an empty HTML artifact for that parameter.
+// It is never a product record: omit only this exact generated output directory
+// so portable static hosts serve their normal 404 instead of a blank 200 page.
+const reservedProductPreview = resolve(root, "products", "content-preview");
+if (!reservedProductPreview.startsWith(root + sep))
+  throw new Error("Reserved export path must remain inside out/");
+await rm(reservedProductPreview, { recursive: true, force: true });
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   const groups = await Promise.all(

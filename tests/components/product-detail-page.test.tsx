@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { expect, it } from "vitest";
 import { ProductDetailPage } from "@/features/products/product-detail-page";
-import { ProductStructurePreview } from "@/features/products/product-structure-preview";
+import { ProductDetailHeader } from "@/features/products/product-detail-header";
 import { findProductDetail } from "@/lib/products/catalog";
 
 it("renders the complete master page with semantic sections, true links and honest missing data", () => {
@@ -10,6 +10,7 @@ it("renders the complete master page with semantic sections, true links and hone
     <ProductDetailPage {...findProductDetail("whey-protein-powder")!} />,
   );
   expect(root.querySelectorAll("h1")).toHaveLength(1);
+  expect(root.querySelector('[data-slot="breadcrumb"]')).toBeNull();
   expect(root.querySelector("h1")).toHaveTextContent("Whey Protein Powder");
   expect(root.querySelector('[role="note"]')).toHaveTextContent(
     "Illustrative product detail preview",
@@ -34,10 +35,14 @@ it("renders the complete master page with semantic sections, true links and hone
   expect(root).not.toHaveTextContent("Add to Bag");
 });
 
-it("keeps the structure preview neutral instead of making a sample catalog record", () => {
-  const html = renderToStaticMarkup(<ProductStructurePreview />);
-  expect(html).toContain("Product details");
-  expect(html).toContain("does not represent an actual product");
-  expect(html).not.toContain("Whey Protein");
-  expect(html).not.toContain("data-product-card");
+it("omits the whole detail-header wrapper for an approved product", () => {
+  const product = findProductDetail("whey-protein-powder")!.product;
+  expect(
+    renderToStaticMarkup(
+      <ProductDetailHeader
+        product={{ ...product, status: "approved" }}
+        previewNotice="Preview only"
+      />,
+    ),
+  ).toBe("");
 });

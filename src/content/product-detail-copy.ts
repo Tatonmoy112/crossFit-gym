@@ -15,8 +15,6 @@ export const productDetailCopy = z
     reviews: text,
     reviewsNote: text,
     related: text,
-    structureTitle: text,
-    structureDescription: text,
     availability: z.array(z.object({ label: text, value: text })).min(1),
   })
   .parse({
@@ -35,9 +33,6 @@ export const productDetailCopy = z
     reviewsNote:
       "Approved product reviews have not been supplied for this website.",
     related: "You may also like",
-    structureTitle: "Product details · structure preview",
-    structureDescription:
-      "Approved product detail content has not been supplied. This neutral structure preview does not represent an actual product.",
     availability: [
       {
         label: "Availability",

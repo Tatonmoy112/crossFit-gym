@@ -14,7 +14,7 @@ function Fixture() {
         <button
           type="button"
           className="touch-target block"
-          onClick={() => setPath("/locations/uttara/")}
+          onClick={() => setPath("/contact/")}
         >
           Change fixture pathname
         </button>

@@ -3,7 +3,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { Header } from "@/components/layout/header";
 import { navigation } from "@/content/navigation";
 
-vi.mock("next/navigation", () => ({ usePathname: () => "/programs/" }));
+vi.mock("next/navigation", () => ({ usePathname: () => "/membership/" }));
 beforeEach(() => {
   vi.stubGlobal("matchMedia", (media: string) => ({
     media,

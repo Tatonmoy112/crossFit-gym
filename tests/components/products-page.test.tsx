@@ -43,7 +43,7 @@ afterEach(() => {
   flags.preview = true;
 });
 
-it("composes the Products heading, breadcrumb, supplied introduction and explicit preview content", () => {
+it("composes the Products heading, supplied introduction and explicit preview content without breadcrumbs", () => {
   const root = document.createElement("div");
   root.innerHTML = renderToStaticMarkup(<ProductsPage />);
   expect(root.querySelectorAll("h1")).toHaveLength(1);
@@ -55,9 +55,7 @@ it("composes the Products heading, breadcrumb, supplied introduction and explici
     "data-client-products",
     "10",
   );
-  expect(root.querySelector('[aria-current="page"]')).toHaveTextContent(
-    "Products",
-  );
+  expect(root.querySelector('[data-slot="breadcrumb"]')).toBeNull();
 });
 
 it("omits all examples and interactive product data when site preview is disabled", () => {

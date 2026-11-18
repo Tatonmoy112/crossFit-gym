@@ -2,14 +2,14 @@ import { expect, it } from "vitest";
 import { navigation } from "@/content/navigation";
 import { navigationSchema } from "@/schemas/navigation";
 
-it("L02-A01: retains the four supplied groups and 15 unique destinations", () => {
+it("L02-A01: retains the four supplied groups and four implemented destinations", () => {
   expect(navigation.map((group) => group.label)).toEqual([
     "About",
     "Training",
     "Explore",
     "Visit us",
   ]);
-  expect(navigation.flatMap((group) => group.links)).toHaveLength(15);
+  expect(navigation.flatMap((group) => group.links)).toHaveLength(4);
   expect(navigationSchema.safeParse(navigation).success).toBe(true);
 });
 

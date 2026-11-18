@@ -49,7 +49,7 @@ function Specimens({ newTabHref }: { newTabHref: string }) {
           <NavigationLink
             id={`${surface}-long`}
             className="mt-4"
-            href="/programs/"
+            href="/about/"
           >
             Long navigation label {"unbroken".repeat(24)}
           </NavigationLink>

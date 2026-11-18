@@ -57,7 +57,7 @@ export const footerContentSchema = z.object({
         hrefs.add(link.href);
       });
     }),
-  legal: navigationSchema,
+  legal: navigationSchema.or(z.tuple([])),
   legalNotice: copy.nullable(),
 });
 export type FooterContent = z.infer<typeof footerContentSchema>;
@@ -79,15 +79,7 @@ export const footerContent = footerContentSchema.parse({
     { label: "Facebook", href: site.facebook },
     { label: "Instagram", href: site.instagram },
   ],
-  legal: [
-    {
-      label: "Legal",
-      links: [
-        { label: "Privacy", href: "/privacy" },
-        { label: "Terms", href: "/terms" },
-      ],
-    },
-  ],
+  legal: [],
   legalNotice: Object.values(legalDocuments).some(
     (document) => !document.approved,
   )

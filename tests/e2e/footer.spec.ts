@@ -45,7 +45,7 @@ async function fits(page: Page) {
   ).toEqual([]);
 }
 
-test("L03-A01/A02/A03/A05: actual footer, native contacts and soft internal/legal navigation", async ({
+test("L03-A01/A02/A03/A05: actual footer, native contacts and soft internal navigation", async ({
   page,
 }) => {
   await ready(page);
@@ -63,7 +63,7 @@ test("L03-A01/A02/A03/A05: actual footer, native contacts and soft internal/lega
     footer(page)
       .getByRole("navigation", { name: "Footer navigation" })
       .getByRole("link"),
-  ).toHaveCount(15);
+  ).toHaveCount(4);
   await expect(footer(page).locator("address")).toHaveText(site.address);
   const phone = footer(page).getByRole("link", {
     name: site.phone,
@@ -102,9 +102,9 @@ test("L03-A01/A02/A03/A05: actual footer, native contacts and soft internal/lega
     return value;
   });
   for (const [label, path] of [
-    ["Programs", "/programs/"],
-    ["Privacy", "/privacy/"],
-    ["Terms", "/terms/"],
+    ["Membership", "/membership/"],
+    ["Products", "/products/"],
+    ["Contact", "/contact/"],
   ]) {
     await footer(page).getByRole("link", { name: label, exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`${path}$`));
@@ -231,15 +231,15 @@ test("L03-A04: responsive geometry, focus order, header isolation and accessibil
   });
 });
 
-test("L03-B: the shared CTA and decorative wordmark appear on Home, interior, legal and 404 pages", async ({
+test("L03-B: the shared CTA and decorative wordmark appear on Home, interior and 404 pages", async ({
   page,
 }) => {
   for (const path of [
     "/",
     "/about/",
     "/contact/",
-    "/privacy/",
-    "/terms/",
+    "/membership/",
+    "/products/",
     "/missing-footer-route/",
   ]) {
     const response = await page.goto(path);
@@ -347,7 +347,7 @@ test("L03-A01/A02/A03: footer content and navigation work without JavaScript", a
     const page = await context.newPage();
     await page.goto("/about/");
     await expect(footer(page)).toHaveCount(1);
-    await expect(footer(page).getByRole("link")).toHaveCount(23);
+    await expect(footer(page).getByRole("link")).toHaveCount(10);
     await expect(
       footer(page).getByRole("heading", {
         name: "Your Stronger Future Starts Here.",
@@ -370,9 +370,9 @@ test("L03-A01/A02/A03: footer content and navigation work without JavaScript", a
       ),
     ).toBeVisible();
     await footer(page)
-      .getByRole("link", { name: "Terms", exact: true })
+      .getByRole("link", { name: "Membership", exact: true })
       .click();
-    await expect(page).toHaveURL(/\/terms\/$/);
+    await expect(page).toHaveURL(/\/membership\/$/);
     await expect(
       footer(page).getByText("Legal text is awaiting approval."),
     ).toBeVisible();

@@ -1,3 +1,4 @@
+import { mountContentFixture } from "./helpers/content-fixture";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import AxeBuilder from "@axe-core/playwright";
@@ -17,7 +18,7 @@ const state = (page: Page) =>
     .locator("..");
 
 async function ready(page: Page) {
-  await page.goto("/programs/");
+  await mountContentFixture(page);
   await page.waitForLoadState("networkidle");
 }
 
@@ -46,13 +47,17 @@ async function fits(page: Page, selector = "main [data-slot=empty]") {
   }
 }
 
-test("S01-B02/B04/B05: real catalog state, keyboard recovery and preview protections", async ({
+test("S01-B02/B04/B05: isolated content-state specimen, keyboard recovery and preview protections", async ({
   page,
 }) => {
   await ready(page);
   await expect(state(page)).toContainText(description);
   await expect(
-    page.getByRole("heading", { level: 1, name: "Programs", exact: true }),
+    page.getByRole("heading", {
+      level: 1,
+      name: "Component specimen",
+      exact: true,
+    }),
   ).toHaveCount(1);
   await expect(
     page.getByText("Page components are awaiting rebuild.", { exact: true }),
@@ -66,7 +71,7 @@ test("S01-B02/B04/B05: real catalog state, keyboard recovery and preview protect
   );
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    /\/programs\/$/,
+    /\/about\/$/,
   );
   await expect(
     state(page).locator("[role], [aria-live], [tabindex], a, button, input"),
@@ -75,13 +80,6 @@ test("S01-B02/B04/B05: real catalog state, keyboard recovery and preview protect
   await page.keyboard.press("Enter");
   await expect(page.getByRole("main")).toBeFocused();
   await page.keyboard.press("Tab");
-  await expect(
-    page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("link", {
-      name: "Home",
-      exact: true,
-    }),
-  ).toBeFocused();
-  await page.keyboard.press("Tab");
   const recovery = page.getByRole("link", {
     name: "Back to home",
     exact: true,
@@ -89,9 +87,7 @@ test("S01-B02/B04/B05: real catalog state, keyboard recovery and preview protect
   await expect(recovery).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/$/);
-  await expect(
-    page.getByRole("navigation", { name: "Page inventory" }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 });
 
 test("S01-B03: actual composition has semantic styling and reflows on all surfaces", async ({
@@ -218,13 +214,11 @@ test("S01-B04: explanation and recovery work without JavaScript", async ({
   });
   try {
     const page = await context.newPage();
-    await page.goto("/programs/");
+    await mountContentFixture(page);
     await expect(state(page)).toContainText(description);
     await fits(page);
     await page.getByRole("link", { name: "Back to home", exact: true }).click();
-    await expect(
-      page.getByRole("navigation", { name: "Page inventory" }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   } finally {
     await context.close();
   }

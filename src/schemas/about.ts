@@ -41,7 +41,6 @@ export type HomeAboutContent = z.infer<typeof homeAboutSchema>;
 
 export const aboutPageSchema = z.object({
   seo: z.object({ title: text, description: text }),
-  breadcrumb: z.object({ home: text, current: text }),
   hero: introduction.extend({ image: photo }),
   story: introduction,
   purpose: z.object({

@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import { Container } from "@/components/shared/container";
-import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { ContentState } from "@/components/shared/content-state";
 import { NavigationLink } from "@/components/ui/navigation-link";
 import { productCategories } from "@/content/product-categories";
@@ -19,9 +18,6 @@ export function ProductsPage({
   const records = visibleProducts();
   const introduction = (
     <Container className="grid gap-5 py-8">
-      <Breadcrumbs
-        items={[{ label: "Home", href: "/" }, { label: "Products" }]}
-      />
       <h2 className="m-0">{copy.catalogHeading}</h2>
       {site.preview && (
         <p

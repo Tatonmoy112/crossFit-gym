@@ -8,7 +8,7 @@ test.beforeAll(async () => {
     "tests/fixtures/mobile-navigation.browser.tsx",
   );
 });
-async function mount(page: Page, surface = "light", path = "/programs/") {
+async function mount(page: Page, surface = "light", path = "/membership/") {
   await page.goto(path);
   await page.evaluate((surface) => {
     const root = document.createElement("div");
@@ -70,9 +70,9 @@ test("L02-B01/B02/B03: modal keyboard, current state, dismissal, selection and r
   const close = page.getByRole("button", { name: "Close menu" });
   await expect(close).toBeFocused();
   await expect(dialog(page).getByRole("heading")).toHaveCount(5);
-  await expect(dialog(page).getByRole("link")).toHaveCount(15);
+  await expect(dialog(page).getByRole("link")).toHaveCount(4);
   await expect(
-    dialog(page).getByRole("link", { name: "Programs", exact: true }),
+    dialog(page).getByRole("link", { name: "Membership", exact: true }),
   ).toHaveAttribute("aria-current", "page");
   await expect(dialog(page).locator("[aria-current]")).toHaveCount(1);
   await expect(page.locator("#main")).toHaveAttribute("aria-hidden", "true");
@@ -109,7 +109,7 @@ test("L02-B01/B02/B03: modal keyboard, current state, dismissal, selection and r
   await unlocked(page);
   await open(page);
   await expect(
-    dialog(page).getByRole("link", { name: "Uttara, Dhaka" }),
+    dialog(page).getByRole("link", { name: "Contact" }),
   ).toHaveAttribute("aria-current", "page");
   await dialog(page)
     .getByRole("link", { name: "Contact", exact: true })
@@ -119,10 +119,10 @@ test("L02-B01/B02/B03: modal keyboard, current state, dismissal, selection and r
     "content",
     /noindex/,
   );
-  await mount(page, "light", "/programs/content-preview/");
+  await mount(page, "light", "/products/whey-protein-powder/");
   await open(page);
   await expect(
-    dialog(page).getByRole("link", { name: "Programs", exact: true }),
+    dialog(page).getByRole("link", { name: "Products", exact: true }),
   ).toHaveAttribute("aria-current", "location");
 });
 

@@ -69,7 +69,10 @@ test("overlay navigation remains above the hero and the mobile dialog retains fo
     exact: true,
   });
   await trigger.click();
-  const link = navigation.getByRole("link", { name: "Programs", exact: true });
+  const link = navigation.getByRole("link", {
+    name: "Membership",
+    exact: true,
+  });
   await expect(link).toBeVisible();
   expect(
     await link.evaluate((node) => {

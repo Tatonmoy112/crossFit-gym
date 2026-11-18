@@ -119,8 +119,7 @@
 }
 .about-hero-content {
   display: grid;
-  align-content: space-between;
-  gap: 4rem;
+  align-content: end;
   min-block-size: 36rem;
   padding-block: 1.5rem 4rem;
 }
@@ -140,15 +139,6 @@
   max-inline-size: 56ch;
 }
 .about-hero .about-copy p {
-  color: #fff;
-}
-.about-hero nav a {
-  color: #fff;
-}
-.about-hero nav a:hover {
-  color: var(--primary);
-}
-.about-hero nav [aria-current="page"] {
   color: #fff;
 }
 

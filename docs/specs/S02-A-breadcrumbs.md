@@ -1,6 +1,8 @@
 # S02-A: Breadcrumbs
 
-Status: **verified** (see [QA record](../qa-checklist.md#s02-a-breadcrumbs-2026-11-16); manual visual/screen-reader review remains open). Date: 2026-11-16. Item 9 in the [13-item pre-Home checklist](../pre-home-checklist.md).
+Status: **retired** by owner request on 2026-11-18. See [S02-C](S02-C-breadcrumb-removal.md) for removal. The following specification and verification record are historical.
+
+Previous status: **verified** (see [QA record](../qa-checklist.md#s02-a-breadcrumbs-2026-11-16); manual visual/screen-reader review remains open). Date: 2026-11-16. Item 9 in the [13-item pre-Home checklist](../pre-home-checklist.md).
 
 ## Purpose and design
 

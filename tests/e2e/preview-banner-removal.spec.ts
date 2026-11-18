@@ -1,16 +1,14 @@
 import { expect, test } from "@playwright/test";
 
-test("Website preview banner is absent on Home, interior, structural preview and 404 pages while indexing stays disabled", async ({
+test("Website preview banner is absent on Home, interior, product preview and 404 pages while indexing stays disabled", async ({
   page,
   request,
 }) => {
   for (const path of [
     "/",
     "/about/",
-    "/programs/",
-    "/programs/content-preview/",
-    "/blog/content-preview/",
-    "/terms/",
+    "/membership/",
+    "/products/whey-protein-powder/",
     "/not-a-page/",
   ]) {
     expect((await page.goto(path))?.status()).toBe(
@@ -100,9 +98,7 @@ test("skip-link focus and mobile navigation remain usable after removing the ban
   await expect(page.getByRole("main")).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
-    page
-      .getByRole("navigation", { name: "Breadcrumb" })
-      .getByRole("link", { name: "Home", exact: true }),
+    page.getByRole("link", { name: "Explore Membership Plans", exact: true }),
   ).toBeFocused();
   await page.setViewportSize({ width: 375, height: 812 });
   const trigger = page
