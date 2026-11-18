@@ -19,15 +19,11 @@ The shared test helper now loads only the primary computed family with its style
 
 Local verification (2026-11-18): 357 unit/component tests, type generation/TypeScript, lint, formatting, production build, the 29-HTML export audit and all 367 applicable browser cases pass; three viewport-specific cases are intentionally skipped. All 20 focused font/typography cases pass, including both regressions in both projects. Frozen lockfile consistency passes without changing `pnpm-lock.yaml`.
 
-Remote delivery is pending: GitHub CLI is signed out, Git HTTPS cannot connect to github.com:443 even through the approved direct execution path, and no connected browser/Vercel session is available. Linux/WSL is not installed locally. No green remote run, merged commit, live deployment or client URL is claimed.
+Remote GitHub verification also succeeded: fix commit `bd7dd07` was pushed after initial connection failures, and the complete Ubuntu [Frontend checks run 44300310580](https://github.com/Tatonmoy112/crossFit-gym/actions/runs/44300310580) passed. The tested fix was promoted into main with a fast-forward. The owner will deploy later through the Vercel platform; no live deployment or client URL is claimed.
 
-The fix is prepared on `fix/ci-font-loading-vercel-preview`. Push that branch, inspect the Frontend checks run and merge the tested commit into `main` only after the Ubuntu workflow passes. A local Windows pass and the simulated missing-fallback regression are not evidence that the remote Linux run has completed.
+The fix was delivered on `fix/ci-font-loading-vercel-preview` and promoted into `main` after its remote Ubuntu workflow passed. For future changes, use the same branch/check/promote sequence; a local Windows pass alone is not evidence that Linux CI completed.
 
-```sh
-git push -u origin fix/ci-font-loading-vercel-preview
-```
-
-GitHub CLI access requires signing in with `gh auth login`; Git can also use an already configured credential manager. Keep account credentials out of the repository. The exact remote push/check/merge status must be recorded after those operations succeed.
+Git uses the existing configured credential manager. GitHub CLI access, if needed separately, requires `gh auth login`. Keep credentials out of the repository. The owner's later Vercel deployment should import the updated `main` branch.
 
 ## Vercel settings
 
